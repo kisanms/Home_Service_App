@@ -1,18 +1,16 @@
-import {
-  Button,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from "react-native";
-
 import React from "react";
+import { Button, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Threeplatform() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("CustomerSignIn")}
+      >
         <Text style={styles.buttonText}>Customer</Text>
       </TouchableOpacity>
 
@@ -35,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
   },
   button: {
-    backgroundColor: "#6200ea",
+    backgroundColor: "#FF5722",
     paddingVertical: 15,
     paddingHorizontal: 25,
     borderRadius: 10,
