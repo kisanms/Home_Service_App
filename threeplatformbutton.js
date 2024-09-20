@@ -41,6 +41,9 @@ export default function Threeplatform() {
         </View>
       </View>
       <Image source={loginImage} style={styles.loginImage} />
+
+      {/* SignedOut Section */}
+
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("CustomerSignIn")}
@@ -76,12 +79,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: "80%",
     alignItems: "center",
-    // Add shadow for iOS
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
-    // Add elevation for Android
     elevation: 8,
   },
   buttonText: {
@@ -90,11 +91,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   loginImage: {
-    width: "80%", // Takes up 80% of the screen width
-    height: 400, // Make height proportional to width
-    aspectRatio: 1.5, // Control the aspect ratio (e.g., 3:2)
-    resizeMode: "contain", // Ensures the image fits within the space while maintaining its aspect ratio
-    marginBottom: 25, // Adds spacing between the image and buttons
-    borderRadius: 15, // Optionally add rounded corners to the image
+    width: "80%",
+    height: 400,
+    aspectRatio: 1.5,
+    resizeMode: "contain",
+    marginBottom: 25,
+    borderRadius: 15,
   },
 });
