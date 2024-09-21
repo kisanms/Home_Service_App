@@ -7,8 +7,29 @@ import {
 } from "react-native-responsive-screen"; // Import responsive library
 import Color from "../../../utils/Color";
 import Entypo from "@expo/vector-icons/Entypo";
+import * as WebBrowser from "expo-web-browser";
+import { useWarmUpBrowser } from "../../../app/hooks/warmUpBrowser";
+import { useOAuth } from "@clerk/clerk-expo";
+WebBrowser.maybeCompleteAuthSession();
 
 const CustomerSignIn = () => {
+  useWarmUpBrowser();
+  const { startOAuthFlow } = useOAuth({
+    strategy: "oauth_google",
+  });
+  const onPress = React.useCallback(async () => {
+    try {
+      const { createdSessionId, signIn, signUp, setActive } =
+        await startOAuthFlow();
+      if (createdSessionId) {
+        setActive({ session: createdSessionId });
+      } else {
+        //Use signIn or signUp for nxt steps
+      }
+    } catch (err) {
+      console.error("OAuth error", err);
+    }
+  }, []);
   const navigation = useNavigation();
 
   const handleGoBack = () => {
@@ -34,7 +55,9 @@ const CustomerSignIn = () => {
           service
         </Text>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Let's Get Started</Text>
+          <Text style={styles.buttonText} onPress={onPress}>
+            Let's Get Started
+          </Text>
         </TouchableOpacity>
 
         <View style={{ alignItems: "center" }}>

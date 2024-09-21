@@ -3,6 +3,7 @@
     "name": "Home_Service_App",
     "slug": "Home_Service_App",
     "version": "1.0.0",
+    "scheme": "homeserviceapp",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
