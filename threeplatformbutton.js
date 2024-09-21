@@ -10,30 +10,34 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import loginImage from "./assets/loginPortalImage.jpg";
 import Icon from "./assets/icon.png";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default function Threeplatform() {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1, alignItems: "center", marginTop: 90 }}>
+      <View style={{ flex: 1, alignItems: "center" }}>
         <View
           style={{
             flex: 1,
             flexDirection: "row",
-            gap: 4,
+            gap: wp("1%"),
             alignItems: "center",
           }}
         >
           <Image
             source={Icon}
-            style={{ width: 50, height: 50, borderRadius: 50 }}
+            style={{ width: wp("13%"), height: wp("13%"), borderRadius: 50 }}
           />
           <Text
             style={{
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 20,
+              fontSize: wp("5%"),
             }}
           >
             Home Service App
@@ -41,8 +45,6 @@ export default function Threeplatform() {
         </View>
       </View>
       <Image source={loginImage} style={styles.loginImage} />
-
-      {/* SignedOut Section */}
 
       <TouchableOpacity
         style={styles.button}
@@ -71,13 +73,13 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#FF5722",
-    paddingVertical: 15,
-    paddingHorizontal: 25,
-    borderRadius: 10,
+    paddingVertical: hp("2%"),
+    paddingHorizontal: wp("8%"),
+    borderRadius: wp("3%"),
     borderColor: "#FFFFFF",
     borderWidth: 3,
-    marginVertical: 10,
-    width: "80%",
+    marginVertical: hp("1.5%"),
+    width: wp("80%"),
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 5 },
@@ -87,15 +89,15 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
-    fontSize: 18,
+    fontSize: wp("4.5%"),
     fontWeight: "bold",
   },
   loginImage: {
-    width: "80%",
-    height: 400,
+    width: wp("80%"),
+    height: hp("45%"),
     aspectRatio: 1.5,
     resizeMode: "contain",
-    marginBottom: 25,
-    borderRadius: 15,
+    marginBottom: hp("3%"),
+    borderRadius: wp("4%"),
   },
 });
