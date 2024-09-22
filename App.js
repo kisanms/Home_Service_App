@@ -24,12 +24,7 @@ export default function App() {
         <SplashScreen />
       ) : (
         <ClerkProvider publishableKey="pk_test_bGVhZGluZy1zdGlua2J1Zy01MC5jbGVyay5hY2NvdW50cy5kZXYk">
-          <SignedIn>
-            <Text>You are SignedIn</Text>
-          </SignedIn>
-          <SignedOut>
-            <Navigate />
-          </SignedOut>
+          <Navigate />
         </ClerkProvider>
       )}
     </>

@@ -54,6 +54,7 @@ const CustomerSignIn = () => {
           Best App to find services near you which deliver you a professional
           service
         </Text>
+
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText} onPress={onPress}>
             Let's Get Started
