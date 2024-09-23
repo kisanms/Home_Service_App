@@ -10,27 +10,35 @@ import Entypo from "@expo/vector-icons/Entypo";
 import * as WebBrowser from "expo-web-browser";
 import { useWarmUpBrowser } from "../../../app/hooks/warmUpBrowser";
 import { useOAuth } from "@clerk/clerk-expo";
-WebBrowser.maybeCompleteAuthSession();
+
+WebBrowser.maybeCompleteAuthSession(); // Ensure this completes the auth session.
 
 const CustomerSignIn = () => {
-  useWarmUpBrowser();
+  useWarmUpBrowser(); // Warm up browser for faster OAuth flow.
+
+  const navigation = useNavigation(); // Use navigation hook to navigate after login.
+
   const { startOAuthFlow } = useOAuth({
     strategy: "oauth_google",
   });
+
   const onPress = React.useCallback(async () => {
     try {
-      const { createdSessionId, signIn, signUp, setActive } =
-        await startOAuthFlow();
+      const { createdSessionId, setActive } = await startOAuthFlow();
       if (createdSessionId) {
-        setActive({ session: createdSessionId });
+        await setActive({ session: createdSessionId });
+        console.log(
+          "User successfully logged in with session:",
+          createdSessionId
+        );
+        navigation.push("HomeScreen"); // Navigate to HomeScreen after successful login.
       } else {
-        //Use signIn or signUp for nxt steps
+        console.log("Sign in or sign up needed");
       }
     } catch (err) {
       console.error("OAuth error", err);
     }
-  }, []);
-  const navigation = useNavigation();
+  }, [startOAuthFlow, navigation]);
 
   const handleGoBack = () => {
     navigation.goBack();
@@ -55,10 +63,8 @@ const CustomerSignIn = () => {
           service
         </Text>
 
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText} onPress={onPress}>
-            Let's Get Started
-          </Text>
+        <TouchableOpacity style={styles.button} onPress={onPress}>
+          <Text style={styles.buttonText}>Let's Get Started</Text>
         </TouchableOpacity>
 
         <View style={{ alignItems: "center" }}>

@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -7,6 +6,7 @@ import CustomerSignIn from "../screens/Customer/LoginScreen/CustomerSignIn";
 import HomeScreen from "../screens/Customer/HomeScreen/HomeScreen";
 
 const Stack = createStackNavigator();
+
 export default function Navigate() {
   return (
     <NavigationContainer>
