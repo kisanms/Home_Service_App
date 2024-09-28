@@ -24,19 +24,32 @@ const CustomerSignIn = () => {
 
   const onPress = React.useCallback(async () => {
     try {
+      console.log("Starting OAuth flow...");
       const { createdSessionId, setActive } = await startOAuthFlow();
       if (createdSessionId) {
-        await setActive({ session: createdSessionId });
-        console.log(
-          "User successfully logged in with session:",
-          createdSessionId
-        );
-        navigation.push("HomeScreen"); // Navigate to HomeScreen after successful login.
+        console.log("OAuth success. Session ID:", createdSessionId);
+
+        // Ensure the session is being set properly.
+        const setActiveResponse = await setActive({
+          session: createdSessionId,
+        });
+        console.log("SetActive response:", setActiveResponse);
+
+        // Navigate to HomeScreen after successful login
+        navigation.navigate("HomeScreen"); // Using navigate instead of push.
       } else {
-        console.log("Sign in or sign up needed");
+        console.log("Sign in or sign up needed.");
       }
     } catch (err) {
-      console.error("OAuth error", err);
+      console.error("OAuth error:", err);
+
+      // Add more detailed logging to help with debugging.
+      if (err.message) {
+        console.error("Error message:", err.message);
+      }
+      if (err.response) {
+        console.error("Error response:", err.response);
+      }
     }
   }, [startOAuthFlow, navigation]);
 
