@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+
 import * as SecureStore from "expo-secure-store";
 import SplashScreen from "./SplashScreenView";
 import Navigate from "./navigation/navigate";
@@ -12,6 +12,7 @@ import {
   SignedOut,
 } from "@clerk/clerk-expo";
 import { Slot } from "expo-router";
+import Tabnavigation from "./navigation/Tabnavigation";
 const tokenCache = {
   async getToken(key) {
     try {
@@ -50,7 +51,7 @@ export default function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsShowSplash(false);
-    }, 1000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -62,7 +63,9 @@ export default function App() {
     <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
       <ClerkLoaded>
         <SignedIn>
-          <Text style={{ paddingTop: 20 }}>You are signed in</Text>
+          <NavigationContainer>
+            <Tabnavigation />
+          </NavigationContainer>
         </SignedIn>
         {isShowSplash ? (
           <SplashScreen />

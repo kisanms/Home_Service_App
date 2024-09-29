@@ -34,9 +34,6 @@ const CustomerSignIn = () => {
           session: createdSessionId,
         });
         console.log("SetActive response:", setActiveResponse);
-
-        // Navigate to HomeScreen after successful login
-        navigation.navigate("HomeScreen"); // Using navigate instead of push.
       } else {
         console.log("Sign in or sign up needed.");
       }
