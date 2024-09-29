@@ -4,7 +4,7 @@ import React from "react";
 export default function BookingScreen() {
   return (
     <View>
-      <Text>BookingScreen</Text>
+      <Text style={{ paddingTop: 20 }}>BookingScreen</Text>
     </View>
   );
 }
