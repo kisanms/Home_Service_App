@@ -29,9 +29,7 @@ export default function Slider() {
             <Image
               source={{ uri: item?.image?.url }}
               style={styles.sliderImage}
-              resizeMode="contain"  // Added resizeMode to ensure the image scales correctly
             />
-            <Text>{item.name}</Text>
           </View>
         )}
         horizontal={true} // Optional: to display images in a horizontal slider format
@@ -54,6 +52,6 @@ const styles = StyleSheet.create({
     width: 270,
     height: 150,
     borderRadius: 20,
-    backgroundColor: '#ccc', // Use a background color to ensure the image space is visible
+    objectFit: "cover"
   }
 });
