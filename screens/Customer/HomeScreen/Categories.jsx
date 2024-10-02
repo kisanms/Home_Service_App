@@ -28,7 +28,7 @@ export default function Categories() {
   };
 
   return (
-    <View style={{ marginTop: 3 }}>
+    <View style={{ marginTop: 1 }}>
       {/* Heading with "View All" button */}
       <View style={styles.headingContainer}>
         <Heading text={'Categories'} />
@@ -49,7 +49,7 @@ export default function Categories() {
               <View style={styles.iconContainer}>
                 <Image source={{ uri: item?.icon?.url }} style={{ width: hp(4.5), height: hp(4.5) }} />
               </View>
-              <Text style={{ fontFamily: "outfit-medium", marginTop: 5 }}>{item?.name}</Text>
+              <Text style={{ fontFamily: "outfit-medium", marginTop: 2 }}>{item?.name}</Text>
             </View>
           )
         )}

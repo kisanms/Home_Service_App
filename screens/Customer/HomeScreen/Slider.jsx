@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import GlobalApi from '../../../utils/GlobalApi';
 import Heading from '../../../app/Components/Heading';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'; // Responsive screen width and height
 
 export default function Slider() {
   const [slider, setSlider] = useState([]); // Initialize slider state
@@ -45,24 +46,24 @@ export default function Slider() {
   );
 }
 
-// Stylesheet for better layout and visuals
+// Responsive stylesheet
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
+    paddingVertical: hp('1.5%'), // Responsive vertical padding
   },
   heading: {
-    fontSize: 22,
+    fontSize: wp('5.5%'), // Responsive font size
     fontFamily: 'outfit-bold', // Ensure you have a suitable bold font loaded
-    marginBottom: 15,
+    marginBottom: hp('2.5%'), // Responsive margin
     color: '#333', // Darker text color for better readability
     textAlign: 'center',
   },
   sliderList: {
-    paddingLeft: 10,
-    paddingRight: 20, // Ensure spacing at the end of the list
+    paddingLeft: wp('3%'), // Responsive padding
+    paddingRight: wp('5%'), // Ensure spacing at the end of the list
   },
   sliderItem: {
-    marginRight: 15, // Space between each slider item
+    marginRight: wp('3%'), // Responsive space between each slider item
     alignItems: 'center',
     shadowColor: '#000', // Adds shadow for a card-like effect
     shadowOffset: { width: 0, height: 5 },
@@ -71,9 +72,9 @@ const styles = StyleSheet.create({
     elevation: 5, // For Android shadow
   },
   sliderImage: {
-    width: 280, // Slightly wider image
-    height: 160,
-    borderRadius: 20,
+    width: wp('99%'), // Responsive image width, allowing more space for smaller devices
+    height: hp('22.5%'), // Responsive image height
+    borderRadius: wp('5%'), // Responsive border radius
     resizeMode: 'cover', // Ensures images cover their container
   },
 });

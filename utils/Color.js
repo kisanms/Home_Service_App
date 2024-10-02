@@ -1,4 +1,5 @@
 export default {
   PRIMARY: "#FF5722",
-  WHITE: "#FFF"
+  PRIMARY_LIGHT: "#FFBFAB",
+  WHITE: "#FFF",
 };
