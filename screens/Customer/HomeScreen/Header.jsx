@@ -1,78 +1,89 @@
-import { View, Text, StyleSheet, Image, TextInput } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Image, TextInput, Dimensions } from 'react-native';
+import React from 'react';
 import { useUser } from '@clerk/clerk-expo';
 import Color from '../../../utils/Color';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default function Header() {
-    const {user, isLoading} = useUser();
-  return user&&(
-    <View style={styles.container}>
-        {/* Profile Section */}
-        <View style={styles.profileMainContainer}>
-        <View style={styles.profileContainer}>
-        <Image source={{uri:user?.imageUrl}} 
-        style={styles.userImage} />
-        <View>
-            <Text style={{color: Color.WHITE, fontFamily: 'outfit'}}>Welcome,</Text>
-            <Text style={{color: Color.WHITE, fontSize: 20, fontFamily: 'outfit-medium'}}>{user?.fullName}</Text>
+    const { user, isLoading } = useUser();
+    const { width } = Dimensions.get('window'); // Get screen width
+
+    return user && (
+        <View style={styles.container}>
+            {/* Profile Section */}
+            <View style={styles.profileMainContainer}>
+                <View style={styles.profileContainer}>
+                    <Image source={{ uri: user?.imageUrl }} style={styles.userImage} />
+                    <View>
+                        <Text style={styles.welcomeText}>Welcome,</Text>
+                        <Text style={styles.userNameText}>{user?.fullName}</Text>
+                    </View>
+                </View>
+                <FontAwesome name="bookmark-o" size={wp('6%')} color="white" />
+            </View>
+            {/* Search bar section */}
+            <View style={styles.searchBarContainer}>
+                <TextInput placeholder='Search' style={styles.textInput} />
+                <FontAwesome name="search" size={wp('5.5%')} color={Color.PRIMARY} style={styles.searchBtn} />
+            </View>
         </View>
-      </View>
-      <FontAwesome name="bookmark-o" size={27} color="white" />
-        </View>
-        {/* Search bar section */}
-        <View style={styles.searchBarContainer}>
-            <TextInput placeholder='Search' style={styles.textInput} />
-            <FontAwesome name="search" size={24} color={Color.PRIMARY} style={styles.searchbtn} />
-        </View>
-    </View>
-  )
+    );
 }
 
+// Enhanced responsive styles
 const styles = StyleSheet.create({
-    container:{
-        padding: 20,
-        paddingTop: 40,
+    container: {
+        padding: wp('5%'), // Responsive padding
+        paddingTop: hp('5%'),
         backgroundColor: Color.PRIMARY,
-        borderBottomLeftRadius: 25,
-        borderBottomRightRadius:25
+        borderBottomLeftRadius: wp('8%'),
+        borderBottomRightRadius: wp('8%'),
     },
-    profileMainContainer:{
-        display: 'flex',
+    profileMainContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
-    profileContainer:{
-        display: 'flex',
+    profileContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 10,
+        gap: wp('3%'), // Responsive gap between image and text
     },
-    userImage:{
-        width: 45,
-        height: 45,
-        borderRadius: 99
+    userImage: {
+        width: wp('12%'), // Responsive width and height
+        height: wp('12%'),
+        borderRadius: wp('12%'),
     },
-    textInput:{
-        padding: 7,
+    welcomeText: {
+        color: Color.WHITE,
+        fontFamily: 'outfit',
+        fontSize: wp('4%'), // Responsive font size
+    },
+    userNameText: {
+        color: Color.WHITE,
+        fontSize: wp('5%'), // Responsive font size
+        fontFamily: 'outfit-medium',
+    },
+    searchBarContainer: {
+        marginTop: hp('2%'),
+        flexDirection: 'row',
+        gap: wp('3%'),
+        marginBottom: hp('1%'),
+    },
+    textInput: {
+        padding: wp('3%'),
         width: '85%',
-        paddingHorizontal: 16,
+        paddingHorizontal: wp('4%'),
         backgroundColor: '#f5f5f5',
-        borderRadius: 8,
-        fontSize: 16,
-        fontFamily: 'outfit'
+        borderRadius: wp('3%'),
+        fontSize: wp('4%'),
+        fontFamily: 'outfit',
     },
-    searchBarContainer:{
-        marginTop: 15,
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 10,
-        marginBottom: 10
-    },
-    searchbtn:{
+    searchBtn: {
         backgroundColor: Color.WHITE,
-        padding: 10,
-        borderRadius: 8
-    }
-})
+        padding: wp('3%'),
+        borderRadius: wp('3%'),
+    },
+});
+

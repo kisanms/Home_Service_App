@@ -8,7 +8,7 @@ const HomeScreen = () => {
   return (
     <View>
       <Header />
-      <View style={{ padding: 10 }}>
+      <View style={{ padding: 5 }}>
         <Slider />
         <Categories />
       </View>

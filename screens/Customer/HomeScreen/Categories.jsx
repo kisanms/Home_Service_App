@@ -1,4 +1,4 @@
-import { FlatList, Image, StyleSheet, View, Dimensions } from 'react-native';
+import { FlatList, Image, StyleSheet, View, Dimensions, Text, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import GlobalApi from '../../../utils/GlobalApi';
 import Heading from '../../../app/Components/Heading';
@@ -6,6 +6,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
+  const [showAll, setShowAll] = useState(false); // State to toggle "View All"
   const { width } = Dimensions.get('window'); // Get the device's screen width
 
   useEffect(() => {
@@ -21,24 +22,37 @@ export default function Categories() {
     }
   };
 
-  return (
-    <View style={styles.container}>
-      {/* Heading with "View All" button */}
-      <Heading text={'Categories'} isViewAll={true} />
+  // Handler to toggle the display of categories
+  const toggleViewAll = () => {
+    setShowAll(!showAll);
+  };
 
-      {/* Horizontal scrolling categories */}
+  return (
+    <View style={{ marginTop: 3 }}>
+      {/* Heading with "View All" button */}
+      <View style={styles.headingContainer}>
+        <Heading text={'Categories'} />
+        <TouchableOpacity onPress={toggleViewAll}>
+          <Text style={styles.viewAllText}>{showAll ? "Show Less" : "View All"}</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Category list */}
       <FlatList
         data={categories}
         numColumns={4}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.iconContainer}>
-            <Image source={{ uri: item?.icon?.url }} style={[styles.categoryIcon, { width: wp('10%'), height: wp('10%') }]} />
-          </View>
+        renderItem={({ item, index }) => (
+          // Only show first 4 items if 'showAll' is false, otherwise show all items
+          (showAll || index <= 3) && (
+            <View style={styles.container}>
+              <View style={styles.iconContainer}>
+                <Image source={{ uri: item?.icon?.url }} style={{ width: hp(4.5), height: hp(4.5) }} />
+              </View>
+              <Text style={{ fontFamily: "outfit-medium", marginTop: 5 }}>{item?.name}</Text>
+            </View>
+          )
         )}
-        // horizontal
-        // showsHorizontalScrollIndicator={false} // Hides default scrollbar
-        contentContainerStyle={styles.categoriesList} // Style for padding around the list
       />
     </View>
   );
@@ -46,21 +60,24 @@ export default function Categories() {
 
 // Enhanced responsive styles
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: hp('2%'), // Responsive vertical padding
+  headingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: wp(3),
   },
-  categoriesList: {
-    paddingHorizontal: wp('3%'), // Padding around the categories list
+  viewAllText: {
+    color: '#007BFF', // Color for the View All text
+    fontSize: hp(2), // Responsive font size
+    fontFamily: 'outfit-medium',
   },
   iconContainer: {
-    backgroundColor: '#EDEDED', // White background for the category icon
-    padding: wp('4.5%'), // Responsive padding
-    marginRight: wp('4%'), // Responsive margin
-    borderRadius: wp('12%'), // Rounding for a circular effect based on screen width
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#EDEDED",
+    padding: wp(4),
+    borderRadius: 99,
   },
-  categoryIcon: {
-    resizeMode: 'contain', // Ensure the icon maintains its aspect ratio
+  container: {
+    flex: 1,
+    alignItems: "center",
   },
 });

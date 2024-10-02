@@ -48,7 +48,7 @@ export default function Slider() {
 // Stylesheet for better layout and visuals
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 20,
+    paddingVertical: 10,
   },
   heading: {
     fontSize: 22,
