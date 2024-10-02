@@ -9,7 +9,7 @@ const HomeScreen = () => {
   return (
     <View>
       <Header />
-      <View style={{ padding: 2 }}>
+      <View style={{ padding: 10 }}>
         <Slider />
         <Categories />
         <BusinessList />

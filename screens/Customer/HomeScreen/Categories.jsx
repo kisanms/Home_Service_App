@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react';
 import GlobalApi from '../../../utils/GlobalApi';
 import Heading from '../../../app/Components/Heading';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'; // Responsive library
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
   const [showAll, setShowAll] = useState(false); // State to toggle "View All"
+  const navigation = useNavigation();
   const { width } = Dimensions.get('window'); // Get the device's screen width
 
   useEffect(() => {
@@ -45,12 +48,12 @@ export default function Categories() {
         renderItem={({ item, index }) => (
           // Only show first 4 items if 'showAll' is false, otherwise show all items
           (showAll || index <= 3) && (
-            <View style={styles.container}>
+            <TouchableOpacity style={styles.container} onPress={() => navigation.push('business-list', { category: item.name })}>
               <View style={styles.iconContainer}>
                 <Image source={{ uri: item?.icon?.url }} style={{ width: hp(4.5), height: hp(4.5) }} />
               </View>
               <Text style={{ fontFamily: "outfit-medium", marginTop: 2 }}>{item?.name}</Text>
-            </View>
+            </TouchableOpacity>
           )
         )}
       />

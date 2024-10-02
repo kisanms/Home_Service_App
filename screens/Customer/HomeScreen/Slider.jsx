@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
     elevation: 5, // For Android shadow
   },
   sliderImage: {
-    width: wp('99%'), // Responsive image width, allowing more space for smaller devices
-    height: hp('22.5%'), // Responsive image height
+    width: 270, // Responsive image width, allowing more space for smaller devices
+    height: hp('15%'), // Responsive image height
     borderRadius: wp('5%'), // Responsive border radius
     resizeMode: 'cover', // Ensures images cover their container
   },
