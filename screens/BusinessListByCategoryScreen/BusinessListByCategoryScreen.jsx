@@ -25,12 +25,13 @@ export default function BusinessListByCategoryScreen() {
         <Ionicons name="arrow-back-outline" size={30} color="black" />
         <Text style={{ fontFamily: "outfit-medium", fontSize: 25 }}>{param.category}</Text>
       </TouchableOpacity>
-      <FlatList
+      {businessList?.length > 0 ? <FlatList
         style={{ marginTop: 10 }}
         data={businessList}
         renderItem={({ item, index }) => (
           <BusinessListItem business={item} />
-        )} />
+        )} /> :
+        <Text style={{ fontFamily: "outfit-medium", fontSize: 20, textAlign: "center", marginTop: "20%", color: "gray" }}>No Business Found</Text>}
     </View>
   )
 }
