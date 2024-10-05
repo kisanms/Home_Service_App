@@ -37,7 +37,7 @@ export default function BusinessDetailsScreen() {
           <Ionicons name="location-sharp" size={25} color={Color.PRIMARY} />{business?.address}</Text>
 
         {/*horizontal line */}
-        {/* <View style={{ borderWidth: 0.5, borderColor: "gray", marginTop: 15, marginBottom: 10 }}></View> */}
+        <View style={{ borderWidth: 0.5, borderColor: "gray", marginTop: 15, marginBottom: 10 }}></View>
 
         {/*About Me */}
         {/* <View>
