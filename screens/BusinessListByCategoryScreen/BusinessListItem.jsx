@@ -1,12 +1,16 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Color from '../../utils/Color';
+import { useNavigation } from '@react-navigation/native';
 
 export default function BusinessListItem({ business }) {
+  const navigation = useNavigation();
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => navigation.push('business-detail', {
+      business: business
+    })}>
       <Image source={{ uri: business?.images[0]?.url }} style={styles.image} />
       <View style={styles.subContainer}>
         <Text style={styles.contactPerson}>
@@ -18,7 +22,7 @@ export default function BusinessListItem({ business }) {
           {business.address}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
