@@ -5,12 +5,14 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import Color from '../../utils/Color';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Heading from '../../app/Components/Heading';
+import BusinessPhotos from './BusinessPhotos';
 
 export default function BusinessDetailsScreen() {
   const route = useRoute();
   const [isReadMore, setIsReadMore] = useState(false);
   const [business, setBusiness] = useState(null);
   const navigation = useNavigation();
+
   useEffect(() => {
     if (route?.params?.business) {
       setBusiness(route.params.business);
@@ -18,55 +20,117 @@ export default function BusinessDetailsScreen() {
   }, [route]);
 
   if (!business) {
-    return <Text>Loading...</Text>;  // Handle the loading state
+    return <Text>Loading...</Text>; // Handle the loading state
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtnContainer}>
-        <Ionicons name="arrow-back-outline" size={30} color="white" />
+        <Ionicons name="arrow-back-outline" size={hp(4)} color="white" />
       </TouchableOpacity>
-      <Image source={{ uri: business?.images[0]?.url }} style={{ width: "100%", height: 300 }} />
+      <Image source={{ uri: business?.images[0]?.url }} style={styles.image} />
       <View style={styles.infoContainer}>
-        <Text style={{ fontFamily: "outfit-bold", fontSize: 25 }}>{business?.name}</Text>
+        <Text style={styles.businessName}>{business?.name}</Text>
         <View style={styles.subContainer}>
-          <Text style={{ fontFamily: "outfit-medium", fontSize: 20, color: Color.PRIMARY }}>{business?.contactPerson} 🌟 </Text>
-          <Text style={{ color: "red", backgroundColor: Color.PRIMARY_LIGHT, padding: 5, borderRadius: 5, fontSize: 14 }}>{business?.category.name}</Text>
+          <Text style={styles.contactPerson}>{business?.contactPerson} 🌟</Text>
+          <Text style={styles.category}>{business?.category.name}</Text>
         </View>
-        <Text style={{ fontSize: 17, fontFamily: "outfit", color: "gray" }}>
-          <Ionicons name="location-sharp" size={25} color={Color.PRIMARY} />{business?.address}</Text>
+        <Text style={styles.address}>
+          <Ionicons name="location-sharp" size={hp(2.5)} color={Color.PRIMARY} /> {business?.address}
+        </Text>
 
-        {/*horizontal line */}
-        <View style={{ borderWidth: 0.5, borderColor: "gray", marginTop: 15, marginBottom: 10 }}></View>
+        {/* Horizontal line */}
+        <View style={styles.horizontalLine}></View>
 
-        {/*About Me */}
+        {/* About Me */}
         <View>
           <Heading text={'About Me'} />
-          <Text style={{ fontFamily: "outfit", color: "gray", fontSize: 16, paddingHorizontal: wp(3), lineHeight: 27 }} numberOfLines={isReadMore ? 10 : 5}>{business?.about}</Text>
+          <Text
+            style={styles.aboutText}
+            numberOfLines={isReadMore ? 8 : 4}
+          >
+            {business?.about}
+          </Text>
           <TouchableOpacity onPress={() => setIsReadMore(!isReadMore)}>
-            <Text style={{ color: Color.PRIMARY, fontFamily: "outfit", fontSize: 16, paddingHorizontal: wp(3) }}>{isReadMore ? 'Read Less' : 'Read More'}</Text>
+            <Text style={styles.readMoreText}>
+              {isReadMore ? 'Read Less' : 'Read More'}
+            </Text>
           </TouchableOpacity>
         </View>
+
+        {/* Horizontal line */}
+        <View style={styles.horizontalLine}></View>
+        <BusinessPhotos business={business} />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingTop: hp(3), // Added padding for better UI layout
+  },
   backBtnContainer: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 10,
-    padding: 20
+    paddingTop: wp(6),
+    marginHorizontal: wp(2)
+  },
+  image: {
+    width: '100%',
+    height: hp(30), // Reduced image height for a more compact layout
+    resizeMode: 'cover', // Ensure the image covers the area properly
   },
   infoContainer: {
-    padding: 20,
-    display: "flex",
-    gap: 7
+    padding: wp(4), // Reduced padding for a compact look
+    gap: hp(1),
+  },
+  businessName: {
+    fontFamily: 'outfit-bold',
+    fontSize: wp(5), // Reduced font size
+    color: '#000',
   },
   subContainer: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 5,
-    alignItems: "center"
-  }
+    flexDirection: 'row',
+    gap: wp(2),
+    alignItems: 'center',
+  },
+  contactPerson: {
+    fontFamily: 'outfit-medium',
+    fontSize: wp(4), // Reduced font size
+    color: Color.PRIMARY,
+  },
+  category: {
+    color: 'red',
+    backgroundColor: Color.PRIMARY_LIGHT,
+    padding: wp(1.5), // Reduced padding
+    borderRadius: wp(1),
+    fontSize: wp(3), // Reduced font size
+  },
+  address: {
+    fontSize: wp(3.5), // Reduced font size
+    fontFamily: 'outfit',
+    color: 'gray',
+  },
+  horizontalLine: {
+    borderWidth: 0.5,
+    borderColor: 'gray',
+    marginTop: hp(1.5),
+    marginBottom: hp(1.5),
+  },
+  aboutText: {
+    fontFamily: 'outfit',
+    color: 'gray',
+    fontSize: wp(3.5), // Reduced font size
+    paddingHorizontal: wp(3),
+    lineHeight: hp(3), // Reduced line height
+  },
+  readMoreText: {
+    color: Color.PRIMARY,
+    fontFamily: 'outfit',
+    fontSize: wp(3.5), // Reduced font size
+    paddingHorizontal: wp(3),
+  },
 });
