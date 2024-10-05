@@ -40,13 +40,13 @@ export default function BusinessDetailsScreen() {
         <View style={{ borderWidth: 0.5, borderColor: "gray", marginTop: 15, marginBottom: 10 }}></View>
 
         {/*About Me */}
-        {/* <View>
+        <View>
           <Heading text={'About Me'} />
           <Text style={{ fontFamily: "outfit", color: "gray", fontSize: 16, paddingHorizontal: wp(3), lineHeight: 27 }} numberOfLines={isReadMore ? 10 : 5}>{business?.about}</Text>
           <TouchableOpacity onPress={() => setIsReadMore(!isReadMore)}>
             <Text style={{ color: Color.PRIMARY, fontFamily: "outfit", fontSize: 16, paddingHorizontal: wp(3) }}>{isReadMore ? 'Read Less' : 'Read More'}</Text>
           </TouchableOpacity>
-        </View> */}
+        </View>
       </View>
     </View>
   );
