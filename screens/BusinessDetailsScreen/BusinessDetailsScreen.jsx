@@ -64,14 +64,14 @@ export default function BusinessDetailsScreen() {
           <BusinessPhotos business={business} />
         </View>
       </ScrollView>
-      {/* <View style={{ display: "flex", flexDirection: "row" }}>
+      <View style={{ display: "flex", flexDirection: "row" }}>
         <TouchableOpacity style={styles.messgaeBtn}>
           <Text style={{ textAlign: "center", fontFamily: "outfit-medium", color: Color.PRIMARY, fontSize: 18 }}>Message</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.bookingBtn}>
           <Text style={{ textAlign: "center", fontFamily: "outfit-medium", color: "white", fontSize: 18 }}>Booking</Text>
         </TouchableOpacity>
-      </View> */}
+      </View>
     </View>
 
   );
