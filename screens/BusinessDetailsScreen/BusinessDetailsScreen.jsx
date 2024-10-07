@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, LogBox, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -6,7 +6,7 @@ import Color from '../../utils/Color';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Heading from '../../app/Components/Heading';
 import BusinessPhotos from './BusinessPhotos';
-
+LogBox.ignoreLogs(["VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead."]);
 export default function BusinessDetailsScreen() {
   const route = useRoute();
   const [isReadMore, setIsReadMore] = useState(false);
@@ -24,58 +24,69 @@ export default function BusinessDetailsScreen() {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtnContainer}>
-        <Ionicons name="arrow-back-outline" size={hp(4)} color="white" />
-      </TouchableOpacity>
-      <Image source={{ uri: business?.images[0]?.url }} style={styles.image} />
-      <View style={styles.infoContainer}>
-        <Text style={styles.businessName}>{business?.name}</Text>
-        <View style={styles.subContainer}>
-          <Text style={styles.contactPerson}>{business?.contactPerson} 🌟</Text>
-          <Text style={styles.category}>{business?.category.name}</Text>
-        </View>
-        <Text style={styles.address}>
-          <Ionicons name="location-sharp" size={hp(2.5)} color={Color.PRIMARY} /> {business?.address}
-        </Text>
-
-        {/* Horizontal line */}
-        <View style={styles.horizontalLine}></View>
-
-        {/* About Me */}
-        <View>
-          <Heading text={'About Me'} />
-          <Text
-            style={styles.aboutText}
-            numberOfLines={isReadMore ? 8 : 4}
-          >
-            {business?.about}
+    <View>
+      <ScrollView style={styles.container}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtnContainer}>
+          <Ionicons name="arrow-back-outline" size={hp(4)} color="white" />
+        </TouchableOpacity>
+        <Image source={{ uri: business?.images[0]?.url }} style={styles.image} />
+        <View style={styles.infoContainer}>
+          <Text style={styles.businessName}>{business?.name}</Text>
+          <View style={styles.subContainer}>
+            <Text style={styles.contactPerson}>{business?.contactPerson} 🌟</Text>
+            <Text style={styles.category}>{business?.category.name}</Text>
+          </View>
+          <Text style={styles.address}>
+            <Ionicons name="location-sharp" size={hp(2.5)} color={Color.PRIMARY} /> {business?.address}
           </Text>
-          <TouchableOpacity onPress={() => setIsReadMore(!isReadMore)}>
-            <Text style={styles.readMoreText}>
-              {isReadMore ? 'Read Less' : 'Read More'}
-            </Text>
-          </TouchableOpacity>
-        </View>
 
-        {/* Horizontal line */}
-        <View style={styles.horizontalLine}></View>
-        <BusinessPhotos business={business} />
-      </View>
-    </ScrollView>
+          {/* Horizontal line */}
+          <View style={styles.horizontalLine}></View>
+
+          {/* About Me */}
+          <View>
+            <Heading text={'About Me'} />
+            <Text
+              style={styles.aboutText}
+              numberOfLines={isReadMore ? 8 : 4}
+            >
+              {business?.about}
+            </Text>
+            <TouchableOpacity onPress={() => setIsReadMore(!isReadMore)}>
+              <Text style={styles.readMoreText}>
+                {isReadMore ? 'Read Less' : 'Read More'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Horizontal line */}
+          <View style={styles.horizontalLine}></View>
+          <BusinessPhotos business={business} />
+        </View>
+      </ScrollView>
+      {/* <View style={{ display: "flex", flexDirection: "row" }}>
+        <TouchableOpacity style={styles.messgaeBtn}>
+          <Text style={{ textAlign: "center", fontFamily: "outfit-medium", color: Color.PRIMARY, fontSize: 18 }}>Message</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.bookingBtn}>
+          <Text style={{ textAlign: "center", fontFamily: "outfit-medium", color: "white", fontSize: 18 }}>Booking</Text>
+        </TouchableOpacity>
+      </View> */}
+    </View>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
-    paddingTop: hp(3), // Added padding for better UI layout
+    paddingTop: hp(3),
+    height: '92%',// Added padding for better UI layout
   },
   backBtnContainer: {
     position: 'absolute',
     zIndex: 10,
-    paddingTop: wp(6),
+    paddingTop: wp(4),
     marginHorizontal: wp(2)
   },
   image: {
@@ -133,4 +144,20 @@ const styles = StyleSheet.create({
     fontSize: wp(3.5), // Reduced font size
     paddingHorizontal: wp(3),
   },
+  messgaeBtn: {
+    padding: 15,
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: Color.PRIMARY,
+    borderRadius: 99,
+    flex: 1,
+  },
+  bookingBtn: {
+    padding: 15,
+    backgroundColor: Color.PRIMARY,
+    borderWidth: 1,
+    borderColor: Color.PRIMARY,
+    borderRadius: 99,
+    flex: 1,
+  }
 });
