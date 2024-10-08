@@ -1,4 +1,4 @@
-import { Image, LogBox, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, LogBox, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -9,6 +9,7 @@ import BusinessPhotos from './BusinessPhotos';
 LogBox.ignoreLogs(["VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead."]);
 export default function BusinessDetailsScreen() {
   const route = useRoute();
+  const [showModal, setShowModal] = useState(false);
   const [isReadMore, setIsReadMore] = useState(false);
   const [business, setBusiness] = useState(null);
   const navigation = useNavigation();
@@ -68,10 +69,16 @@ export default function BusinessDetailsScreen() {
         <TouchableOpacity style={styles.messgaeBtn}>
           <Text style={{ textAlign: "center", fontFamily: "outfit-medium", color: Color.PRIMARY, fontSize: 18 }}>Message</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.bookingBtn}>
+        <TouchableOpacity style={styles.bookingBtn} onPress={() => setShowModal(true)}>
           <Text style={{ textAlign: "center", fontFamily: "outfit-medium", color: "white", fontSize: 18 }}>Book Now</Text>
         </TouchableOpacity>
       </View>
+      {/* Booking screen modal*/}
+      <Modal
+        animationType='slide'
+        visible={showModal}>
+        <Text>Booking</Text>
+      </Modal>
     </View>
 
   );
