@@ -66,12 +66,12 @@ export default function BusinessDetailsScreen() {
           <BusinessPhotos business={business} />
         </View>
       </ScrollView>
-      <View style={{ display: "flex", flexDirection: "row", margin: 8, gap: 8 }}>
+      <View style={{ display: "flex", flexDirection: "row", margin: wp(2), gap: wp(2) }}>
         <TouchableOpacity style={styles.messgaeBtn}>
-          <Text style={{ textAlign: "center", fontFamily: "outfit-medium", color: Color.PRIMARY, fontSize: 18 }}>Message</Text>
+          <Text style={{ textAlign: "center", fontFamily: "outfit-medium", color: Color.PRIMARY, fontSize: wp(4.5) }}>Message</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.bookingBtn} onPress={() => setShowModal(true)}>
-          <Text style={{ textAlign: "center", fontFamily: "outfit-medium", color: "white", fontSize: 18 }}>Book Now</Text>
+          <Text style={{ textAlign: "center", fontFamily: "outfit-medium", color: "white", fontSize: wp(4.5) }}>Book Now</Text>
         </TouchableOpacity>
       </View>
       {/* Booking screen modal*/}
@@ -153,19 +153,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(3),
   },
   messgaeBtn: {
-    padding: 15,
+    paddingVertical: hp(1.5),
+    paddingHorizontal: wp(4),
     backgroundColor: "white",
     borderWidth: 1,
     borderColor: Color.PRIMARY,
-    borderRadius: 99,
+    borderRadius: wp(10),
     flex: 1,
   },
   bookingBtn: {
-    padding: 15,
+    paddingVertical: hp(1.5),
+    paddingHorizontal: wp(4),
     backgroundColor: Color.PRIMARY,
     borderWidth: 1,
     borderColor: Color.PRIMARY,
-    borderRadius: 99,
+    borderRadius: wp(10),
     flex: 1,
   }
 });
