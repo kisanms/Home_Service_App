@@ -6,6 +6,7 @@ import Color from '../../utils/Color';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Heading from '../../app/Components/Heading';
 import BusinessPhotos from './BusinessPhotos';
+import BookingModal from './BookingModal';
 LogBox.ignoreLogs(["VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead."]);
 export default function BusinessDetailsScreen() {
   const route = useRoute();
@@ -77,7 +78,7 @@ export default function BusinessDetailsScreen() {
       <Modal
         animationType='slide'
         visible={showModal}>
-        <Text>Booking</Text>
+        <BookingModal />
       </Modal>
     </View>
 
