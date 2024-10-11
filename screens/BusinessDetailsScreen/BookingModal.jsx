@@ -1,32 +1,64 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
+import React, { useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CalendarPicker from "react-native-calendar-picker";
 import Color from '../../utils/Color';
+import Heading from '../../app/Components/Heading';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default function BookingModal({ hideModal }) {
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const onDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
   return (
-    <View style={{ padding: 20 }}>
-      <TouchableOpacity style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: "center" }}
-        onPress={() => hideModal()}>
-        <Ionicons name="arrow-back-outline" size={30} color="black" />
-        <Text style={{ fontFamily: "outfit-medium", fontSize: 25 }}>Booking</Text>
+    <View style={styles.container}>
+      {/* Header with back arrow and title */}
+      <TouchableOpacity
+        style={styles.header}
+        onPress={() => hideModal()}
+      >
+        <Ionicons name="arrow-back-outline" size={wp('7%')} color="black" />
+        <Text style={styles.headerText}>Booking</Text>
       </TouchableOpacity>
-      {/*Calender section */}
-      <View style={styles.calenderContainer}>
-        <CalendarPicker onDateChange={this.onDateChange}
-          width={340}
+
+      {/* Calendar Section */}
+      <Heading text={'Select Date'} />
+      <View style={styles.calendarContainer}>
+        <CalendarPicker
+          onDateChange={onDateChange}
+          width={wp('85%')} // Width is 85% of the screen width
           minDate={Date.now()}
-          todayBackgroundColor={Color.PRIMARY} />
+          todayBackgroundColor={Color.PRIMARY}
+          todayTextStyle={styles.todayTextStyle}
+        />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-  calenderContainer: {
-    backgroundColor: Color.PRIMARY_LIGHT,
-    padding: 20,
-    borderRadius: 15,
-  }
-})
+  container: {
+    padding: wp('5%'), // Responsive padding
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: hp('3%'), // Responsive margin bottom
+    gap: wp('2%'), // Responsive gap
+  },
+  headerText: {
+    fontFamily: "outfit-medium",
+    fontSize: wp('6%'), // Responsive font size
+  },
+  calendarContainer: {
+    backgroundColor: "lightgray",
+    padding: wp('5%'), // Responsive padding
+    borderRadius: wp('4%'), // Responsive border radius
+  },
+  todayTextStyle: {
+    color: Color.WHITE,
+  },
+});
