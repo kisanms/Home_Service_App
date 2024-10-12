@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CalendarPicker from "react-native-calendar-picker";
 import Color from '../../utils/Color';
@@ -12,6 +12,29 @@ export default function BookingModal({ hideModal }) {
   const onDateChange = (date) => {
     setSelectedDate(date);
   };
+  const [timeList, setTimeList] = useState();
+  useEffect(() => {
+    getTime(); // Fetch time slots on component mount
+  }, []);
+  const getTime = () => {
+    const timeList = [];
+    for (let i = 8; i <= 12; i++) {
+      timeList.push({
+        time: i + ':00 AM'
+      })
+      timeList.push({
+        time: i + ':30 AM'
+      })
+    }
+    for (let i = 1; i <= 7; i++) {
+      timeList.push({
+        time: i + ':00 PM'
+      })
+      timeList.push({
+        time: i + ':30 PM'
+      })
+    }
+  }
 
   return (
     <View style={styles.container}>
