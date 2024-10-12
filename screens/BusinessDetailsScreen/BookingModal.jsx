@@ -8,6 +8,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export default function BookingModal({ hideModal }) {
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState();
 
   const onDateChange = (date) => {
     setSelectedDate(date);
@@ -81,11 +82,13 @@ export default function BookingModal({ hideModal }) {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => (
-            <TouchableOpacity style={{ marginRight: 5 }}>
-              <Text style={styles.unselectedTime}>{item.time}</Text>
+            <TouchableOpacity style={{ marginRight: 5 }} onPress={() => setSelectedTime(item.time)}>
+              <Text style={[selectedTime == item.time ? styles.selectedTime : styles.unselectedTime]}>{item.time}</Text>
             </TouchableOpacity>
           )} />
       </View>
+      {/*Note Section */}
+
     </View>
   );
 }
@@ -113,7 +116,13 @@ const styles = StyleSheet.create({
     color: Color.WHITE,
   },
   selectedTime: {
-
+    padding: 8,
+    borderWidth: 1,
+    borderColor: Color.PRIMARY,
+    borderRadius: 99,
+    paddingHorizontal: 18,
+    backgroundColor: Color.PRIMARY,
+    color: Color.WHITE
   },
   unselectedTime: {
     padding: 8,
@@ -122,5 +131,5 @@ const styles = StyleSheet.create({
     borderRadius: 99,
     paddingHorizontal: 18,
     color: Color.PRIMARY,
-  }
+  },
 });
