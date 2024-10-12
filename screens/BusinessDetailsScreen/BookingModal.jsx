@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, Dimensions, FlatList } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions, FlatList, TextInput } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CalendarPicker from "react-native-calendar-picker";
@@ -9,14 +9,17 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 export default function BookingModal({ hideModal }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState();
+  const [note, setNote] = useState();
 
   const onDateChange = (date) => {
     setSelectedDate(date);
   };
+
   const [timeList, setTimeList] = useState();
   useEffect(() => {
     getTime(); // Fetch time slots on component mount
   }, []);
+
   const getTime = () => {
     const timeList = [];
 
@@ -49,8 +52,7 @@ export default function BookingModal({ hideModal }) {
     }
 
     setTimeList(timeList);
-  }
-
+  };
 
   return (
     <View style={styles.container}>
@@ -74,21 +76,31 @@ export default function BookingModal({ hideModal }) {
           todayTextStyle={styles.todayTextStyle}
         />
       </View>
+
       {/* Time slots Section */}
-      <View style={{ marginTop: 20 }}>
+      <View style={styles.timeSlotContainer}>
         <Heading text={'Select Time Slot'} />
         <FlatList
           data={timeList}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity style={{ marginRight: 5 }} onPress={() => setSelectedTime(item.time)}>
-              <Text style={[selectedTime == item.time ? styles.selectedTime : styles.unselectedTime]}>{item.time}</Text>
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.timeSlot} onPress={() => setSelectedTime(item.time)}>
+              <Text style={selectedTime === item.time ? styles.selectedTime : styles.unselectedTime}>{item.time}</Text>
             </TouchableOpacity>
-          )} />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={styles.timeList}
+        />
       </View>
-      {/*Note Section */}
-
+      {/* Note Section*/}
+      <View style={{ paddingTop: 20 }}>
+        <Heading text={'Any Suggestion Note'} />
+        <TextInput placeholder='Note'
+          numberOfLines={4}
+          multiline={true} style={styles.noteTextArea}
+          onChange={(text) => setNote(text)} />
+      </View>
     </View>
   );
 }
@@ -115,21 +127,45 @@ const styles = StyleSheet.create({
   todayTextStyle: {
     color: Color.WHITE,
   },
+  timeSlotContainer: {
+    marginTop: hp('2%'), // Responsive margin top
+  },
+  timeSlot: {
+    marginRight: wp('3%'), // Responsive margin between time slots
+  },
   selectedTime: {
-    padding: 8,
+    paddingVertical: hp('1.2%'), // Responsive vertical padding
+    paddingHorizontal: wp('5%'), // Responsive horizontal padding
     borderWidth: 1,
     borderColor: Color.PRIMARY,
-    borderRadius: 99,
-    paddingHorizontal: 18,
+    borderRadius: wp('6%'), // Responsive border radius
     backgroundColor: Color.PRIMARY,
-    color: Color.WHITE
+    color: Color.WHITE,
+    fontSize: wp('4%'), // Responsive font size
+    textAlign: 'center',
   },
   unselectedTime: {
-    padding: 8,
+    paddingVertical: hp('1.2%'), // Responsive vertical padding
+    paddingHorizontal: wp('5%'), // Responsive horizontal padding
     borderWidth: 1,
     borderColor: Color.PRIMARY,
-    borderRadius: 99,
-    paddingHorizontal: 18,
+    borderRadius: wp('6%'), // Responsive border radius
     color: Color.PRIMARY,
+    fontSize: wp('4%'), // Responsive font size
+    textAlign: 'center',
+  },
+  timeList: {
+    paddingHorizontal: wp('2%'), // Responsive padding for the FlatList container
+  },
+  noteTextArea: {
+    borderWidth: 1,
+    borderColor: Color.PRIMARY,
+    paddingHorizontal: wp('5%'),
+    paddingVertical: hp('1%'),
+    borderRadius: wp('4%'), // Responsive border radius
+    marginBottom: hp('2%'), // Responsive margin bottom
+    fontSize: wp('4%'), // Responsive font size
+    color: Color.PRIMARY,
+    fontFamily: 'outfit',
   },
 });
