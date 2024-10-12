@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CalendarPicker from "react-native-calendar-picker";
@@ -18,23 +18,38 @@ export default function BookingModal({ hideModal }) {
   }, []);
   const getTime = () => {
     const timeList = [];
-    for (let i = 8; i <= 12; i++) {
+
+    // Loop for morning times (8 AM - 12 PM)
+    for (let i = 8; i <= 11; i++) {
       timeList.push({
         time: i + ':00 AM'
-      })
+      });
       timeList.push({
         time: i + ':30 AM'
-      })
+      });
     }
+
+    // Special case for 12 PM
+    timeList.push({
+      time: '12:00 PM'
+    });
+    timeList.push({
+      time: '12:30 PM'
+    });
+
+    // Loop for afternoon/evening times (1 PM - 7 PM)
     for (let i = 1; i <= 7; i++) {
       timeList.push({
         time: i + ':00 PM'
-      })
+      });
       timeList.push({
         time: i + ':30 PM'
-      })
+      });
     }
+
+    setTimeList(timeList);
   }
+
 
   return (
     <View style={styles.container}>
@@ -57,6 +72,19 @@ export default function BookingModal({ hideModal }) {
           todayBackgroundColor={Color.PRIMARY}
           todayTextStyle={styles.todayTextStyle}
         />
+      </View>
+      {/* Time slots Section */}
+      <View style={{ marginTop: 20 }}>
+        <Heading text={'Select Time Slot'} />
+        <FlatList
+          data={timeList}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity style={{ marginRight: 5 }}>
+              <Text style={styles.unselectedTime}>{item.time}</Text>
+            </TouchableOpacity>
+          )} />
       </View>
     </View>
   );
@@ -84,4 +112,15 @@ const styles = StyleSheet.create({
   todayTextStyle: {
     color: Color.WHITE,
   },
+  selectedTime: {
+
+  },
+  unselectedTime: {
+    padding: 8,
+    borderWidth: 1,
+    borderColor: Color.PRIMARY,
+    borderRadius: 99,
+    paddingHorizontal: 18,
+    color: Color.PRIMARY,
+  }
 });
