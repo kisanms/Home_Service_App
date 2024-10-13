@@ -105,9 +105,9 @@ const createBooking = async (data) => {
       ) {
         id
       }
-      publishManyBookings{
-      count
-      }
+       publishManyBookings(to: PUBLISHED) {
+    count
+  }
     }
   `;
   const result = await request(MASTER_URL, mutationQuery);
