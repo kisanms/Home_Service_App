@@ -6,12 +6,13 @@ import Color from '../../utils/Color';
 import Heading from '../../app/Components/Heading';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useUser } from '@clerk/clerk-expo';
+import GlobalApi from '../../utils/GlobalApi';
 
-export default function BookingModal({ hideModal }) {
+export default function BookingModal({ buinessId, hideModal }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState();
   const [note, setNote] = useState();
-  const user = useUser();
+  const { user } = useUser();
 
   const onDateChange = (date) => {
     setSelectedDate(date);
@@ -60,7 +61,23 @@ export default function BookingModal({ hideModal }) {
   };
 
   // create booking method
-
+  const createNewBooking = () => {
+    if (!selectedDate || !selectedTime) {
+      ToastAndroid.show("Please select date and time!", ToastAndroid.LONG);
+      return;
+    }
+    const data = {
+      userName: user?.fullName,
+      userEmail: user?.primaryEmailAddress.emailAddress,
+      date: selectedDate,
+      time: selectedTime,
+      businessId: buinessId,
+    }
+    GlobalApi.createBooking(data).then(resp => {
+      console.log("Resp", resp);
+      ToastAndroid.show("Booking created successfully!", ToastAndroid.LONG);
+    })
+  }
 
   return (
     <ScrollView>
@@ -111,7 +128,7 @@ export default function BookingModal({ hideModal }) {
             onChange={(text) => setNote(text)} />
         </View>
         {/* Confirmation Button */}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => createNewBooking()}>
           <Text style={styles.confirmBtn}>Confirm and Book</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>

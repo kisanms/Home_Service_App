@@ -79,6 +79,7 @@ export default function BusinessDetailsScreen() {
         animationType='slide'
         visible={showModal}>
         <BookingModal
+          buinessId={business.id}
           hideModal={() => setShowModal(false)} />
       </Modal>
     </View>
