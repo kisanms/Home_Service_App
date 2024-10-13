@@ -1,13 +1,12 @@
-import { FlatList, StyleSheet, View, Text } from 'react-native';
+import { FlatList, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import GlobalApi from '../../utils/GlobalApi';
 import BusinessListItemSmall from '../Customer/HomeScreen/BusinessListItemSmall';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'; // For responsive sizing
-import Heading from '../../app/Components/Heading';
 import { useNavigation } from '@react-navigation/native';
 
-export default function AllBusinessListing() {
+export default function AllBusinessListing({ business }) {
   const navigation = useNavigation();
   const [businessList, setBusinessList] = useState([]);
 
@@ -35,9 +34,13 @@ export default function AllBusinessListing() {
         keyExtractor={(item, index) => index.toString()} // Ensure each item has a unique key
         contentContainerStyle={styles.listContent} // Apply responsive content style
         renderItem={({ item }) => (
-          <View style={styles.itemContainer}>
-            <BusinessListItemSmall business={item} />
-          </View>
+          <TouchableOpacity
+            onPress={() => navigation.push('business-detail', { business: item })} // Pass the selected business data
+          >
+            <View style={styles.itemContainer}>
+              <BusinessListItemSmall business={item} />
+            </View>
+          </TouchableOpacity>
         )}
         showsVerticalScrollIndicator={false} // Hide vertical scroll indicator for cleaner look
       />
