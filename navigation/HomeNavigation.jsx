@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from '../screens/Customer/HomeScreen/HomeScreen';
 import BusinessListByCategoryScreen from '../screens/BusinessListByCategoryScreen/BusinessListByCategoryScreen';
 import BusinessDetailsScreen from '../screens/BusinessDetailsScreen/BusinessDetailsScreen';
+import AllBusinessListing from '../screens/BusinessDetailsScreen/AllBusinessListing';
 
 LogBox.ignoreLogs(["Found screens with the same name nested inside one another. Check:"]);
 const Stack = createStackNavigator();
@@ -14,6 +15,7 @@ export default function HomeNavigation() {
       <Stack.Screen name='Home' component={HomeScreen} />
       <Stack.Screen name='business-list' component={BusinessListByCategoryScreen} />
       <Stack.Screen name='business-detail' component={BusinessDetailsScreen} />
+      <Stack.Screen name='all-business-detail' component={AllBusinessListing} />
     </Stack.Navigator>
   )
 }

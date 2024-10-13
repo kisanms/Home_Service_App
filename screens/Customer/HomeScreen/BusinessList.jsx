@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import Heading from '../../../app/Components/Heading'
 import GlobalApi from '../../../utils/GlobalApi';
 import BusinessListItemSmall from './BusinessListItemSmall';
+import { useNavigation } from '@react-navigation/native';
 
 export default function BusinessList() {
+  const navigation = useNavigation();
   const [businessList, setBusinessList] = useState([]);
   useEffect(() => {
     getBusinessList();
@@ -21,7 +23,7 @@ export default function BusinessList() {
   };
   return (
     <View style={{ marginTop: 5 }}>
-      <Heading text={"Latest Business"} isViewAll={true} />
+      <Heading text={"Latest Business"} isViewAll={true} onViewAllPress={() => navigation.navigate('all-business-detail')} />
       <FlatList
         data={businessList}
         horizontal={true}
