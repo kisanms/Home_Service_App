@@ -79,42 +79,43 @@ const getBusinessListByCategory = async (category) => {
   const result = await request(MASTER_URL, query);
   return result;
 };
-const createBooking = async (data) => {
-  const mutationQuery =
-    gql`
-    mutation createBooking {
-      createBooking(
-        data: {
-          bookingStatus: booked
-          businessList: { connect: { id: "` +
-    data.businessid +
-    `" } }
-          date: "` +
-    data.date +
-    `"
-          time: "` +
-    data.time +
-    `"
-          userEmail: "` +
-    data.userEmail +
-    `"
-          userName: "` +
-    data.userName +
-    `"
-        }
-      ) {
-        id
-      }
-      publishManyBookings
-    }
-  `;
-  const result = await request(MASTER_URL, mutationQuery);
-  return result;
-};
+// const createBooking = async (data) => {
+//   const mutationQuery =
+//     gql`
+//     mutation createBooking {
+//       createBooking(
+//         data: {
+//           bookingStatus: booked
+//           businessList: { connect: { id: "` +
+//     data.businessId +
+//     `" } }
+//           date: "` +
+//     data.date +
+//     `"
+//           time: "` +
+//     data.time +
+//     `"
+//           userEmail: "` +
+//     data.userEmail +
+//     `"
+//           userName: "` +
+//     data.userName +
+//     `"
+//         }
+//       ) {
+//         id
+//       }
+//       publishManyBookings{
+//       count
+//       }
+//     }
+//   `;
+//   const result = await request(MASTER_URL, mutationQuery);
+//   return result;
+// };
 export default {
   getSlider,
   getCategories,
   getBusinessList,
   getBusinessListByCategory,
-  createBooking,
 };

@@ -1,15 +1,17 @@
-import { StyleSheet, Text, TouchableOpacity, View, Dimensions, FlatList, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions, FlatList, TextInput, ScrollView, KeyboardAvoidingView, ToastAndroid } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CalendarPicker from "react-native-calendar-picker";
 import Color from '../../utils/Color';
 import Heading from '../../app/Components/Heading';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useUser } from '@clerk/clerk-expo';
 
 export default function BookingModal({ hideModal }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState();
   const [note, setNote] = useState();
+  const user = useUser();
 
   const onDateChange = (date) => {
     setSelectedDate(date);
@@ -19,6 +21,9 @@ export default function BookingModal({ hideModal }) {
   useEffect(() => {
     getTime(); // Fetch time slots on component mount
   }, []);
+
+
+
 
   const getTime = () => {
     const timeList = [];
@@ -53,6 +58,9 @@ export default function BookingModal({ hideModal }) {
 
     setTimeList(timeList);
   };
+
+  // create booking method
+
 
   return (
     <ScrollView>
