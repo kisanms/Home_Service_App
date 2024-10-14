@@ -18,6 +18,7 @@ export default function BusinessDetailsScreen() {
   useEffect(() => {
     if (route?.params?.business) {
       setBusiness(route.params.business);
+      // console.log(route.params.business);
     }
   }, [route]);
 
@@ -33,7 +34,11 @@ export default function BusinessDetailsScreen() {
         </TouchableOpacity>
         <Image source={{ uri: business?.images[0]?.url }} style={styles.image} />
         <View style={styles.infoContainer}>
-          <Text style={styles.businessName}>{business?.name}</Text>
+          <View style={styles.businessHeader}>
+            <Text style={styles.businessName}>{business?.name}</Text>
+            <Text style={styles.businessRate}>₹{business?.rate ? business.rate : 'Not rated'}</Text>
+          </View>
+
           <View style={styles.subContainer}>
             <Text style={styles.contactPerson}>{business?.contactPerson} 🌟</Text>
             <Text style={styles.category}>{business?.category.name}</Text>
@@ -171,5 +176,29 @@ const styles = StyleSheet.create({
     borderColor: Color.PRIMARY,
     borderRadius: wp(10),
     flex: 1,
-  }
+  },
+  businessHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between', // Ensure the name and rate are spaced apart
+    alignItems: 'center', // Align items vertically in the center
+    marginVertical: hp(1), // Vertical margin for spacing
+  },
+  businessName: {
+    fontFamily: 'outfit-bold',
+    fontSize: wp(5),
+    color: '#000',
+    flex: 1, // Allow the name to take as much space as needed
+  },
+  businessRate: {
+    color: '#000',
+    fontSize: wp(4.5),
+    fontFamily: 'outfit-medium',
+    // Optional: Add background for better contrast
+    color: Color.PRIMARY,
+    paddingHorizontal: wp(2), // Padding for spacing around the rate text
+    paddingVertical: hp(0.5), // Vertical padding to make the text block look balanced
+    borderRadius: wp(1), // Rounded corners for aesthetics
+    overflow: 'hidden', // Prevents text from overflowing
+  },
+
 });

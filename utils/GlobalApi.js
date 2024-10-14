@@ -38,6 +38,7 @@ const getBusinessList = async () => {
       businessLists {
         id
         name
+        rate
         email
         contactPerson
         category {
@@ -63,6 +64,7 @@ const getBusinessListByCategory = async (category) => {
     `"}}) {
     id
     name
+    rate
     email
     contactPerson
     category {
@@ -85,7 +87,7 @@ const createBooking = async (data) => {
     mutation createBooking {
       createBooking(
         data: {
-          bookingStatus: booked
+          bookingStatus: Booked
           businessList: { connect: { id: "` +
     data.businessId +
     `" } }

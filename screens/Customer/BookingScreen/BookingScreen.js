@@ -12,15 +12,18 @@ import BookingListItem from "../../BusinessListByCategoryScreen/BookingListItem"
 export default function BookingScreen() {
   const { user } = useUser();
   const [bookingList, setBookingList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     user && getUserBookings();
   }, [user]);
 
   const getUserBookings = () => {
+    setLoading(true); // Set loading state to true
     GlobalApi.getUserBookings(user?.primaryEmailAddress?.emailAddress)
       .then((resp) => {
         setBookingList(resp?.bookings || []); // Set an empty array if no bookings are returned
+        setLoading(false); // Set loading state to false
       })
       .catch((error) => {
         console.error("Error fetching bookings:", error);
@@ -33,6 +36,8 @@ export default function BookingScreen() {
       <FlatList
         showsVerticalScrollIndicator={false}
         data={bookingList}
+        onRefresh={() => getUserBookings()}
+        refreshing={loading}
         renderItem={({ item }) => {
           if (!item?.businessList) return null; // Skip rendering if no businessList
           return (
