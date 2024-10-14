@@ -4,8 +4,10 @@ import PageHeading from "../../../app/Components/PageHeading ";
 
 export default function BookingScreen() {
   return (
-    <View>
-      <Text>My Bookings</Text>
+    <View style={{ paddingTop: 40, padding: 10 }}>
+      <Text style={{ fontFamily: "outfit-bold", fontSize: 26 }}>
+        My Bookings
+      </Text>
     </View>
   );
 }
