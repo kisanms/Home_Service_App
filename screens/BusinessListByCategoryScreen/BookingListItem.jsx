@@ -16,11 +16,11 @@ export default function BookingListItem({ business, booking }) {
   // Function to dynamically set status color based on booking status
   const getStatusStyles = (status) => {
     switch (status) {
-      case "booked":
+      case "Booked":
         return [styles.bookingStatus, styles.booked];
-      case "inProgress":
-        return [styles.bookingStatus, styles.inProgress];
-      case "completed":
+      case "Cancelled":
+        return [styles.bookingStatus, styles.cancelled];
+      case "Completed":
         return [styles.bookingStatus, styles.completed];
       default:
         return styles.bookingStatus;
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     color: "blue",
     backgroundColor: "lightblue",
   },
-  inProgress: {
+  cancelled: {
     color: Color.PRIMARY,
     backgroundColor: Color.PRIMARY_LIGHT,
   },
