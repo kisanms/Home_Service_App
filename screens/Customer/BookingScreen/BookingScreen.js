@@ -2,11 +2,12 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import GlobalApi from "../../../utils/GlobalApi";
 import { useUser } from "@clerk/clerk-expo";
-import BusinessListItem from "../../BusinessListByCategoryScreen/BusinessListItem";
+// Update the import
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import BookingListItem from "../../BusinessListByCategoryScreen/BookingListItem";
 
 export default function BookingScreen() {
   const { user } = useUser();
@@ -30,11 +31,12 @@ export default function BookingScreen() {
     <View style={styles.container}>
       <Text style={styles.heading}>My Bookings</Text>
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={bookingList}
         renderItem={({ item }) => {
           if (!item?.businessList) return null; // Skip rendering if no businessList
           return (
-            <BusinessListItem
+            <BookingListItem // Use the new BookingListItem component
               business={item?.businessList}
               booking={{
                 id: item.id,
