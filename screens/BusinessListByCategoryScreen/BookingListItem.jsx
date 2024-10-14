@@ -106,16 +106,16 @@ const styles = StyleSheet.create({
   },
   // Specific styles for each booking status
   booked: {
-    color: "blue",
-    backgroundColor: "lightblue",
+    color: "white",
+    backgroundColor: "blue",
   },
   cancelled: {
-    color: Color.PRIMARY,
-    backgroundColor: Color.PRIMARY_LIGHT,
+    color: "white",
+    backgroundColor: "red",
   },
   completed: {
-    color: "green",
-    backgroundColor: "lightgreen",
+    color: "white",
+    backgroundColor: "green",
   },
 });
 
