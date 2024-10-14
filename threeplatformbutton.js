@@ -53,13 +53,13 @@ export default function Threeplatform() {
         <Text style={styles.buttonText}>Customer</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={[styles.button, { marginBottom: wp(15) }]}>
         <Text style={styles.buttonText}>Employee</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button}>
+      {/* <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Admin</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }
