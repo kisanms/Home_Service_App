@@ -1,9 +1,12 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import PageHeading from "../../../app/Components/PageHeading ";
 import GlobalApi from "../../../utils/GlobalApi";
 import { useUser } from "@clerk/clerk-expo";
 import BusinessListItem from "../../BusinessListByCategoryScreen/BusinessListItem";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default function BookingScreen() {
   const { user } = useUser();
@@ -24,22 +27,43 @@ export default function BookingScreen() {
   };
 
   return (
-    <View style={{ paddingTop: 40, padding: 10 }}>
-      <Text style={{ fontFamily: "outfit-bold", fontSize: 26 }}>
-        My Bookings
-      </Text>
-      <View>
-        <FlatList
-          data={bookingList}
-          renderItem={({ item }) => {
-            if (!item?.businessList) return null; // Skip rendering if no businessList
-            return <BusinessListItem business={item?.businessList} />;
-          }}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
+    <View style={styles.container}>
+      <Text style={styles.heading}>My Bookings</Text>
+      <FlatList
+        data={bookingList}
+        renderItem={({ item }) => {
+          if (!item?.businessList) return null; // Skip rendering if no businessList
+          return (
+            <BusinessListItem
+              business={item?.businessList}
+              booking={{
+                id: item.id,
+                bookingStatus: item.bookingStatus,
+                time: item.time,
+                date: item.date,
+              }}
+            />
+          );
+        }}
+        keyExtractor={(item, index) => index.toString()}
+        contentContainerStyle={styles.flatListContent}
+      />
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, // Makes the container take up full available space for scrolling
+    paddingTop: hp("4%"), // Responsive padding
+    paddingHorizontal: wp("3%"), // Responsive horizontal padding
+  },
+  heading: {
+    fontFamily: "outfit-bold",
+    fontSize: wp("6.5%"), // Responsive font size
+    marginBottom: hp("2%"), // Responsive margin below the heading
+  },
+  flatListContent: {
+    paddingBottom: hp("5%"), // Adds padding to the bottom to ensure full visibility of last item
+  },
+});

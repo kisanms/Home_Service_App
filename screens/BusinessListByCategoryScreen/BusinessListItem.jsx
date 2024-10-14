@@ -5,13 +5,22 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Color from "../../utils/Color";
 import { useNavigation } from "@react-navigation/native";
 
-export default function BusinessListItem({ business }) {
+export default function BusinessListItem({ business, booking }) {
   const navigation = useNavigation();
 
   // Check if business is null or undefined
   if (!business) {
     return null; // Return null to avoid rendering
   }
+
+  // Format date as DD/MM/YYYY
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0"); // Ensure 2 digits for day
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Ensure 2 digits for month, months are 0-indexed
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
   return (
     <TouchableOpacity
@@ -26,10 +35,16 @@ export default function BusinessListItem({ business }) {
       <View style={styles.subContainer}>
         <Text style={styles.contactPerson}>{business?.contactPerson}</Text>
         <Text style={styles.businessName}>{business?.name}</Text>
-        <Text style={styles.address}>
-          <Ionicons name="location-sharp" size={wp("4%")} color={Color.PRIMARY} />
-          {business?.address}
-        </Text>
+
+        {/* Render bookingStatus, time, and date */}
+        {booking?.bookingStatus && (
+          <Text style={styles.bookingStatus}>{booking.bookingStatus}</Text>
+        )}
+        {booking?.date && booking?.time && (
+          <Text style={styles.bookingDateTime}>
+            {formatDate(booking.date)} at {booking.time}
+          </Text>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -62,9 +77,23 @@ const styles = StyleSheet.create({
     fontFamily: "outfit-bold",
     fontSize: wp("4.5%"),
   },
-  address: {
+  bookingStatus: {
+    fontFamily: "outfit-bold", // Make the font bold for emphasis
+    color: Color.PRIMARY, // Primary color for the text
+    backgroundColor: Color.PRIMARY_LIGHT, // Light background to contrast with the text
+    fontSize: wp("3.5%"), // Responsive font size
+    paddingVertical: hp("0.5%"), // Vertical padding for better spacing
+    paddingHorizontal: wp("3%"), // Horizontal padding to create space around the text
+    borderRadius: wp("2%"), // Rounded corners for a more elegant look
+    borderColor: Color.PRIMARY, // Adding a border of the same color
+    borderWidth: 1, // Define the width of the border
+    textAlign: "center", // Center the text within the element
+    alignSelf: "flex-start", // Align the status to the start of the container
+
+  },
+  bookingDateTime: {
     fontFamily: "outfit",
+    fontSize: wp("3.5%"), // Same font size for consistency
     color: "gray",
-    fontSize: wp("3.5%"),
   },
 });
