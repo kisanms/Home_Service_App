@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Threeplatform from "../threeplatformbutton";
 import CustomerSignIn from "../screens/Customer/LoginScreen/CustomerSignIn";
 import HomeScreen from "../screens/Customer/HomeScreen/HomeScreen";
+import ContactScreen from "../screens/Customer/ProfileScreen/ContactScreen";
 
 const Stack = createStackNavigator();
 
