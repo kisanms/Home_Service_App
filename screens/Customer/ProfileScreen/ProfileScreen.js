@@ -12,7 +12,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useUser } from "@clerk/clerk-expo";
+import { useUser, useClerk } from "@clerk/clerk-expo"; // Use useClerk hook
 import { LinearGradient } from "expo-linear-gradient";
 import Color from "../../../utils/Color";
 
@@ -21,6 +21,7 @@ const { width } = Dimensions.get("window");
 export default function ProfileScreen() {
   const navigation = useNavigation();
   const { user, isLoading } = useUser();
+  const { signOut } = useClerk(); // Access signOut from useClerk hook
 
   if (isLoading) {
     return <Text>Loading...</Text>;
@@ -74,7 +75,10 @@ export default function ProfileScreen() {
             <Text style={styles.menuText}>Contact Us</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem} onPress={() => signOut()}>
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => signOut()} // Use signOut function here
+          >
             <Ionicons name="log-out" size={wp(6)} color={Color.PRIMARY} />
             <Text style={styles.menuText}>Logout</Text>
           </TouchableOpacity>
