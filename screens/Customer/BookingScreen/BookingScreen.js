@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
+  ToastAndroid, // Import ToastAndroid
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import GlobalApi from "../../../utils/GlobalApi";
@@ -79,6 +80,9 @@ export default function BookingScreen() {
         );
         setBookingList(updatedBookings);
         setFeedbackModalVisible(false);
+
+        // Show a success toast
+        ToastAndroid.show("Feedback submitted!", ToastAndroid.SHORT);
       })
       .catch((error) => {
         console.error("Error submitting feedback:", error);
