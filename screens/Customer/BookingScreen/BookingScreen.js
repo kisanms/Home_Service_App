@@ -26,7 +26,6 @@ export default function BookingScreen() {
   const [bookingList, setBookingList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
-  const [businessName, setBusinessName] = useState(""); // New state for business name
   const [feedback, setFeedback] = useState({ rating: 0, note: "" });
   const [isFeedbackModalVisible, setFeedbackModalVisible] = useState(false);
 
@@ -49,7 +48,6 @@ export default function BookingScreen() {
 
   const openFeedbackModal = (booking) => {
     setSelectedBooking(booking);
-    setBusinessName(booking?.businessList?.name || ""); // Set business name
     setFeedback({
       rating: booking?.feedback?.rating || 0,
       note: booking?.feedback?.note || "",
@@ -126,9 +124,6 @@ export default function BookingScreen() {
           <View style={styles.modalContent}>
             <Text style={styles.modalHeading}>Give Feedback</Text>
 
-            {/* Display Business Name */}
-            <Text style={styles.businessName}>{businessName}</Text>
-
             {/* Star Rating */}
             <View style={styles.starContainer}>
               {[1, 2, 3, 4, 5].map((star) => (
@@ -203,12 +198,6 @@ const styles = StyleSheet.create({
     fontSize: wp("6%"),
     marginBottom: hp("2%"),
     fontFamily: "outfit-bold",
-  },
-  businessName: {
-    fontSize: wp("5%"),
-    fontWeight: "bold",
-    marginBottom: hp("2%"),
-    color: "#333",
   },
   starContainer: {
     flexDirection: "row",
