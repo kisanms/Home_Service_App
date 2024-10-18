@@ -146,6 +146,72 @@ const getUserBookings = async (userEmail) => {
   const result = await request(MASTER_URL, query);
   return result;
 };
+const submitFeedback = async (feedbackData) => {
+  // Mutation to create feedback
+  const createFeedbackMutation = gql`
+    mutation SubmitFeedback(
+      $rating: Int!
+      $note: String!
+      $bookingId: ID!
+      $userId: String
+    ) {
+      createFeedback(
+        data: {
+          rating: $rating
+          note: $note
+          booking: { connect: { id: $bookingId } }
+          userId: $userId
+        }
+      ) {
+        id
+        rating
+        note
+      }
+    }
+  `;
+
+  const variables = {
+    rating: feedbackData.rating,
+    note: feedbackData.note,
+    bookingId: feedbackData.bookingId,
+    userId: feedbackData.userId,
+  };
+
+  try {
+    // Create feedback first
+    const createResult = await request(
+      MASTER_URL,
+      createFeedbackMutation,
+      variables
+    );
+
+    const feedbackId = createResult.createFeedback.id;
+
+    // Mutation to publish feedback
+    const publishFeedbackMutation = gql`
+      mutation PublishFeedback($id: ID!) {
+        publishFeedback(where: { id: $id }, to: PUBLISHED) {
+          id
+          stage
+        }
+      }
+    `;
+
+    // Publish the created feedback
+    const publishVariables = { id: feedbackId };
+    const publishResult = await request(
+      MASTER_URL,
+      publishFeedbackMutation,
+      publishVariables
+    );
+
+    return publishResult;
+  } catch (error) {
+    console.error("Error submitting feedback:", error);
+    throw new Error("Failed to submit feedback");
+  }
+};
+
 export default {
   getSlider,
   getCategories,
@@ -153,4 +219,5 @@ export default {
   getBusinessListByCategory,
   createBooking,
   getUserBookings,
+  submitFeedback,
 };
