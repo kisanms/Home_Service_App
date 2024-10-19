@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { useFonts } from 'expo-font';
+import { useFonts } from "expo-font";
 import * as SecureStore from "expo-secure-store";
 import SplashScreen from "./SplashScreenView";
 import Navigate from "./navigation/navigate";
@@ -47,16 +47,16 @@ if (!publishableKey) {
 
 export default function App() {
   const [loaded, error] = useFonts({
-    'outfit': require('./assets/fonts/Outfit-Regular.ttf'),
-    'outfit-medium': require('./assets/fonts/Outfit-Medium.ttf'),
-    'outfit-bold': require('./assets/fonts/Outfit-Bold.ttf'),
+    outfit: require("./assets/fonts/Outfit-Regular.ttf"),
+    "outfit-medium": require("./assets/fonts/Outfit-Medium.ttf"),
+    "outfit-bold": require("./assets/fonts/Outfit-Bold.ttf"),
   });
   const [isShowSplash, setIsShowSplash] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsShowSplash(false);
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
