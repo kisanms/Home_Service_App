@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Dimensions,
   ToastAndroid,
-} from "react-native";
+} from 'react-native';
 import React, { useState } from "react";
 import GlobalApi from "../../utils/GlobalApi";
 import {
