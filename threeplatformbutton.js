@@ -53,10 +53,7 @@ export default function Threeplatform() {
         <Text style={styles.buttonText}>Customer</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        style={[styles.button, { marginBottom: wp(15) }]}
-        onPress={() => navigation.navigate("EmployeeSignIn")}
-      >
+      <TouchableOpacity style={[styles.button, { marginBottom: wp(15) }]}>
         <Text style={styles.buttonText}>Employee</Text>
       </TouchableOpacity>
 

@@ -154,6 +154,7 @@ const submitFeedback = async (feedbackData) => {
       $note: String!
       $bookingId: ID!
       $userId: String
+      $userEmail: String!
     ) {
       createFeedback(
         data: {
@@ -161,11 +162,13 @@ const submitFeedback = async (feedbackData) => {
           note: $note
           booking: { connect: { id: $bookingId } }
           userId: $userId
+          userEmail: $userEmail
         }
       ) {
         id
         rating
         note
+        userEmail
       }
     }
   `;
@@ -175,6 +178,7 @@ const submitFeedback = async (feedbackData) => {
     note: feedbackData.note,
     bookingId: feedbackData.bookingId,
     userId: feedbackData.userId,
+    userEmail: feedbackData.userEmail,
   };
 
   try {
