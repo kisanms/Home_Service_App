@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Platform,
+  KeyboardAvoidingView,
+  ScrollView,
 } from "react-native";
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -17,68 +19,70 @@ import {
 
 const { height } = Dimensions.get("window");
 
-export default function LoginPage() {
+export default function LoginPage({ navigation }) {
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          source={require("../../../assets/images/login2.jpg")}
-        />
-      </View>
-      <View style={styles.loginContainer}>
-        <Text style={styles.text_header}>Login !!!</Text>
-        <View style={styles.action}>
-          <FontAwesome name="user-o" color="#FF5722" style={styles.smallIcon} />
-          <TextInput placeholder="Mobile or Email" style={styles.textInput} />
-        </View>
-        <View style={styles.action}>
-          <FontAwesome name="lock" color="#FF5722" style={styles.smallIcon} />
-          <TextInput
-            placeholder="Password"
-            secureTextEntry={true}
-            style={styles.textInput}
-          />
-        </View>
-        <View style={styles.forgotPasswordContainer}>
-          <Text style={styles.forgotPasswordText}>Forgot Password</Text>
-        </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.inBut}>
-          <Text style={styles.textSign}>Log in</Text>
+    <KeyboardAvoidingView
+      style={styles.mainContainer}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+        {/* Back Arrow Icon */}
+        <TouchableOpacity
+          style={styles.backArrow}
+          onPress={() => navigation.goBack()} // Navigates back on press
+        >
+          <FontAwesome name="arrow-left" size={wp(6)} color="#000" />
         </TouchableOpacity>
 
-        <Text style={styles.orText}>----Or Continue as----</Text>
-
-        <View style={styles.bottomButtonContainer}>
-          {[
-            { name: "Sign Up", icon: "user-plus", onPress: () => {} },
-            {
-              name: "Google",
-              icon: "google",
-              onPress: () => alert("Coming Soon"),
-            },
-            {
-              name: "Facebook",
-              icon: "facebook-f",
-              onPress: () => alert("Coming Soon"),
-            },
-          ].map((item, index) => (
-            <View key={index} style={styles.bottomButtonItem}>
-              <TouchableOpacity style={styles.inBut2}>
-                <FontAwesome
-                  name={item.icon}
-                  color="white"
-                  style={styles.smallIcon2}
-                />
-              </TouchableOpacity>
-              <Text style={styles.bottomText}>{item.name}</Text>
-            </View>
-          ))}
+        <View style={styles.logoContainer}>
+          <Image
+            style={styles.logo}
+            source={require("../../../assets/images/login2.jpg")}
+          />
         </View>
-      </View>
-    </View>
+
+        <View style={styles.loginContainer}>
+          <Text style={styles.text_header}>Login !!!</Text>
+          <View style={styles.action}>
+            <FontAwesome
+              name="user-o"
+              color="#FF5722"
+              style={styles.smallIcon}
+            />
+            <TextInput placeholder="Mobile or Email" style={styles.textInput} />
+          </View>
+          <View style={styles.action}>
+            <FontAwesome name="lock" color="#FF5722" style={styles.smallIcon} />
+            <TextInput
+              placeholder="Password"
+              secureTextEntry={true}
+              style={styles.textInput}
+            />
+          </View>
+          <View style={styles.forgotPasswordContainer}>
+            <Text style={styles.forgotPasswordText}>Forgot Password</Text>
+          </View>
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.inBut}>
+            <Text style={styles.textSign}>Log in</Text>
+          </TouchableOpacity>
+
+          <View style={styles.bottomButtonContainer}>
+            <TouchableOpacity
+              style={styles.registerContainer}
+              onPress={() => {}}
+            >
+              <Text style={styles.notEmployeeText}>
+                Not an employee{" "}
+                <Text style={styles.registerText}>Register</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -87,23 +91,32 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
+  scrollViewContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
+  backArrow: {
+    position: "absolute",
+    top: Platform.OS === "ios" ? hp(5) : hp(3), // Adjust for iOS/Android
+    left: wp(5),
+    zIndex: 1, // Ensures it's on top of other elements
+  },
   logoContainer: {
     justifyContent: "center",
     alignItems: "center",
     marginTop: hp(5),
   },
   logo: {
-    height: hp(30),
-    width: wp(60),
+    height: hp(40),
+    width: wp(80),
     resizeMode: "contain",
-    borderRadius: wp(5), // Adding some border radius for softer edges
+    borderRadius: wp(5),
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3, // Adding shadow to give it depth
+    shadowOpacity: 0.3,
     shadowRadius: 4,
-    elevation: 5, // For Android shadow effect
+    elevation: 5,
   },
-
   text_header: {
     color: "#FF5722",
     fontWeight: "bold",
@@ -164,37 +177,20 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
   },
-  orText: {
-    fontSize: wp(4),
-    fontWeight: "bold",
-    color: "#919191",
-    marginVertical: hp(2),
-  },
   bottomButtonContainer: {
-    width: wp(90),
-    flexDirection: "row",
-    justifyContent: "space-between",
+    alignItems: "center",
     marginTop: hp(2),
   },
-  bottomButtonItem: {
-    alignItems: "center",
-    justifyContent: "center",
+  registerContainer: {
+    marginVertical: hp(2),
   },
-  inBut2: {
-    backgroundColor: "#FF5722",
-    height: wp(16),
-    width: wp(16),
-    borderRadius: wp(4),
-    justifyContent: "center",
-    alignItems: "center",
+  notEmployeeText: {
+    fontSize: wp(4),
+    color: "#919191",
+    fontWeight: "bold",
   },
-  smallIcon2: {
-    fontSize: wp(7),
-  },
-  bottomText: {
-    color: "black",
-    fontSize: wp(3.5),
-    fontWeight: "600",
-    marginTop: hp(1),
+  registerText: {
+    color: "#0000FF",
+    fontWeight: "bold",
   },
 });
