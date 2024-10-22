@@ -31,7 +31,7 @@ export default function LoginPage({ navigation }) {
           style={styles.backArrow}
           onPress={() => navigation.goBack()} // Navigates back on press
         >
-          <FontAwesome name="arrow-left" size={wp(6)} color="#000" />
+          <FontAwesome name="arrow-left" size={wp(8)} color="#000" />
         </TouchableOpacity>
 
         <View style={styles.logoContainer}>
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     top: Platform.OS === "ios" ? hp(5) : hp(3), // Adjust for iOS/Android
     left: wp(5),
     zIndex: 1, // Ensures it's on top of other elements
+    paddingTop: 20,
   },
   logoContainer: {
     justifyContent: "center",
