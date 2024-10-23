@@ -6,6 +6,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useState } from "react";
 import { RadioButton } from "react-native-paper";
@@ -33,134 +34,172 @@ export default function Register() {
 
   const navigation = useNavigation(); // For handling back navigation
 
+  function handleName(e) {
+    const nameVar = e.nativeEvent.text;
+    setName(nameVar);
+    setNameVerify(false);
+
+    if (nameVar.length > 1) {
+      setNameVerify(true);
+    }
+  }
+  function handleEmail(e) {
+    const emailVar = e.nativeEvent.text;
+    setEmail(emailVar);
+    setEmailVerify(false);
+    if (/^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/.test(emailVar)) {
+      setEmail(emailVar);
+      setEmailVerify(true);
+    }
+  }
+  function handleMobile(e) {
+    const mobileVar = e.nativeEvent.text;
+    setMobile(mobileVar);
+    setMobileVerify(false);
+    if (/[6-9]{1}[0-9]{9}/.test(mobileVar)) {
+      setMobile(mobileVar);
+      setMobileVerify(true);
+    }
+  }
+  function handlePassword(e) {
+    const passwordVar = e.nativeEvent.text;
+    setPassword(passwordVar);
+    setPasswordVerify(false);
+    if (/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(passwordVar)) {
+      setPassword(passwordVar);
+      setPasswordVerify(true);
+    }
+  }
   return (
-    <ScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
-      showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps={"always"}
-      style={{ backgroundColor: "white" }}
-    >
-      <View style={styles.mainContainer}>
-        {/* Logo */}
-        <View style={styles.logoContainer}>
-          <Image
-            style={styles.logo}
-            source={require("../../../assets/images/register.jpg")}
-          />
-        </View>
-
-        {/* Form Container */}
-        <View style={styles.formContainer}>
-          <Text style={styles.textHeader}>Register</Text>
-
-          {/* Name Input */}
-          <View style={styles.inputContainer}>
-            <FontAwesome name="user-o" color="#FF5722" style={styles.icon} />
-            <TextInput
-              placeholder="Name"
-              style={styles.textInput}
-              onChange={(e) => setName(e.nativeEvent.text)}
+    <KeyboardAvoidingView>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps={"always"}
+        style={{ backgroundColor: "white" }}
+      >
+        <View style={styles.mainContainer}>
+          {/* Logo */}
+          <View style={styles.logoContainer}>
+            <Image
+              style={styles.logo}
+              source={require("../../../assets/images/register.jpg")}
             />
-            {name.length > 0 &&
-              (nameVerify ? (
-                <Feather name="check-circle" color="green" size={20} />
-              ) : (
-                <Feather name="x-circle" color="red" size={20} />
-              ))}
           </View>
-          {name.length > 0 && !nameVerify && (
-            <Text style={styles.errorText}>
-              Name should be more than 1 character.
-            </Text>
-          )}
 
-          {/* Email Input */}
-          <View style={styles.inputContainer}>
-            <Fontisto name="email" color="#FF5722" style={styles.icon} />
-            <TextInput
-              placeholder="Email"
-              style={styles.textInput}
-              onChange={(e) => setEmail(e.nativeEvent.text)}
-            />
-            {email.length > 0 &&
-              (emailVerify ? (
-                <Feather name="check-circle" color="green" size={20} />
-              ) : (
-                <Feather name="x-circle" color="red" size={20} />
-              ))}
-          </View>
-          {email.length > 0 && !emailVerify && (
-            <Text style={styles.errorText}>Enter a valid email address.</Text>
-          )}
+          {/* Form Container */}
+          <View style={styles.formContainer}>
+            <Text style={styles.textHeader}>Register !!!</Text>
 
-          {/* Mobile Input */}
-          <View style={styles.inputContainer}>
-            <FontAwesome
-              name="mobile"
-              color="#FF5722"
-              size={30}
-              style={styles.icon}
-            />
-            <TextInput
-              placeholder="Mobile"
-              style={styles.textInput}
-              onChange={(e) => setMobile(e.nativeEvent.text)}
-              maxLength={10}
-            />
-            {mobile.length > 0 &&
-              (mobileVerify ? (
-                <Feather name="check-circle" color="green" size={20} />
-              ) : (
-                <Feather name="x-circle" color="red" size={20} />
-              ))}
-          </View>
-          {mobile.length > 0 && !mobileVerify && (
-            <Text style={styles.errorText}>Mobile number must be valid.</Text>
-          )}
-
-          {/* Password Input */}
-          <View style={styles.inputContainer}>
-            <FontAwesome name="lock" color="#FF5722" style={styles.icon} />
-            <TextInput
-              placeholder="Password"
-              style={styles.textInput}
-              onChange={(e) => setPassword(e.nativeEvent.text)}
-              secureTextEntry={!showPassword}
-            />
-            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-              <Feather
-                name={showPassword ? "eye" : "eye-off"}
-                color={passwordVerify ? "green" : "red"}
-                size={20}
+            {/* Name Input */}
+            <View style={styles.inputContainer}>
+              <FontAwesome name="user-o" color="#FF5722" style={styles.icon} />
+              <TextInput
+                placeholder="Name"
+                style={styles.textInput}
+                onChange={(e) => handleName(e)}
               />
+              {name.length < 1 ? null : nameVerify ? (
+                <Feather name="check-circle" color="green" size={20} />
+              ) : (
+                <Feather name="x-circle" color="red" size={20} />
+              )}
+            </View>
+            {name.length < 1 ? null : nameVerify ? null : (
+              <Text style={styles.errorText}>
+                Name should be more than 1 character.
+              </Text>
+            )}
+
+            {/* Email Input */}
+            <View style={styles.inputContainer}>
+              <Fontisto name="email" color="#FF5722" style={styles.icon} />
+              <TextInput
+                placeholder="Email"
+                style={styles.textInput}
+                onChange={(e) => handleEmail(e)}
+              />
+              {email.length > 0 &&
+                (emailVerify ? (
+                  <Feather name="check-circle" color="green" size={20} />
+                ) : (
+                  <Feather name="x-circle" color="red" size={20} />
+                ))}
+            </View>
+            {email.length > 0 && !emailVerify && (
+              <Text style={styles.errorText}>Enter a valid email address.</Text>
+            )}
+
+            {/* Mobile Input */}
+            <View style={styles.inputContainer}>
+              <FontAwesome
+                name="mobile"
+                color="#FF5722"
+                size={30}
+                style={styles.icon}
+              />
+              <TextInput
+                placeholder="Mobile"
+                style={styles.textInput}
+                onChange={(e) => handleMobile(e)}
+                maxLength={10}
+              />
+              {mobile.length > 0 &&
+                (mobileVerify ? (
+                  <Feather name="check-circle" color="green" size={20} />
+                ) : (
+                  <Feather name="x-circle" color="red" size={20} />
+                ))}
+            </View>
+            {mobile.length > 0 && !mobileVerify && (
+              <Text style={styles.errorText}>Mobile number must be valid.</Text>
+            )}
+
+            {/* Password Input */}
+            <View style={styles.inputContainer}>
+              <FontAwesome name="lock" color="#FF5722" style={styles.icon} />
+              <TextInput
+                placeholder="Password"
+                style={styles.textInput}
+                onChange={(e) => handlePassword(e)}
+                secureTextEntry={!showPassword}
+              />
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                <Feather
+                  name={showPassword ? "eye" : "eye-off"}
+                  color={passwordVerify ? "green" : "red"}
+                  size={20}
+                />
+              </TouchableOpacity>
+            </View>
+            {password.length > 0 && !passwordVerify && (
+              <Text style={styles.errorText}>
+                Password must contain uppercase, lowercase, numbers, and be 6 or
+                more characters.
+              </Text>
+            )}
+          </View>
+
+          {/* Register Button */}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
           </View>
-          {password.length > 0 && !passwordVerify && (
-            <Text style={styles.errorText}>
-              Password must contain uppercase, lowercase, numbers, and be 6 or
-              more characters.
-            </Text>
-          )}
+          <View style={styles.bottomButtonContainer}>
+            <TouchableOpacity
+              style={styles.registerContainer}
+              onPress={() => navigation.goBack()}
+            >
+              <Text style={styles.notEmployeeText}>
+                Already an employee{" "}
+                <Text style={styles.registerText}>Login</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-
-        {/* Register Button */}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Register</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.bottomButtonContainer}>
-          <TouchableOpacity
-            style={styles.registerContainer}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.notEmployeeText}>
-              Already an employee <Text style={styles.registerText}>Login</Text>
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -218,6 +257,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     color: "#05375a",
+    fontFamily: "outfit",
   },
   icon: {
     marginRight: wp("3%"),
@@ -237,6 +277,7 @@ const styles = StyleSheet.create({
     fontSize: hp("2.5%"),
     fontWeight: "bold",
     color: "white",
+    fontFamily: "outfit",
   },
   errorText: {
     marginLeft: wp("5%"),

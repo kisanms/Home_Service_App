@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   widthPercentageToDP as wp,
@@ -22,6 +22,8 @@ const { height } = Dimensions.get("window");
 
 export default function LoginPage() {
   const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <KeyboardAvoidingView
       style={styles.mainContainer}
@@ -148,6 +150,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: "#05375a",
     fontSize: wp(4),
+    fontFamily: "outfit",
   },
   smallIcon: {
     marginRight: wp(3),
