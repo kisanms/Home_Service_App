@@ -16,10 +16,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/native";
 
 const { height } = Dimensions.get("window");
 
-export default function LoginPage({ navigation }) {
+export default function LoginPage() {
+  const navigation = useNavigation();
   return (
     <KeyboardAvoidingView
       style={styles.mainContainer}
@@ -72,7 +74,7 @@ export default function LoginPage({ navigation }) {
           <View style={styles.bottomButtonContainer}>
             <TouchableOpacity
               style={styles.registerContainer}
-              onPress={() => {}}
+              onPress={() => navigation.navigate("register")}
             >
               <Text style={styles.notEmployeeText}>
                 Not an employee{" "}
