@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    height: hp(45),
+    height: hp(48),
     width: wp(100),
     resizeMode: "contain",
     borderRadius: wp(5),
@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp("5%"),
     paddingVertical: hp("5%"),
     marginTop: -hp("5%"),
+    marginBottom: -hp("2%"),
   },
   textHeader: {
     color: "#FF5722",
@@ -265,6 +266,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: "center",
+    marginBottom: hp("1.3%"),
   },
   button: {
     width: wp("70%"),
