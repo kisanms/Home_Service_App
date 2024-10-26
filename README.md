@@ -37,6 +37,13 @@ Welcome to the **Home Service Application**, a comprehensive solution designed t
 
 
 <p>Home Screen with <strong>Offer Slider, Categories, Employees List</strong></p>
+<h2>5</h2>
+
+![Screenshot_20241026_203428](https://github.com/user-attachments/assets/73bf3b80-c5c3-45cf-972b-181dab79a3b4)
+
+
+
+<p>Categories List</p>
 
 
 
