@@ -41,9 +41,20 @@ Welcome to the **Home Service Application**, a comprehensive solution designed t
 
 ![Screenshot_20241026_203428](https://github.com/user-attachments/assets/73bf3b80-c5c3-45cf-972b-181dab79a3b4)
 
-
-
 <p>Categories List</p>
+<h2>6</h2>
+
+![Screenshot_20241026_203446](https://github.com/user-attachments/assets/bff131da-506f-4b3d-b3b8-798427ba73e2)
+
+
+<p>Service List</p>
+<h2>7</h2>
+
+![Screenshot_20241026_203513](https://github.com/user-attachments/assets/2fc6b32f-9daa-4530-aad5-1ae95f2fb5e7)
+
+
+
+<p>Specific Service Details</p>
 
 
 
