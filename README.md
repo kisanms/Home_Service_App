@@ -101,6 +101,39 @@ https://github.com/kisanms/Home_Service_App.git
 
 
 <p> Select date and time Details</p>
+<h2>10</h2>
+
+![Screenshot_20241026_203818](https://github.com/user-attachments/assets/efad58c4-131f-4a52-b7ac-ab4d64ea4ba5)
+
+
+
+
+
+
+<p>After confirm booking a <strong>Toast message will PopUp</strong></p>
+<h2>11</h2>
+
+![Screenshot_20241026_203832](https://github.com/user-attachments/assets/dc66dc83-0359-444e-a249-94ed42fe1761)
+
+
+
+
+
+
+
+<p>Booking Deatail</p>
+<h2>12</h2>
+
+![Screenshot_20241026_203856](https://github.com/user-attachments/assets/e058cac4-34cb-4eed-be73-876aa7f0d761)
+
+
+
+
+
+
+
+
+<p>Feedback Deatail</p>
 
 
 
