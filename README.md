@@ -8,7 +8,6 @@ Welcome to the **Home Service Application**, a comprehensive solution designed t
 - **Customer and Provider Panels**: Separate panels for customers to book services and for providers to manage their profiles and receive notifications.
 - **Secure Authentication**: Integrated with Clerk authentication for secure sign-in, sign-up, and Google OAuth.
 - **Real-time Booking and Management**: Customers can select services, set preferences, and schedule appointments.
-- **Push Notifications**: Notifications for service providers when they receive a booking request.
 - **Responsive Design**: Adaptable to various screen sizes for a consistent experience across devices.
 - **Hygraph Integration**: Data storage and real-time updates powered by Graphql.
 - **Service Categories**: Multiple service categories with detailed information and images.
@@ -39,7 +38,8 @@ In the output, you'll find options to open the app in a
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
 
-Copy the code by github
+Copy the code by GitHub
+https://github.com/kisanms/Home_Service_App.git
 
 
 
@@ -84,6 +84,23 @@ Copy the code by github
 
 
 <p>Specific Service Details</p>
+<h2>8</h2>
+
+![Screenshot_20241026_203534](https://github.com/user-attachments/assets/02c50f0f-304b-4005-86d5-c8c13082a4bd)
+
+
+
+
+<p> Employee Details</p>
+<h2>9</h2>
+
+![Screenshot_20241026_203751](https://github.com/user-attachments/assets/1332ff01-22c0-40d8-ab88-42268b3fcfff)
+
+
+
+
+
+<p> Select date and time Details</p>
 
 
 
