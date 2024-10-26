@@ -133,7 +133,43 @@ https://github.com/kisanms/Home_Service_App.git
 
 
 
-<p>Feedback Deatail</p>
+<p>Feedback Detail</p>
+<h2>13</h2>
+
+![Screenshot_20241026_203917](https://github.com/user-attachments/assets/333dfbc3-c577-4984-8849-882f23eb78aa)
+
+
+
+
+
+
+
+
+<p>Profile Detail</p>
+<h2>14</h2>
+
+![Screenshot_20241026_203942](https://github.com/user-attachments/assets/59174307-13f2-44fc-a24c-381638fd5e53)
+
+
+
+
+
+
+
+
+
+<p>Employee Login</p>
+<h2>15</h2>
+
+![Screenshot_20241026_203957](https://github.com/user-attachments/assets/49ea41a4-3583-439c-aa33-83ea2833ec12)
+
+
+
+
+
+
+
+<p>Employee Register</p>
 
 
 
