@@ -163,13 +163,16 @@ https://github.com/kisanms/Home_Service_App.git
 
 ![Screenshot_20241026_203957](https://github.com/user-attachments/assets/49ea41a4-3583-439c-aa33-83ea2833ec12)
 
-
-
-
-
-
-
 <p>Employee Register</p>
+<h2>Database</h2>
+
+![image](https://github.com/user-attachments/assets/084abaf8-dd4a-4326-a608-53948ddc7995)  
+![image](https://github.com/user-attachments/assets/7dc2ebb5-f4d8-4056-8922-c6862df96f03)
+![image](https://github.com/user-attachments/assets/d091751d-dca1-456b-bdd0-16ab05fef558)
+![image](https://github.com/user-attachments/assets/fb66116e-58f5-4626-b711-044b230bbffc)
+![image](https://github.com/user-attachments/assets/1681726b-3eac-45c5-bde3-d68dc7babf83)
+
+
 
 
 
