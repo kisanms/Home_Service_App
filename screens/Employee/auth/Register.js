@@ -34,19 +34,22 @@ export default function Register() {
   const [secretText, setSecretText] = useState("");
 
   const navigation = useNavigation(); // For handling back navigation
-  function handelSubmit() {
+  function handleSubmit() {
+    // Check if any field is empty
+    if (!name || !email || !mobile || !password) {
+      return Alert.alert("Error", "All fields are required!");
+    }
+
+    // If all validations pass, create userData object
     const userData = {
-      name: name,
+      name,
       email,
       mobile,
       password,
       userType,
     };
 
-    if (userType == "Admin" && secretText != "Text1243") {
-      return Alert.alert("Invalid Admin");
-    }
-
+    // Make the registration request
     axios
       .post("http://192.168.230.179:5001/register", userData)
       .then((res) => {
@@ -228,7 +231,7 @@ export default function Register() {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => handelSubmit()}
+              onPress={() => handleSubmit()}
             >
               <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
