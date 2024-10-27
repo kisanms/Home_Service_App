@@ -7,9 +7,9 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
-import { RadioButton } from "react-native-paper";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import Feather from "@expo/vector-icons/Feather";
@@ -18,6 +18,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen"; // For responsive design
+import axios from "axios";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -33,6 +34,45 @@ export default function Register() {
   const [secretText, setSecretText] = useState("");
 
   const navigation = useNavigation(); // For handling back navigation
+  function handelSubmit() {
+    const userData = {
+      name: name,
+      email,
+      mobile,
+      password,
+      userType,
+    };
+
+    if (userType == "Admin" && secretText != "Text1243") {
+      return Alert.alert("Invalid Admin");
+    }
+
+    axios
+      .post("http://192.168.230.179:5001/register", userData)
+      .then((res) => {
+        console.log(res.data);
+
+        if (res.data.status === "success") {
+          Alert.alert("Registration Successful!", "User has been registered.");
+          // Clear input fields after successful registration
+          setName("");
+          setEmail("");
+          setMobile("");
+          setPassword("");
+          setUserType("");
+          setSecretText("");
+
+          // Navigate to Login screen
+          navigation.navigate("login");
+        } else {
+          Alert.alert("Error", res.data.data || "Registration failed.");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        Alert.alert("Error", "Something went wrong. Please try again later.");
+      });
+  }
 
   function handleName(e) {
     const nameVar = e.nativeEvent.text;
@@ -97,6 +137,7 @@ export default function Register() {
               <TextInput
                 placeholder="Name"
                 style={styles.textInput}
+                value={name}
                 onChange={(e) => handleName(e)}
               />
               {name.length < 1 ? null : nameVerify ? (
@@ -116,6 +157,7 @@ export default function Register() {
               <Fontisto name="email" color="#FF5722" style={styles.icon} />
               <TextInput
                 placeholder="Email"
+                value={email}
                 style={styles.textInput}
                 onChange={(e) => handleEmail(e)}
               />
@@ -140,6 +182,7 @@ export default function Register() {
               />
               <TextInput
                 placeholder="Mobile"
+                value={mobile}
                 style={styles.textInput}
                 onChange={(e) => handleMobile(e)}
                 maxLength={10}
@@ -160,6 +203,7 @@ export default function Register() {
               <FontAwesome name="lock" color="#FF5722" style={styles.icon} />
               <TextInput
                 placeholder="Password"
+                value={password}
                 style={styles.textInput}
                 onChange={(e) => handlePassword(e)}
                 secureTextEntry={!showPassword}
@@ -182,7 +226,10 @@ export default function Register() {
 
           {/* Register Button */}
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handelSubmit()}
+            >
               <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
           </View>
@@ -266,7 +313,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: "center",
-    marginBottom: hp("1.3%"),
   },
   button: {
     width: wp("70%"),
@@ -291,7 +337,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   registerContainer: {
-    marginVertical: hp(1),
+    marginVertical: hp(2),
   },
   notEmployeeText: {
     fontSize: wp(4),
