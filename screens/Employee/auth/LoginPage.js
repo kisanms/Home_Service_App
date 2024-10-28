@@ -53,7 +53,11 @@ export default function LoginPage() {
               color="#FF5722"
               style={styles.smallIcon}
             />
-            <TextInput placeholder="Mobile or Email" style={styles.textInput} />
+            <TextInput
+              placeholder="Mobile or Email"
+              style={styles.textInput}
+              onChange={(e) => setEmail(e.nativeEvent.text)}
+            />
           </View>
           <View style={styles.action}>
             <FontAwesome name="lock" color="#FF5722" style={styles.smallIcon} />
@@ -61,6 +65,7 @@ export default function LoginPage() {
               placeholder="Password"
               secureTextEntry={true}
               style={styles.textInput}
+              onChange={(e) => setPassword(e.nativeEvent.text)}
             />
           </View>
           <View style={styles.forgotPasswordContainer}>
