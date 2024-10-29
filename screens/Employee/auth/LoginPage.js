@@ -9,6 +9,7 @@ import {
   Platform,
   KeyboardAvoidingView,
   ScrollView,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -17,6 +18,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { height } = Dimensions.get("window");
 
@@ -24,12 +27,39 @@ export default function LoginPage() {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  function handleSubmit() {
+    console.log(email, password);
+    const userData = {
+      email: email,
+      password,
+    };
+    axios
+      .post("http://192.168.230.179:5001/login-user", userData)
+      .then((res) => {
+        console.log(res.data); // Check what the response contains
+        if (res.data.status == "ok") {
+          Alert.alert("Login successful");
+          AsyncStorage.setItem("token", res.data.data);
+          navigation.navigate("emphome");
+        } else {
+          Alert.alert("Login failed", "Please check your credentials");
+        }
+      })
+      .catch((error) => {
+        console.error("Error occurred during login:", error);
+        Alert.alert("Error", "An error occurred. Please try again.");
+      });
+  }
   return (
     <KeyboardAvoidingView
       style={styles.mainContainer}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContainer}
+        keyboardShouldPersistTaps={"always"}
+      >
         {/* Back Arrow Icon */}
         <TouchableOpacity
           style={styles.backArrow}
@@ -74,7 +104,7 @@ export default function LoginPage() {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.inBut}>
+          <TouchableOpacity style={styles.inBut} onPress={() => handleSubmit()}>
             <Text style={styles.textSign}>Log in</Text>
           </TouchableOpacity>
 

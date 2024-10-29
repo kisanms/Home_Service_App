@@ -6,6 +6,7 @@ import CustomerSignIn from "../screens/Customer/LoginScreen/CustomerSignIn";
 import HomeScreen from "../screens/Customer/HomeScreen/HomeScreen";
 import LoginPage from "../screens/Employee/auth/LoginPage";
 import Register from "../screens/Employee/auth/Register";
+import EmpHomeScreen from "../screens/Employee/HomeScreen/EmpHomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function Navigate() {
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="login" component={LoginPage} />
         <Stack.Screen name="register" component={Register} />
+        <Stack.Screen name="emphome" component={EmpHomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
