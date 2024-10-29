@@ -27,7 +27,7 @@ export default function EmpHomeScreen() {
   async function handleLogout() {
     await AsyncStorage.removeItem('token');
     alert('Logged out successfully');
-    navigation.navigate("login")
+    navigation.navigate("login");
     // Add navigation logic here to redirect to the login screen
   }
 
@@ -73,7 +73,7 @@ export default function EmpHomeScreen() {
 
       {/* Action Buttons */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => alert('Navigating to My Profile...')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("empprofile")}>
           <Text style={styles.buttonText}>My Profile</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => alert('Navigating to Booking Details...')}>
