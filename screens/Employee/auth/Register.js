@@ -19,6 +19,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen"; // For responsive design
 import axios from "axios";
+import Color from "../../../utils/Color";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -30,13 +31,22 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [passwordVerify, setPasswordVerify] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [userType, setUserType] = useState("");
-  const [secretText, setSecretText] = useState("");
+
+  const [gender, setGender] = useState(""); // New state for gender
+  const [profileImageURL, setProfileImageURL] = useState("");
 
   const navigation = useNavigation(); // For handling back navigation
+
   function handleSubmit() {
     // Check if any field is empty
-    if (!name || !email || !mobile || !password) {
+    if (
+      !name ||
+      !email ||
+      !mobile ||
+      !password ||
+      !gender ||
+      !profileImageURL
+    ) {
       return Alert.alert("Error", "All fields are required!");
     }
 
@@ -46,7 +56,8 @@ export default function Register() {
       email,
       mobile,
       password,
-      userType,
+      gender,
+      profileImage: profileImageURL,
     };
 
     // Make the registration request
@@ -62,8 +73,8 @@ export default function Register() {
           setEmail("");
           setMobile("");
           setPassword("");
-          setUserType("");
-          setSecretText("");
+          setGender("");
+          setProfileImageURL("");
 
           // Navigate to Login screen
           navigation.navigate("login");
@@ -80,41 +91,34 @@ export default function Register() {
   function handleName(e) {
     const nameVar = e.nativeEvent.text;
     setName(nameVar);
-    setNameVerify(false);
-
-    if (nameVar.length > 1) {
-      setNameVerify(true);
-    }
+    setNameVerify(nameVar.length > 1);
   }
+
   function handleEmail(e) {
     const emailVar = e.nativeEvent.text;
     setEmail(emailVar);
-    setEmailVerify(false);
-    if (/^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/.test(emailVar)) {
-      setEmail(emailVar);
-      setEmailVerify(true);
-    }
+    setEmailVerify(/^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/.test(emailVar));
   }
+
   function handleMobile(e) {
     const mobileVar = e.nativeEvent.text;
     setMobile(mobileVar);
-    setMobileVerify(false);
-    if (/[6-9]{1}[0-9]{9}/.test(mobileVar)) {
-      setMobile(mobileVar);
-      setMobileVerify(true);
-    }
+    setMobileVerify(/[6-9]{1}[0-9]{9}/.test(mobileVar));
   }
+
   function handlePassword(e) {
     const passwordVar = e.nativeEvent.text;
     setPassword(passwordVar);
-    setPasswordVerify(false);
-    if (/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(passwordVar)) {
-      setPassword(passwordVar);
-      setPasswordVerify(true);
-    }
+    setPasswordVerify(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(passwordVar));
   }
+
+  function handleProfileImageURL(e) {
+    const url = e.nativeEvent.text;
+    setProfileImageURL(url);
+  }
+
   return (
-    <KeyboardAvoidingView>
+    <KeyboardAvoidingView style={{ flex: 1 }}>
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
@@ -134,6 +138,37 @@ export default function Register() {
           <View style={styles.formContainer}>
             <Text style={styles.textHeader}>Register !!!</Text>
 
+            {/* Gender Checkbox */}
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Gender:</Text>
+              <View style={styles.genderOptionsContainer}>
+                <TouchableOpacity
+                  style={[
+                    styles.genderOption,
+                    gender === "Male" && styles.selectedOption,
+                  ]}
+                  onPress={() => setGender("Male")}
+                >
+                  <Text style={styles.genderText}>Male</Text>
+                  {gender === "Male" && (
+                    <Feather name="check-circle" color="green" size={20} />
+                  )}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.genderOption,
+                    gender === "Female" && styles.selectedOption,
+                  ]}
+                  onPress={() => setGender("Female")}
+                >
+                  <Text style={styles.genderText}>Female</Text>
+                  {gender === "Female" && (
+                    <Feather name="check-circle" color="green" size={20} />
+                  )}
+                </TouchableOpacity>
+              </View>
+            </View>
+
             {/* Name Input */}
             <View style={styles.inputContainer}>
               <FontAwesome name="user-o" color="#FF5722" style={styles.icon} />
@@ -142,6 +177,7 @@ export default function Register() {
                 style={styles.textInput}
                 value={name}
                 onChange={(e) => handleName(e)}
+                accessibilityLabel="Name"
               />
               {name.length < 1 ? null : nameVerify ? (
                 <Feather name="check-circle" color="green" size={20} />
@@ -163,6 +199,7 @@ export default function Register() {
                 value={email}
                 style={styles.textInput}
                 onChange={(e) => handleEmail(e)}
+                accessibilityLabel="Email"
               />
               {email.length > 0 &&
                 (emailVerify ? (
@@ -189,6 +226,7 @@ export default function Register() {
                 style={styles.textInput}
                 onChange={(e) => handleMobile(e)}
                 maxLength={10}
+                accessibilityLabel="Mobile"
               />
               {mobile.length > 0 &&
                 (mobileVerify ? (
@@ -201,6 +239,18 @@ export default function Register() {
               <Text style={styles.errorText}>Mobile number must be valid.</Text>
             )}
 
+            {/* Profile Image URL Input */}
+            <View style={styles.inputContainer}>
+              <FontAwesome name="image" color="#FF5722" style={styles.icon} />
+              <TextInput
+                placeholder="Profile Image URL"
+                value={profileImageURL}
+                style={styles.textInput}
+                onChange={(e) => handleProfileImageURL(e)}
+                accessibilityLabel="Profile Image URL"
+              />
+            </View>
+
             {/* Password Input */}
             <View style={styles.inputContainer}>
               <FontAwesome name="lock" color="#FF5722" style={styles.icon} />
@@ -210,13 +260,14 @@ export default function Register() {
                 style={styles.textInput}
                 onChange={(e) => handlePassword(e)}
                 secureTextEntry={!showPassword}
+                accessibilityLabel="Password"
               />
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                <Feather
-                  name={showPassword ? "eye" : "eye-off"}
-                  color={passwordVerify ? "green" : "red"}
-                  size={20}
-                />
+                {showPassword ? (
+                  <Feather name="eye-off" color="#FF5722" size={20} />
+                ) : (
+                  <Feather name="eye" color="#FF5722" size={20} />
+                )}
               </TouchableOpacity>
             </View>
             {password.length > 0 && !passwordVerify && (
@@ -225,27 +276,19 @@ export default function Register() {
                 more characters.
               </Text>
             )}
-          </View>
 
-          {/* Register Button */}
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => handleSubmit()}
-            >
+            {/* Register Button */}
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
               <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
-          </View>
-          <View style={styles.bottomButtonContainer}>
-            <TouchableOpacity
-              style={styles.registerContainer}
-              onPress={() => navigation.goBack()}
-            >
-              <Text style={styles.notEmployeeText}>
-                Already an employee{" "}
-                <Text style={styles.registerText}>Login</Text>
-              </Text>
-            </TouchableOpacity>
+
+            {/* Navigation to Login */}
+            <View style={styles.footer}>
+              <Text style={styles.footerText}>Already have an account?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate("login")}>
+                <Text style={styles.footerLink}>Login</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -254,45 +297,73 @@ export default function Register() {
 }
 
 const styles = StyleSheet.create({
-  // backIconContainer: {
-  //   position: "absolute",
-  //   top: hp("5%"),
-  //   left: wp("5%"),
-  //   zIndex: 1,
+  // mainContainer: {
+  //   flex: 1,
+  //   padding: hp("2%"),
+  //   alignItems: "center",
   // },
-  mainContainer: {
-    backgroundColor: "white",
-    flex: 1,
-  },
   logoContainer: {
     justifyContent: "center",
     alignItems: "center",
   },
   logo: {
-    height: hp(48),
+    height: hp(30),
     width: wp(100),
     resizeMode: "contain",
-    borderRadius: wp(5),
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
   },
+
   formContainer: {
     backgroundColor: "#fff",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: wp("5%"),
-    paddingVertical: hp("5%"),
-    marginTop: -hp("5%"),
-    marginBottom: -hp("2%"),
+    paddingVertical: hp("3%"),
+    marginTop: -hp("3%"),
   },
   textHeader: {
     color: "#FF5722",
     fontWeight: "bold",
     fontSize: hp("4%"),
     textAlign: "center",
+  },
+
+  imagePicker: {
+    marginVertical: hp("2%"),
+    borderColor: "#FF5722",
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: hp("1%"),
+    alignItems: "center",
+  },
+  profileImage: {
+    width: wp("30%"),
+    height: wp("30%"),
+    borderRadius: 15,
+  },
+  imagePlaceholder: {
+    color: "#FF5722",
+    fontSize: hp("2%"),
+  },
+  genderOptionsContainer: {
+    flexDirection: "row",
+  },
+  genderOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: "#ccc", // Light gray border
+    marginHorizontal: wp("7%"),
+  },
+
+  genderText: {
+    color: "gray", // Text color
+    fontSize: hp("2%"),
+    fontFamily: "outfit",
+  },
+  label: {
+    color: Color.PRIMARY,
+    fontSize: hp("2%"),
+    fontFamily: "outfit",
   },
   inputContainer: {
     flexDirection: "row",
@@ -314,41 +385,37 @@ const styles = StyleSheet.create({
     marginRight: wp("3%"),
     fontSize: wp("6%"),
   },
-  buttonContainer: {
-    alignItems: "center",
-  },
+
   button: {
-    width: wp("70%"),
     backgroundColor: "#FF5722",
-    alignItems: "center",
-    paddingVertical: hp("2%"),
-    borderRadius: 50,
+    padding: hp("2%"),
+    borderRadius: 5,
+    marginVertical: hp("2%"),
   },
   buttonText: {
-    fontSize: hp("2.5%"),
+    color: "#FFF",
+    textAlign: "center",
     fontWeight: "bold",
-    color: "white",
-    fontFamily: "outfit",
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: hp("2%"),
+  },
+  footerText: {
+    fontSize: hp("2%"),
+  },
+  footerLink: {
+    color: "#FF5722",
+    fontWeight: "bold",
+    marginLeft: 5,
   },
   errorText: {
-    marginLeft: wp("5%"),
     color: "red",
-    fontSize: wp("3.5%"),
-    marginTop: hp("1%"),
+    fontSize: hp("2%"),
   },
-  bottomButtonContainer: {
-    alignItems: "center",
-  },
-  registerContainer: {
-    marginVertical: hp(2),
-  },
-  notEmployeeText: {
-    fontSize: wp(4),
-    color: "#919191",
-    fontWeight: "bold",
-  },
-  registerText: {
-    color: "#0000FF",
-    fontWeight: "bold",
+  successText: {
+    color: "green",
+    fontSize: hp("2%"),
   },
 });

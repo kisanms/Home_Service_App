@@ -20,6 +20,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Color from "../../../utils/Color";
 
 const { height } = Dimensions.get("window");
 
@@ -231,7 +232,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   registerText: {
-    color: "#0000FF",
+    color: Color.PRIMARY,
     fontWeight: "bold",
   },
 });

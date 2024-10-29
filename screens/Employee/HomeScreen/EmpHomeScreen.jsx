@@ -7,15 +7,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Color from '../../../utils/Color';
 
 export default function EmpHomeScreen() {
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState(null); // Set initial state to null
+
   async function getData() {
     const token = await AsyncStorage.getItem('token');
     console.log(token);
-    axios.post("http://192.168.230.179:5001/userdata", { token: token }).then(res => {
-      console.log(res.data);
-      setUserData(res.data.data);
-    });
+    if (token) {
+      axios.post("http://192.168.230.179:5001/userdata", { token: token }).then(res => {
+        console.log(res.data);
+        setUserData(res.data.data); // Assuming data contains user info
+      }).catch(err => {
+        console.error("Error fetching user data:", err); // Handle any errors
+      });
+    }
   }
+
   useEffect(() => {
     getData();
   }, []);
@@ -28,10 +34,10 @@ export default function EmpHomeScreen() {
       {/* Profile Picture */}
       <View style={styles.profileSection}>
         <Image
-          source={{ uri: 'https://via.placeholder.com/100' }}
+          source={{ uri: userData?.profileImage || 'https://via.placeholder.com/100' }} // Fallback image
           style={styles.profileImage}
         />
-        <Text style={styles.nameText}>{userData.name}</Text>
+        <Text style={styles.nameText}>{userData?.name}</Text>
       </View>
 
       {/* Profile Details */}
@@ -39,22 +45,18 @@ export default function EmpHomeScreen() {
         <View style={styles.infoItem}>
           <FontAwesome name="envelope" size={24} color="#FF8C00" />
           <Text style={styles.infoLabel}>Email</Text>
-          <Text style={styles.infoText}>{userData.email}</Text>
+          <Text style={styles.infoText}>{userData?.email}</Text>
         </View>
         <View style={styles.infoItem}>
           <FontAwesome name="user" size={24} color="#4CAF50" />
           <Text style={styles.infoLabel}>Gender</Text>
-          <Text style={styles.infoText}>Male</Text>
+          <Text style={styles.infoText}>{userData?.gender}</Text>
         </View>
-        <View style={styles.infoItem}>
-          <FontAwesome name="briefcase" size={24} color="#800080" />
-          <Text style={styles.infoLabel}>Profession</Text>
-          <Text style={styles.infoText}>Engineer</Text>
-        </View>
+
         <View style={styles.infoItem}>
           <FontAwesome name="phone" size={24} color="#FF6347" />
           <Text style={styles.infoLabel}>Mobile</Text>
-          <Text style={styles.infoText}>{userData.mobile}</Text>
+          <Text style={styles.infoText}>{userData?.mobile}</Text>
         </View>
       </View>
     </View>
