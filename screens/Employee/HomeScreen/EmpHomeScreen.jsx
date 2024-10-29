@@ -30,6 +30,7 @@ export default function EmpHomeScreen() {
     <View style={styles.container}>
       {/* Background Shape */}
       <View style={styles.headerBackground} />
+      <Text style={{ marginTop: 20, paddingTop: 20, textAlign: "center", fontSize: hp(3), fontFamily: "outfit-bold", color: "white" }}>Home Service App</Text>
 
       {/* Profile Picture */}
       <View style={styles.profileSection}>
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   },
   headerBackground: {
     width: '100%',
-    height: hp('25%'),
+    height: hp('30%'),
     backgroundColor: Color.PRIMARY,
     borderBottomLeftRadius: wp('50%'),
     borderBottomRightRadius: wp('50%'),
@@ -79,12 +80,12 @@ const styles = StyleSheet.create({
   },
   profileSection: {
     alignItems: 'center',
-    marginTop: hp('15%'),
+    marginTop: hp('5%'),
   },
   profileImage: {
-    width: wp('25%'),
-    height: wp('25%'),
-    borderRadius: wp('12.5%'),
+    width: wp('50%'),
+    height: wp('50%'),
+    borderRadius: wp('50%'),
     borderWidth: 2,
     borderColor: '#fff',
   },
@@ -93,6 +94,7 @@ const styles = StyleSheet.create({
     fontSize: wp('5%'),
     fontWeight: 'bold',
     color: '#333',
+    fontFamily: "outfit",
   },
   infoSection: {
     marginTop: hp('3%'),
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: wp('4%'),
-    color: '#666',
+    color: 'black',
     marginLeft: 'auto',
   },
 });
