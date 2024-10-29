@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Color from '../../../utils/Color';
+import { useNavigation } from '@react-navigation/native';
 
 export default function EmpHomeScreen() {
   const [userData, setUserData] = useState(null); // Set initial state to null
+  const navigation = useNavigation();
 
   async function getData() {
     const token = await AsyncStorage.getItem('token');
@@ -21,6 +23,14 @@ export default function EmpHomeScreen() {
       });
     }
   }
+
+  async function handleLogout() {
+    await AsyncStorage.removeItem('token');
+    alert('Logged out successfully');
+    navigation.navigate("login")
+    // Add navigation logic here to redirect to the login screen
+  }
+
 
   useEffect(() => {
     getData();
@@ -59,6 +69,22 @@ export default function EmpHomeScreen() {
           <Text style={styles.infoLabel}>Mobile</Text>
           <Text style={styles.infoText}>{userData?.mobile}</Text>
         </View>
+      </View>
+
+      {/* Action Buttons */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() => alert('Navigating to My Profile...')}>
+          <Text style={styles.buttonText}>My Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => alert('Navigating to Booking Details...')}>
+          <Text style={styles.buttonText}>Booking Details</Text>
+        </TouchableOpacity>
+      </View>
+      {/* Logout Button */}
+      <View style={styles.logoutContainer}>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -115,5 +141,42 @@ const styles = StyleSheet.create({
     fontSize: wp('4%'),
     color: 'black',
     marginLeft: 'auto',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: hp('5%'),
+    paddingHorizontal: wp('5%'),
+    gap: wp('5%'),
+  },
+  button: {
+    backgroundColor: Color.PRIMARY,
+    paddingVertical: hp('2%'),
+    paddingHorizontal: wp('10%'),
+    borderRadius: wp('3%'),
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: wp('4%'),
+    fontWeight: 'bold',
+  },
+  logoutContainer: {
+    alignItems: 'center',
+    marginTop: hp('15%'),
+  },
+  logoutButton: {
+    borderColor: Color.PRIMARY,
+    borderWidth: 2,
+    paddingVertical: hp('1%'),
+    paddingHorizontal: wp('10%'),
+    marginBottom: hp('5%'),
+    borderRadius: wp('3%'),
+    alignItems: 'center',
+  },
+  logoutButtonText: {
+    color: Color.PRIMARY,
+    fontSize: wp('4.5%'),
+    fontWeight: 'bold',
   },
 });

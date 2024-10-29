@@ -42,6 +42,7 @@ export default function LoginPage() {
         if (res.data.status == "ok") {
           Alert.alert("Login successful");
           AsyncStorage.setItem("token", res.data.data);
+          AsyncStorage.setItem("isLoggedIn", JSON.stringify(true));
           navigation.navigate("emphome");
         } else {
           Alert.alert("Login failed", "Please check your credentials");
