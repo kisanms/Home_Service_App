@@ -15,7 +15,7 @@ export default function EmpHomeScreen() {
     const token = await AsyncStorage.getItem('token');
     console.log(token);
     if (token) {
-      axios.post("http://192.168.230.179:5001/userdata", { token: token }).then(res => {
+      axios.post("http://192.168.89.179:5001/userdata", { token: token }).then(res => {
         console.log(res.data);
         setUserData(res.data.data); // Assuming data contains user info
       }).catch(err => {
@@ -63,13 +63,20 @@ export default function EmpHomeScreen() {
           <Text style={styles.infoLabel}>Gender</Text>
           <Text style={styles.infoText}>{userData?.gender}</Text>
         </View>
-
         <View style={styles.infoItem}>
           <FontAwesome name="phone" size={24} color="#FF6347" />
           <Text style={styles.infoLabel}>Mobile</Text>
           <Text style={styles.infoText}>{userData?.mobile}</Text>
         </View>
+        {/* Updated Profession Section */}
+        <View style={styles.infoItem}>
+          <FontAwesome name="briefcase" size={24} color="#007BFF" />
+          <Text style={styles.infoLabel}>Profession</Text>
+          <Text style={styles.infoText}>Updated Profession</Text>
+        </View>
       </View>
+
+
 
       {/* Action Buttons */}
       <View style={styles.buttonContainer}>
@@ -146,13 +153,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     marginTop: hp('5%'),
-    paddingHorizontal: wp('5%'),
+    paddingHorizontal: wp('6%'),
     gap: wp('5%'),
   },
   button: {
     backgroundColor: Color.PRIMARY,
     paddingVertical: hp('2%'),
-    paddingHorizontal: wp('10%'),
+    paddingHorizontal: wp('5%'),
     borderRadius: wp('3%'),
     alignItems: 'center',
   },
@@ -163,7 +170,7 @@ const styles = StyleSheet.create({
   },
   logoutContainer: {
     alignItems: 'center',
-    marginTop: hp('15%'),
+    marginTop: hp('6%'),
   },
   logoutButton: {
     borderColor: Color.PRIMARY,

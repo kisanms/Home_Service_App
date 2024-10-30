@@ -216,6 +216,50 @@ const submitFeedback = async (feedbackData) => {
   }
 };
 
+const createBusinessList = async (data) => {
+  const mutationQuery = gql`
+    mutation CreateBusinessList(
+      $name: String!
+      $contactPerson: String!
+      $address: String!
+      $about: String!
+      $email: String!
+    ) {
+      createBusinessList(
+        data: {
+          name: $name
+          contactPerson: $contactPerson
+          address: $address
+          about: $about
+          email: $email
+        }
+      ) {
+        id
+        name
+        contactPerson
+        address
+        about
+        email
+      }
+    }
+  `;
+
+  const variables = {
+    name: data.name,
+    contactPerson: data.contactPerson,
+    address: data.address,
+    about: data.about,
+    email: data.email,
+  };
+
+  try {
+    const result = await request(MASTER_URL, mutationQuery, variables);
+    return result;
+  } catch (error) {
+    console.error("Error creating business list:", error);
+    throw new Error("Failed to create business list");
+  }
+};
 export default {
   getSlider,
   getCategories,
@@ -224,4 +268,5 @@ export default {
   createBooking,
   getUserBookings,
   submitFeedback,
+  createBusinessList,
 };
