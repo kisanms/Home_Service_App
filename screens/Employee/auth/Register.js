@@ -34,6 +34,7 @@ export default function Register() {
 
   const [gender, setGender] = useState(""); // New state for gender
   const [profileImageURL, setProfileImageURL] = useState("");
+  const [profession, setProfession] = useState("");
 
   const navigation = useNavigation(); // For handling back navigation
 
@@ -45,7 +46,8 @@ export default function Register() {
       !mobile ||
       !password ||
       !gender ||
-      !profileImageURL
+      !profileImageURL ||
+      !profession
     ) {
       return Alert.alert("Error", "All fields are required!");
     }
@@ -58,6 +60,7 @@ export default function Register() {
       password,
       gender,
       profileImage: profileImageURL,
+      profession,
     };
 
     // Make the registration request
@@ -75,6 +78,7 @@ export default function Register() {
           setPassword("");
           setGender("");
           setProfileImageURL("");
+          setProfession("");
 
           // Navigate to Login screen
           navigation.navigate("login");
@@ -117,6 +121,10 @@ export default function Register() {
     setProfileImageURL(url);
   }
 
+  function handleProfession(e) {
+    const professionVar = e.nativeEvent.text;
+    setProfession(professionVar);
+  }
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <ScrollView
@@ -248,6 +256,18 @@ export default function Register() {
                 style={styles.textInput}
                 onChange={(e) => handleProfileImageURL(e)}
                 accessibilityLabel="Profile Image URL"
+              />
+            </View>
+
+            {/* Profession Input */}
+            <View style={styles.inputContainer}>
+              <Feather name="briefcase" color="#FF5722" style={styles.icon} />
+              <TextInput
+                placeholder="Profession"
+                value={profession}
+                style={styles.textInput}
+                onChange={(e) => handleProfession(e)}
+                accessibilityLabel="Profession"
               />
             </View>
 

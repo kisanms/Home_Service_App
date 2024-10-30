@@ -72,7 +72,7 @@ export default function EmpHomeScreen() {
         <View style={styles.infoItem}>
           <FontAwesome name="briefcase" size={24} color="#007BFF" />
           <Text style={styles.infoLabel}>Profession</Text>
-          <Text style={styles.infoText}>Updated Profession</Text>
+          <Text style={styles.infoText}>{userData?.profession}</Text>
         </View>
       </View>
 
@@ -81,7 +81,7 @@ export default function EmpHomeScreen() {
       {/* Action Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("empprofile")}>
-          <Text style={styles.buttonText}>My Profile</Text>
+          <Text style={styles.buttonText}>Job Apply</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => alert('Navigating to Booking Details...')}>
           <Text style={styles.buttonText}>Booking Details</Text>
