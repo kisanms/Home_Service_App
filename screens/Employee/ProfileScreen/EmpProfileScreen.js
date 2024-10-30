@@ -1,5 +1,3 @@
-// EmpProfileScreen.js
-
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -20,6 +18,7 @@ import {
 import Color from "../../../utils/Color";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios"; // Import Axios
 import GlobalApi from "../../../utils/GlobalApi";
 
 export default function EmpProfileScreen() {
@@ -56,12 +55,44 @@ export default function EmpProfileScreen() {
         ...formData,
       });
       Alert.alert("Success", "Business profile created as draft.");
-      navigation.goBack();
+
+      // Navigate to SubmittedDataScreen with the submitted data
+      navigation.navigate("submittedData", {
+        submittedData: formData,
+      });
     } catch (error) {
       Alert.alert("Error", "Failed to create business profile.");
       console.error("Submit error:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleViewSubmittedData = async () => {
+    setLoading(true); // Optional: Indicate loading state when saving
+
+    try {
+      // Save submitted data to MongoDB
+      const resp = await axios.post(
+        "http://192.168.89.179:5001/api/profiles",
+        formData
+      );
+
+      if (resp.status === 200) {
+        Alert.alert("Success", "Data saved successfully!");
+
+        console.log("Navigating with data:", formData);
+
+        // Navigate to SubmittedDataScreen with the submitted data
+        navigation.navigate("submittedData", {
+          submittedData: formData,
+        });
+      }
+    } catch (error) {
+      Alert.alert("Error", "Failed to save data.");
+      console.error("Save error:", error);
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
@@ -142,6 +173,14 @@ export default function EmpProfileScreen() {
               <Text style={styles.buttonText}>Submit</Text>
             )}
           </TouchableOpacity>
+
+          {/* View Submitted Data Button */}
+          <TouchableOpacity
+            style={styles.viewButton}
+            onPress={handleViewSubmittedData}
+          >
+            <Text style={styles.viewButtonText}>Store Submitted Data</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -193,6 +232,18 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: wp("4.5%"),
+  },
+  viewButton: {
+    backgroundColor: "#007bff", // Change this to your desired color
+    paddingVertical: hp("2%"),
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: hp("2%"),
+  },
+  viewButtonText: {
     color: "#fff",
     fontWeight: "bold",
     fontSize: wp("4.5%"),
