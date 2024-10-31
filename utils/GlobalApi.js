@@ -261,37 +261,37 @@ const createBusinessList = async (data) => {
   }
 };
 
-export const getEmployeeBookings = async ({ id }) => {
-  const response = await request(
-    MASTER_URL,
-    gql`
-    query GetEmployeeBookings {
-  bookings(where: {businessList: {id: "` +
-      id +
-      `"}}) {
-    time
-    userEmail
-    userName
-    bookingStatus
-    date
-    id
-    businessList {
-      id
-      images {
-        url
-      }
-      name
-      address
-      contactPerson
-      email
-      about
-    }
-  }
-}
-  `
-  );
-  return response;
-};
+// export const getEmployeeBookings = async ({ id }) => {
+//   const response = await request(
+//     MASTER_URL,
+//     gql`
+//     query GetEmployeeBookings {
+//   bookings(where: {businessList: {id: "` +
+//       id +
+//       `"}}) {
+//     time
+//     userEmail
+//     userName
+//     bookingStatus
+//     date
+//     id
+//     businessList {
+//       id
+//       images {
+//         url
+//       }
+//       name
+//       address
+//       contactPerson
+//       email
+//       about
+//     }
+//   }
+// }
+//   `
+//   );
+//   return response;
+// };
 
 export default {
   getSlider,
