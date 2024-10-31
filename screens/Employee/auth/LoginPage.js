@@ -36,13 +36,13 @@ export default function LoginPage() {
       password,
     };
     axios
-      .post("http://192.168.89.179:5001/login-user", userData)
+      .post("http://192.168.148.179:5001/login-user", userData)
       .then((res) => {
         console.log(res.data); // Check what the response contains
         if (res.data.status == "ok") {
           Alert.alert("Login successful");
           AsyncStorage.setItem("token", res.data.data);
-          AsyncStorage.setItem("isLoggedIn", JSON.stringify(true));
+          // AsyncStorage.setItem("isLoggedIn", JSON.stringify(true));
           navigation.navigate("emphome");
         } else {
           Alert.alert("Login failed", "Please check your credentials");

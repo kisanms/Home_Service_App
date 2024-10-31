@@ -15,7 +15,7 @@ export default function EmpHomeScreen() {
     const token = await AsyncStorage.getItem('token');
     console.log(token);
     if (token) {
-      axios.post("http://192.168.89.179:5001/userdata", { token: token }).then(res => {
+      axios.post("http://192.168.148.179:5001/userdata", { token: token }).then(res => {
         console.log(res.data);
         setUserData(res.data.data); // Assuming data contains user info
       }).catch(err => {
@@ -83,7 +83,7 @@ export default function EmpHomeScreen() {
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("empprofile")}>
           <Text style={styles.buttonText}>Job Apply</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => alert('Navigating to Booking Details...')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("empbooking")}>
           <Text style={styles.buttonText}>Booking Details</Text>
         </TouchableOpacity>
       </View>
