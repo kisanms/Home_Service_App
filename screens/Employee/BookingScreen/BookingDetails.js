@@ -5,18 +5,46 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Ionicons } from "@expo/vector-icons"; // Make sure to install @expo/vector-icons if you haven't
+import GlobalApi from "../../../utils/GlobalApi";
+// Adjust path based on your file structure
 
 export default function BookingDetails() {
+  const [employeeId, setEmployeeId] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+
+  const handleShowBooking = async () => {
+    if (!employeeId) {
+      Alert.alert("Error", "Please enter Employee ID.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Make the API call to get bookings related to this employee's business list
+      const response = await GlobalApi.getEmployeeBookings({ id: employeeId });
+      Alert.alert("Success", "Booking details retrieved.");
+
+      // Navigate to BookingDetailsScreen and pass the response data
+      navigation.navigate("empbookingdetail", {
+        bookingDetails: response,
+      });
+    } catch (error) {
+      Alert.alert("Error", "Failed to retrieve booking details.");
+      console.error("API error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -36,12 +64,20 @@ export default function BookingDetails() {
         placeholder="Employee ID"
         placeholderTextColor="#888"
         style={styles.input}
-        keyboardType="numeric"
+        keyboardType="numbers-and-punctuation"
+        value={employeeId}
+        onChangeText={setEmployeeId}
       />
 
       {/* Show Booking Button */}
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Show Booking</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleShowBooking}
+        disabled={loading}
+      >
+        <Text style={styles.buttonText}>
+          {loading ? "Loading..." : "Show Booking"}
+        </Text>
       </TouchableOpacity>
     </View>
   );

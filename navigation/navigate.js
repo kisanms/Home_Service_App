@@ -10,6 +10,7 @@ import EmpHomeScreen from "../screens/Employee/HomeScreen/EmpHomeScreen";
 import EmpProfileScreen from "../screens/Employee/ProfileScreen/EmpProfileScreen";
 import SubmittedDataScreen from "../screens/Employee/ProfileScreen/SubmittedDataScreen";
 import BookingDetails from "../screens/Employee/BookingScreen/BookingDetails";
+import EmployeeBookingDetails from "../screens/Employee/BookingScreen/EmployeeBookingDetails";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,10 @@ export default function Navigate() {
         <Stack.Screen name="empprofile" component={EmpProfileScreen} />
         <Stack.Screen name="submittedData" component={SubmittedDataScreen} />
         <Stack.Screen name="empbooking" component={BookingDetails} />
+        <Stack.Screen
+          name="empbookingdetail"
+          component={EmployeeBookingDetails}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
