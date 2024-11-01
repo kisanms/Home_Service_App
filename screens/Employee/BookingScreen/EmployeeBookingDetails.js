@@ -2,11 +2,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  ScrollView,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
@@ -39,32 +38,33 @@ export default function EmployeeBookingDetails({ route }) {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={styles.backButton}
       >
         <FontAwesome name="arrow-left" size={wp(8)} color="#000" />
       </TouchableOpacity>
-      {bookingDetails.bookings.map((booking) => (
-        <View key={booking.id} style={styles.bookingContainer}>
-          <Text style={styles.text}>User: {booking.userName}</Text>
-          <Text style={styles.text}>Status: {booking.bookingStatus}</Text>
-          <Text style={styles.text}>Date: {booking.date}</Text>
-          <Text style={styles.text}>Time: {booking.time}</Text>
-          <Text style={styles.text}>
-            Business Name: {booking.businessList.name}
-          </Text>
-          <Text style={styles.text}>
-            Contact: {booking.businessList.contactPerson}
-          </Text>
-          <Image
-            source={{ uri: booking.businessList.images[0]?.url }}
-            style={styles.image}
-          />
-        </View>
-      ))}
-    </ScrollView>
+      <FlatList
+        data={bookingDetails.bookings}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item: booking }) => (
+          <View style={styles.bookingContainer}>
+            <Text style={styles.text}>User: {booking.userName}</Text>
+            <Text style={styles.text}>Status: {booking.bookingStatus}</Text>
+            <Text style={styles.text}>Date: {booking.date}</Text>
+            <Text style={styles.text}>Time: {booking.time}</Text>
+            <Text style={styles.text}>
+              Business Name: {booking.businessList.name}
+            </Text>
+            <Text style={styles.text}>
+              Contact: {booking.businessList.contactPerson}
+            </Text>
+          </View>
+        )}
+        contentContainerStyle={{ paddingBottom: hp(5) }}
+      />
+    </View>
   );
 }
 
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   bookingContainer: {
     width: "100%",
-    marginTop: hp(10),
+    marginTop: hp(8),
     marginBottom: hp(2),
     padding: wp(4),
     backgroundColor: "#fff",
@@ -105,11 +105,5 @@ const styles = StyleSheet.create({
     fontSize: wp(4),
     color: "#333",
     marginBottom: hp(0.5),
-  },
-  image: {
-    width: "100%",
-    height: hp(25),
-    marginTop: hp(1),
-    borderRadius: wp(2),
   },
 });
