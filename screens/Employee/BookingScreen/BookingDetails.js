@@ -15,6 +15,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import GlobalApi from "../../../utils/GlobalApi";
+import Color from "../../../utils/Color";
 // Adjust path based on your file structure
 
 export default function BookingDetails() {
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "90%",
-    backgroundColor: "#4CAF50",
+    backgroundColor: Color.PRIMARY,
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: "center",

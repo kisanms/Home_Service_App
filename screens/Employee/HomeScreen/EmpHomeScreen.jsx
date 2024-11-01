@@ -15,7 +15,7 @@ export default function EmpHomeScreen() {
     const token = await AsyncStorage.getItem('token');
     console.log(token);
     if (token) {
-      axios.post("http://192.168.148.179:5001/userdata", { token: token }).then(res => {
+      axios.post("http://192.168.237.179:5001/userdata", { token: token }).then(res => {
         console.log(res.data);
         setUserData(res.data.data); // Assuming data contains user info
       }).catch(err => {
