@@ -266,7 +266,7 @@ const getEmployeeBookings = async ({ id }) => {
     MASTER_URL,
     gql`
       query GetEmployeeBookings {
-        bookings(where: { businessList: { id: "${id}" } }) {
+        bookings(orderBy: updatedAt_DESC, where: { businessList: { id: "${id}" } }) {
           time
           userEmail
           userName

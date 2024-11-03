@@ -1,9 +1,9 @@
 import {
+  FlatList,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  FlatList,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -16,12 +16,20 @@ import {
 export default function EmployeeBookingDetails({ route }) {
   const navigation = useNavigation();
   const { bookingDetails } = route.params;
+  const [bookings, setBookings] = useState(bookingDetails?.bookings || []);
+  const [loading, setLoading] = useState(false);
 
-  if (
-    !bookingDetails ||
-    !bookingDetails.bookings ||
-    bookingDetails.bookings.length === 0
-  ) {
+  // This function simulates a refresh by reloading data
+  const handleRefresh = () => {
+    setLoading(true);
+    // Simulate an API call to refresh bookings
+    setTimeout(() => {
+      setBookings([...bookings]); // Replace with actual API response
+      setLoading(false);
+    }, 1500); // Adjust to the time of your actual API call
+  };
+
+  if (!bookings || bookings.length === 0) {
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -46,8 +54,10 @@ export default function EmployeeBookingDetails({ route }) {
         <FontAwesome name="arrow-left" size={wp(8)} color="#000" />
       </TouchableOpacity>
       <FlatList
-        data={bookingDetails.bookings}
-        keyExtractor={(item) => item.id}
+        data={bookings}
+        keyExtractor={(item) => item.id.toString()}
+        onRefresh={handleRefresh}
+        refreshing={loading}
         renderItem={({ item: booking }) => (
           <View style={styles.bookingContainer}>
             <Text style={styles.text}>User: {booking.userName}</Text>
