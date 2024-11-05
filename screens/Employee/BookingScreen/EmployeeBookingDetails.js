@@ -58,6 +58,7 @@ export default function EmployeeBookingDetails({ route }) {
         keyExtractor={(item) => item.id.toString()}
         onRefresh={handleRefresh}
         refreshing={loading}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item: booking }) => (
           <View style={styles.bookingContainer}>
             <Text style={styles.text}>User: {booking.userName}</Text>
