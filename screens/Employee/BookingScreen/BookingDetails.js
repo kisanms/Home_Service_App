@@ -58,7 +58,7 @@ export default function BookingDetails() {
       </TouchableOpacity>
 
       {/* Title */}
-      <Text style={styles.title}>Booking Details</Text>
+      <Text style={styles.title}>Employee Booking ID</Text>
 
       {/* Employee ID Input */}
       <TextInput
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
-    top: Platform.OS === "ios" ? hp(5) : hp(4),
+    top: Platform.OS === "ios" ? hp(6) : hp(6),
     left: wp(4),
     zIndex: 1,
     padding: wp(2),
