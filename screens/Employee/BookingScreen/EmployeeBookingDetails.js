@@ -27,7 +27,7 @@ export default function EmployeeBookingDetails({ route }) {
           onPress={() => navigation.goBack()}
           style={styles.backButton}
         >
-          <FontAwesome name="arrow-left" size={wp(8)} color="#000" />
+          <FontAwesome name="arrow-left" size={wp(8)} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Booking Details</Text>
       </View>
@@ -48,15 +48,26 @@ export default function EmployeeBookingDetails({ route }) {
             showsVerticalScrollIndicator={false}
             renderItem={({ item: booking }) => (
               <View style={styles.bookingContainer}>
-                <Text style={styles.text}>User: {booking.userName}</Text>
-                <Text style={styles.text}>Status: {booking.bookingStatus}</Text>
-                <Text style={styles.text}>Date: {booking.date}</Text>
-                <Text style={styles.text}>Time: {booking.time}</Text>
-                <Text style={styles.text}>
-                  Business Name: {booking.businessList.name}
+                <Text style={styles.textLabel}>User:</Text>
+                <Text style={styles.textValue}>{booking.userName}</Text>
+
+                <Text style={styles.textLabel}>Status:</Text>
+                <Text style={styles.textValue}>{booking.bookingStatus}</Text>
+
+                <Text style={styles.textLabel}>Date:</Text>
+                <Text style={styles.textValue}>{booking.date}</Text>
+
+                <Text style={styles.textLabel}>Time:</Text>
+                <Text style={styles.textValue}>{booking.time}</Text>
+
+                <Text style={styles.textLabel}>Business Name:</Text>
+                <Text style={styles.textValue}>
+                  {booking.businessList.name}
                 </Text>
-                <Text style={styles.text}>
-                  Contact: {booking.businessList.contactPerson}
+
+                <Text style={styles.textLabel}>Contact:</Text>
+                <Text style={styles.textValue}>
+                  {booking.businessList.contactPerson}
                 </Text>
               </View>
             )}
@@ -71,14 +82,22 @@ export default function EmployeeBookingDetails({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#f0f4f8",
     paddingTop: hp(4),
   },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: wp(5),
-    paddingBottom: hp(2),
+    paddingVertical: hp(2),
+    backgroundColor: "#007AFF",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
+    borderBottomLeftRadius: wp(3),
+    borderBottomRightRadius: wp(3),
   },
   backButton: {
     padding: wp(2),
@@ -86,8 +105,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontFamily: "outfit-bold",
-    fontSize: wp(6.5),
-    color: "#333",
+    fontSize: wp(5.5),
+    color: "#fff",
   },
   noBookingContainer: {
     flex: 1,
@@ -98,7 +117,7 @@ const styles = StyleSheet.create({
   noBookingText: {
     fontFamily: "outfit-bold",
     fontSize: wp(5),
-    color: "#555",
+    color: "#FF3B30",
     textAlign: "center",
   },
   listContainer: {
@@ -116,15 +135,21 @@ const styles = StyleSheet.create({
     borderRadius: wp(2),
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 4,
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: "#e6e6e6",
   },
-  text: {
+  textLabel: {
+    fontSize: wp(4),
+    color: "#007AFF",
+    fontWeight: "600",
+    marginBottom: hp(0.3),
+  },
+  textValue: {
     fontSize: wp(4),
     color: "#333",
-    marginBottom: hp(0.5),
+    marginBottom: hp(0.8),
   },
 });
