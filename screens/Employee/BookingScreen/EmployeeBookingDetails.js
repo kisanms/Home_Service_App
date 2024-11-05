@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: wp(5),
     paddingVertical: hp(2),
-    backgroundColor: "#007AFF",
+    backgroundColor: "#FF5722", // Updated header color
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   noBookingText: {
     fontFamily: "outfit-bold",
     fontSize: wp(5),
-    color: "#FF3B30",
+    color: "#FF5722", // Updated color for the no booking message
     textAlign: "center",
   },
   listContainer: {
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   },
   textLabel: {
     fontSize: wp(4),
-    color: "#007AFF",
+    color: "#FF5722", // Updated label color
     fontWeight: "600",
     marginBottom: hp(0.3),
   },
