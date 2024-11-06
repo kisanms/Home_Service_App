@@ -121,7 +121,7 @@ https://github.com/kisanms/Home_Service_App.git
 
 
 
-<p>Booking Deatail</p>
+<p>Booking Detail</p>
 <h2>12</h2>
 
 ![Screenshot_20241026_203856](https://github.com/user-attachments/assets/e058cac4-34cb-4eed-be73-876aa7f0d761)
@@ -164,6 +164,42 @@ https://github.com/kisanms/Home_Service_App.git
 ![Screenshot_20241026_203957](https://github.com/user-attachments/assets/49ea41a4-3583-439c-aa33-83ea2833ec12)
 
 <p>Employee Register</p>
+<h2>16</h2>
+
+![Screenshot_20241106_203436](https://github.com/user-attachments/assets/2bb0b058-3147-4670-917a-9f07eb2863b4)
+
+
+<p>LoggedIn employee Homescreen</p>
+<h2>17</h2>
+
+![Screenshot_20241106_204123](https://github.com/user-attachments/assets/3ca55fa0-a652-459f-9f12-251de6d50d5f)
+
+
+
+<p>Job apply Screen</p>
+<h2>18</h2>
+
+![Screenshot_20241106_204412](https://github.com/user-attachments/assets/9d21e825-e662-443b-a7b7-25153c27a7a6)
+
+
+
+
+<p>Booking Details of user</p>
+<p>When the employee type it's Id all the bookings booked by the user will show</p>
+<h2>19</h2>
+
+![Screenshot_20241106_204518](https://github.com/user-attachments/assets/a590d12f-1301-4cf2-8b88-3273ba5aa807)
+
+
+
+
+
+<p>All booking Details of the user will be shown</p>
+<p>Also employee can cancel and complete the booking</p>
+
+
+
+
 <h2>Database</h2>
 
 ![image](https://github.com/user-attachments/assets/084abaf8-dd4a-4326-a608-53948ddc7995)  
