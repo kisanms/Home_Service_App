@@ -122,7 +122,9 @@ const cancelBooking = async (data) => {
     gql`
     mutation cancelBooking {
   updateBooking(
-    where: {id: "`+data+`"},
+    where: {id: "` +
+    data +
+    `"},
     data: {bookingStatus: Cancelled}) {
     id
   }
@@ -130,6 +132,27 @@ const cancelBooking = async (data) => {
     count
   }
 }
+  `;
+  const result = await request(MASTER_URL, mutationQuery);
+  return result;
+};
+
+export const completeBooking = async (data) => {
+  const mutationQuery =
+    gql`
+    mutation completeBooking {
+      updateBooking(
+        where: { id: "` +
+    data +
+    `" },
+        data: { bookingStatus: Completed }
+      ) {
+        id
+      }
+      publishManyBookings(to: PUBLISHED) {
+        count
+      }
+    }
   `;
   const result = await request(MASTER_URL, mutationQuery);
   return result;
@@ -317,5 +340,6 @@ export default {
   submitFeedback,
   createBusinessList,
   getEmployeeBookings,
-  cancelBooking
+  cancelBooking,
+  completeBooking,
 };

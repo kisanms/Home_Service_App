@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Button,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -13,12 +14,42 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import GlobalApi from "../../../utils/GlobalApi";
 
 export default function EmployeeBookingDetails({ route }) {
   const navigation = useNavigation();
   const { bookingDetails } = route.params;
-  const [bookings] = useState(bookingDetails?.bookings || []);
+  const [bookings, setBookings] = useState(bookingDetails?.bookings || []);
 
+  // Handle cancel booking
+  const handleCancelBooking = async (data) => {
+    try {
+      await GlobalApi.cancelBooking(data);
+      const updatedBookings = bookings.map((item) =>
+        item.id === data ? { ...item, bookingStatus: "Cancelled" } : item
+      );
+      setBookings(updatedBookings);
+      alert("Booking cancelled successfully!");
+    } catch (error) {
+      console.error("Error cancelling booking:", error);
+      alert("Failed to cancel booking.");
+    }
+  };
+
+  // Handle complete booking
+  const handleCompleteBooking = async (data) => {
+    try {
+      await GlobalApi.completeBooking(data);
+      const updatedBookings = bookings.map((item) =>
+        item.id === data ? { ...item, bookingStatus: "Completed" } : item
+      );
+      setBookings(updatedBookings);
+      alert("Booking marked as completed!");
+    } catch (error) {
+      console.error("Error completing booking:", error);
+      alert("Failed to mark booking as completed.");
+    }
+  };
   return (
     <View style={styles.container}>
       {/* Header with Back Button */}
@@ -69,6 +100,19 @@ export default function EmployeeBookingDetails({ route }) {
                 <Text style={styles.textValue}>
                   {booking.businessList.contactPerson}
                 </Text>
+                {/* Cancel and Complete Booking Buttons */}
+                <View style={styles.buttonContainer}>
+                  <Button
+                    title="Cancel Booking"
+                    color="#FF5722"
+                    onPress={() => handleCancelBooking(booking.id)}
+                  />
+                  <Button
+                    title="Complete Booking"
+                    color="#4CAF50"
+                    onPress={() => handleCompleteBooking(booking.id)}
+                  />
+                </View>
               </View>
             )}
             contentContainerStyle={styles.listContentContainer}
