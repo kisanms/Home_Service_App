@@ -126,16 +126,19 @@ export default function EmployeeBookingDetails({ route }) {
 
                 {/* Cancel and Complete Booking Buttons */}
                 <View style={styles.buttonContainer}>
-                  <Button
-                    title="Cancel Booking"
-                    color="#FF5722"
+                  <TouchableOpacity
+                    style={[styles.actionButton, styles.CancelButton]}
                     onPress={() => showModal("cancel", booking.id)}
-                  />
-                  <Button
-                    title="Complete Booking"
-                    color="#4CAF50"
+                  >
+                    <Text style={styles.buttonText}>Cancel Booking</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={[styles.actionButton, styles.completeButton]}
                     onPress={() => showModal("complete", booking.id)}
-                  />
+                  >
+                    <Text style={styles.buttonText}>Complete Booking</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             )}
@@ -297,6 +300,24 @@ const styles = StyleSheet.create({
   cancelText: {
     color: "#fff",
     fontSize: wp(4),
+    fontWeight: "bold",
+  },
+  actionButton: {
+    paddingVertical: hp(1.2),
+    paddingHorizontal: wp(4),
+    borderRadius: wp(6), // Adjust for desired roundness
+    alignItems: "center",
+    // Adjust width if needed
+  },
+  CancelButton: {
+    backgroundColor: "#FF5722",
+  },
+  completeButton: {
+    backgroundColor: "#4CAF50",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: wp(3.5),
     fontWeight: "bold",
   },
 });
