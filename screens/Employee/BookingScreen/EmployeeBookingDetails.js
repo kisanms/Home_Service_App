@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
-    fontSize: wp(3.5),
+    fontSize: wp(3.6),
     fontWeight: "bold",
   },
 });

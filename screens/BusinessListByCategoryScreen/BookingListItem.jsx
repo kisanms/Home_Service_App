@@ -130,13 +130,16 @@ export default function BookingListItem({ business, booking }) {
         <Text style={styles.contactPerson}>{business?.contactPerson}</Text>
         <Text style={styles.businessName}>{business?.name}</Text>
 
+
         {/* Booking status and feedback button */}
         {booking?.bookingStatus && (
           <View style={styles.statusFeedbackContainer}>
             <Text style={getStatusStyles(booking.bookingStatus)}>
               {booking.bookingStatus}
             </Text>
-            {booking?.bookingStatus !== "Cancelled" && (
+
+            {/* Show Feedback button only if status is "Completed" */}
+            {booking?.bookingStatus === "Completed" && (
               <TouchableOpacity
                 style={styles.feedbackButton}
                 onPress={openFeedbackModal}
@@ -144,6 +147,7 @@ export default function BookingListItem({ business, booking }) {
                 <Text style={styles.feedbackButtonText}>Feedback</Text>
               </TouchableOpacity>
             )}
+
             {/* Cancel button */}
             {booking?.bookingStatus === "Booked" && (
               <TouchableOpacity
@@ -155,6 +159,7 @@ export default function BookingListItem({ business, booking }) {
             )}
           </View>
         )}
+
 
         {booking?.date && booking?.time && (
           <View style={styles.dateTimeContainer}>
