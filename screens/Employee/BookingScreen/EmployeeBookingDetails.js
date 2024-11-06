@@ -5,6 +5,9 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Button,
+  Modal,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -19,7 +22,28 @@ export default function EmployeeBookingDetails({ route }) {
   const navigation = useNavigation();
   const { bookingDetails } = route.params;
   const [bookings, setBookings] = useState(bookingDetails?.bookings || []);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [actionType, setActionType] = useState("");
 
+  // Show confirmation modal
+  const showModal = (action, bookingId) => {
+    setSelectedBooking(bookingId);
+    setActionType(action);
+    setModalVisible(true);
+  };
+
+  // Handle confirm action
+  const handleConfirmAction = async () => {
+    if (actionType === "cancel") {
+      await handleCancelBooking(selectedBooking);
+    } else if (actionType === "complete") {
+      await handleCompleteBooking(selectedBooking);
+    }
+    setModalVisible(false);
+  };
+
+  // Handle cancel booking
   const handleCancelBooking = async (data) => {
     try {
       await GlobalApi.cancelBooking(data);
@@ -34,6 +58,7 @@ export default function EmployeeBookingDetails({ route }) {
     }
   };
 
+  // Handle complete booking
   const handleCompleteBooking = async (data) => {
     try {
       await GlobalApi.completeBooking(data);
@@ -50,6 +75,7 @@ export default function EmployeeBookingDetails({ route }) {
 
   return (
     <View style={styles.container}>
+      {/* Header with Back Button */}
       <View style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -60,6 +86,7 @@ export default function EmployeeBookingDetails({ route }) {
         <Text style={styles.headerText}>Booking Details</Text>
       </View>
 
+      {/* No bookings available */}
       {!bookings || bookings.length === 0 ? (
         <ScrollView contentContainerStyle={styles.noBookingContainer}>
           <Text style={styles.noBookingText}>
@@ -67,6 +94,7 @@ export default function EmployeeBookingDetails({ route }) {
           </Text>
         </ScrollView>
       ) : (
+        // Bookings List
         <View style={styles.listContainer}>
           <FlatList
             data={bookings}
@@ -96,19 +124,18 @@ export default function EmployeeBookingDetails({ route }) {
                   {booking.businessList.contactPerson}
                 </Text>
 
+                {/* Cancel and Complete Booking Buttons */}
                 <View style={styles.buttonContainer}>
-                  <TouchableOpacity
-                    style={[styles.actionButton, styles.cancelButton]}
-                    onPress={() => handleCancelBooking(booking.id)}
-                  >
-                    <Text style={styles.buttonText}>Cancel Booking</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.actionButton, styles.completeButton]}
-                    onPress={() => handleCompleteBooking(booking.id)}
-                  >
-                    <Text style={styles.buttonText}>Complete Booking</Text>
-                  </TouchableOpacity>
+                  <Button
+                    title="Cancel Booking"
+                    color="#FF5722"
+                    onPress={() => showModal("cancel", booking.id)}
+                  />
+                  <Button
+                    title="Complete Booking"
+                    color="#4CAF50"
+                    onPress={() => showModal("complete", booking.id)}
+                  />
                 </View>
               </View>
             )}
@@ -116,6 +143,37 @@ export default function EmployeeBookingDetails({ route }) {
           />
         </View>
       )}
+
+      {/* Confirmation Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalText}>
+              Are you sure you want to{" "}
+              {actionType === "cancel" ? "cancel" : "complete"} this booking?
+            </Text>
+            <View style={styles.modalButtonContainer}>
+              <Pressable
+                style={styles.confirmButton}
+                onPress={handleConfirmAction}
+              >
+                <Text style={styles.confirmText}>Confirm</Text>
+              </Pressable>
+              <Pressable
+                style={styles.cancelButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.cancelText}>Cancel</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -132,11 +190,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(5),
     paddingVertical: hp(2),
     backgroundColor: "#FF5722",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 5,
     borderBottomLeftRadius: wp(3),
     borderBottomRightRadius: wp(3),
   },
@@ -173,14 +226,14 @@ const styles = StyleSheet.create({
     marginBottom: hp(2),
     padding: wp(4),
     backgroundColor: "#fff",
-    borderRadius: wp(2),
+    borderRadius: wp(6),
+    borderColor: "#e6e6e6",
+    borderWidth: 1,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.15,
     shadowRadius: 6,
     elevation: 4,
-    borderWidth: 1,
-    borderColor: "#e6e6e6",
   },
   textLabel: {
     fontSize: wp(4),
@@ -196,25 +249,54 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: hp(1.5),
+    marginTop: hp(1),
   },
-  actionButton: {
+  modalOverlay: {
     flex: 1,
-    paddingVertical: hp(1.2),
-    marginHorizontal: wp(1),
-    borderRadius: wp(2),
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContainer: {
+    width: wp(80),
+    backgroundColor: "#fff",
+    borderRadius: wp(3),
+    padding: wp(5),
+    alignItems: "center",
+  },
+  modalText: {
+    fontSize: wp(4.5),
+    color: "#333",
+    textAlign: "center",
+    marginBottom: hp(2),
+  },
+  modalButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  confirmButton: {
+    backgroundColor: "#4CAF50",
+    padding: wp(3),
+    borderRadius: wp(6),
+    width: "45%",
+    alignItems: "center",
   },
   cancelButton: {
     backgroundColor: "#FF5722",
+    padding: wp(3),
+    borderRadius: wp(6),
+    width: "45%",
+    alignItems: "center",
   },
-  completeButton: {
-    backgroundColor: "#4CAF50",
-  },
-  buttonText: {
+  confirmText: {
     color: "#fff",
     fontSize: wp(4),
-    fontWeight: "600",
+    fontWeight: "bold",
+  },
+  cancelText: {
+    color: "#fff",
+    fontSize: wp(4),
+    fontWeight: "bold",
   },
 });
