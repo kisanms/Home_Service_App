@@ -17,8 +17,9 @@ export default function BookingScreen() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    user && getUserBookings();
-  }, [user]);
+    if (user) getUserBookings();
+    setLoading(false);
+  }, [user, bookingList]); // Trigger re-fetch when user or refreshKey changes
 
   const getUserBookings = () => {
     setLoading(true);

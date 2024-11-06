@@ -81,6 +81,7 @@ const getBusinessListByCategory = async (category) => {
   const result = await request(MASTER_URL, query);
   return result;
 };
+
 const createBooking = async (data) => {
   const mutationQuery =
     gql`
@@ -111,6 +112,24 @@ const createBooking = async (data) => {
     count
   }
     }
+  `;
+  const result = await request(MASTER_URL, mutationQuery);
+  return result;
+};
+
+const cancelBooking = async (data) => {
+  const mutationQuery =
+    gql`
+    mutation cancelBooking {
+  updateBooking(
+    where: {id: "`+data+`"},
+    data: {bookingStatus: Cancelled}) {
+    id
+  }
+    publishManyBookings(to: PUBLISHED) {
+    count
+  }
+}
   `;
   const result = await request(MASTER_URL, mutationQuery);
   return result;
@@ -298,4 +317,5 @@ export default {
   submitFeedback,
   createBusinessList,
   getEmployeeBookings,
+  cancelBooking
 };

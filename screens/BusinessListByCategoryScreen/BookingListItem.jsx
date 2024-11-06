@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   Dimensions,
   ToastAndroid,
+  Alert,
+  Platform,
 } from 'react-native';
 import React, { useState } from "react";
 import GlobalApi from "../../utils/GlobalApi";
@@ -23,11 +25,19 @@ const { width } = Dimensions.get("window");
 
 export default function BookingListItem({ business, booking }) {
   const [isFeedbackModalVisible, setFeedbackModalVisible] = useState(false);
+  const [isCancelModalVisible, setCancelModalVisible] = useState(false); // State for cancel modal
   const [feedback, setFeedback] = useState({ rating: 0, note: "" });
   const [selectedBooking, setSelectedBooking] = useState(null);
   const { user } = useUser();
   const [bookingList, setBookingList] = useState([]);
 
+  // Function to show cross-platform toast/alert
+  const showToastOrAlert = (message) => {
+    Platform.select({
+      android: () => ToastAndroid.show(message, ToastAndroid.SHORT),
+      ios: () => Alert.alert("Notification", message),
+    })();
+  };
 
 
   // Function to dynamically set status color based on booking status
@@ -79,14 +89,39 @@ export default function BookingListItem({ business, booking }) {
         setBookingList(updatedBookings);
         setFeedbackModalVisible(false);
 
-        // Show a success toast
-        ToastAndroid.show("Feedback submitted!", ToastAndroid.SHORT);
+        // Show a success notification
+        showToastOrAlert("Feedback submitted!");
       })
       .catch((error) => {
         console.error("Error submitting feedback:", error);
       });
   };
 
+  // Cancel booking function
+  const handleCancelBooking = () => {
+    setCancelModalVisible(true); // Open custom cancel modal
+  };
+
+  const confirmCancelBooking = () => {
+    if (!booking?.id) return;
+
+    // Call API to cancel the booking
+    GlobalApi.cancelBooking(booking.id)
+      .then(() => {
+        // Update the booking status locally
+        const updatedBookings = bookingList.map((item) =>
+          item.id === booking.id ? { ...item, bookingStatus: "Cancelled" } : item
+        );
+        setBookingList(updatedBookings);
+
+        // Show a success notification
+        showToastOrAlert("Booking cancelled!");
+        setCancelModalVisible(false); // Close the modal after success
+      })
+      .catch((error) => {
+        console.error("Error cancelling booking:", error);
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -101,9 +136,23 @@ export default function BookingListItem({ business, booking }) {
             <Text style={getStatusStyles(booking.bookingStatus)}>
               {booking.bookingStatus}
             </Text>
-            <TouchableOpacity style={styles.feedbackButton} onPress={openFeedbackModal}>
-              <Text style={styles.feedbackButtonText}>Feedback</Text>
-            </TouchableOpacity>
+            {booking?.bookingStatus !== "Cancelled" && (
+              <TouchableOpacity
+                style={styles.feedbackButton}
+                onPress={openFeedbackModal}
+              >
+                <Text style={styles.feedbackButtonText}>Feedback</Text>
+              </TouchableOpacity>
+            )}
+            {/* Cancel button */}
+            {booking?.bookingStatus === "Booked" && (
+              <TouchableOpacity
+                style={styles.cancelButton}
+                onPress={handleCancelBooking}
+              >
+                <Text style={styles.cancelButtonText}>Cancel Booking</Text>
+              </TouchableOpacity>
+            )}
           </View>
         )}
 
@@ -168,6 +217,34 @@ export default function BookingListItem({ business, booking }) {
           </View>
         </View>
       </Modal>
+
+      {/* Cancel Confirmation Modal */}
+      <Modal
+        transparent={true}
+        visible={isCancelModalVisible}
+        animationType="slide"
+        onRequestClose={() => setCancelModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalHeading}>Confirm Cancellation</Text>
+            <Text style={styles.modalText}>Are you sure you want to cancel this booking?</Text>
+
+            {/* Confirm and Cancel Buttons */}
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.button} onPress={confirmCancelBooking}>
+                <Text style={styles.buttonText}>Yes, Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: "gray" }]}
+                onPress={() => setCancelModalVisible(false)}
+              >
+                <Text style={styles.buttonText}>No, Go Back</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -207,28 +284,23 @@ const styles = StyleSheet.create({
   bookingDateTime: {
     fontFamily: "outfit",
     color: "gray",
-    fontSize: wp("3.5%"),
+    fontSize: wp("4%"),
   },
   calendarIcon: {
-    marginRight: wp("1%"),
-    borderRadius: wp("1%"),
-    padding: wp("1%"),
-  },
-  bookingStatus: {
-    fontFamily: "outfit",
-    paddingVertical: hp("0.5%"),
-    paddingHorizontal: wp("2%"),
-    borderRadius: wp("2%"),
-    textAlign: "center",
-    overflow: "hidden",
-    fontWeight: "bold",
-    fontSize: wp("3.5%"),
-    width: wp("25%"),
+    marginRight: wp("2%"),
   },
   statusFeedbackContainer: {
     flexDirection: "row",
+    flexWrap: "wrap",
     alignItems: "center",
     gap: wp("2%"),
+  },
+  bookingStatus: {
+    paddingVertical: wp("0.5%"),
+    paddingHorizontal: wp("2%"),
+    borderRadius: wp("2%"),
+    fontSize: wp("3.8%"),
+    color: "white",
   },
   feedbackButton: {
     backgroundColor: Color.PRIMARY,
@@ -237,6 +309,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp("2%"),
   },
   feedbackButtonText: {
+    color: "white",
+    fontSize: wp("3.5%"),
+    fontWeight: "500",
+  },
+  cancelButton: {
+    backgroundColor: "red",
+    padding: wp("1%"),
+    borderRadius: wp("1%"),
+    paddingHorizontal: wp("2%"),
+  },
+  cancelButtonText: {
     color: "white",
     fontSize: wp("3.5%"),
     fontWeight: "500",
@@ -257,6 +340,11 @@ const styles = StyleSheet.create({
     fontSize: wp("6%"),
     marginBottom: hp("2%"),
     fontFamily: "outfit-bold",
+  },
+  modalText: {
+    fontSize: wp("4.5%"),
+    marginBottom: hp("2%"),
+    textAlign: "center",
   },
   starContainer: {
     flexDirection: "row",

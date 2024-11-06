@@ -1,4 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity, View, Dimensions, FlatList, TextInput, ScrollView, KeyboardAvoidingView, ToastAndroid } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions, FlatList, TextInput, ScrollView, KeyboardAvoidingView, ToastAndroid, Alert,
+  Platform, } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CalendarPicker from "react-native-calendar-picker";
@@ -13,6 +14,14 @@ export default function BookingModal({ buinessId, hideModal }) {
   const [selectedTime, setSelectedTime] = useState();
   const [note, setNote] = useState();
   const { user } = useUser();
+
+  // Function to show cross-platform toast/alert
+  const showToastOrAlert = (message) => {
+    Platform.select({
+      android: () => ToastAndroid.show(message, ToastAndroid.SHORT),
+      ios: () => Alert.alert("Notification", message),
+    })();
+  };
 
   const onDateChange = (date) => {
     setSelectedDate(date);
@@ -63,7 +72,8 @@ export default function BookingModal({ buinessId, hideModal }) {
   // create booking method
   const createNewBooking = () => {
     if (!selectedDate || !selectedTime) {
-      ToastAndroid.show("Please select date and time!", ToastAndroid.LONG);
+      // Show a success notification
+      showToastOrAlert("Please select date and time!");
       return;
     }
     const data = {
@@ -75,7 +85,7 @@ export default function BookingModal({ buinessId, hideModal }) {
     }
     GlobalApi.createBooking(data).then(resp => {
       console.log("Resp", resp);
-      ToastAndroid.show("Booking created successfully!", ToastAndroid.LONG);
+      showToastOrAlert("Booking created successfully!");
       hideModal();
     })
   }
