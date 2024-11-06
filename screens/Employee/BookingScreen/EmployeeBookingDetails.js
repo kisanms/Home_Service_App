@@ -5,7 +5,6 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  Button,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -21,7 +20,6 @@ export default function EmployeeBookingDetails({ route }) {
   const { bookingDetails } = route.params;
   const [bookings, setBookings] = useState(bookingDetails?.bookings || []);
 
-  // Handle cancel booking
   const handleCancelBooking = async (data) => {
     try {
       await GlobalApi.cancelBooking(data);
@@ -36,7 +34,6 @@ export default function EmployeeBookingDetails({ route }) {
     }
   };
 
-  // Handle complete booking
   const handleCompleteBooking = async (data) => {
     try {
       await GlobalApi.completeBooking(data);
@@ -50,9 +47,9 @@ export default function EmployeeBookingDetails({ route }) {
       alert("Failed to mark booking as completed.");
     }
   };
+
   return (
     <View style={styles.container}>
-      {/* Header with Back Button */}
       <View style={styles.headerContainer}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -63,7 +60,6 @@ export default function EmployeeBookingDetails({ route }) {
         <Text style={styles.headerText}>Booking Details</Text>
       </View>
 
-      {/* No bookings available */}
       {!bookings || bookings.length === 0 ? (
         <ScrollView contentContainerStyle={styles.noBookingContainer}>
           <Text style={styles.noBookingText}>
@@ -71,7 +67,6 @@ export default function EmployeeBookingDetails({ route }) {
           </Text>
         </ScrollView>
       ) : (
-        // Bookings List
         <View style={styles.listContainer}>
           <FlatList
             data={bookings}
@@ -100,18 +95,20 @@ export default function EmployeeBookingDetails({ route }) {
                 <Text style={styles.textValue}>
                   {booking.businessList.contactPerson}
                 </Text>
-                {/* Cancel and Complete Booking Buttons */}
+
                 <View style={styles.buttonContainer}>
-                  <Button
-                    title="Cancel Booking"
-                    color="#FF5722"
+                  <TouchableOpacity
+                    style={[styles.actionButton, styles.cancelButton]}
                     onPress={() => handleCancelBooking(booking.id)}
-                  />
-                  <Button
-                    title="Complete Booking"
-                    color="#4CAF50"
+                  >
+                    <Text style={styles.buttonText}>Cancel Booking</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.actionButton, styles.completeButton]}
                     onPress={() => handleCompleteBooking(booking.id)}
-                  />
+                  >
+                    <Text style={styles.buttonText}>Complete Booking</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             )}
@@ -134,7 +131,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: wp(5),
     paddingVertical: hp(2),
-    backgroundColor: "#FF5722", // Updated header color
+    backgroundColor: "#FF5722",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
@@ -161,7 +158,7 @@ const styles = StyleSheet.create({
   noBookingText: {
     fontFamily: "outfit-bold",
     fontSize: wp(5),
-    color: "#FF5722", // Updated color for the no booking message
+    color: "#FF5722",
     textAlign: "center",
   },
   listContainer: {
@@ -187,7 +184,7 @@ const styles = StyleSheet.create({
   },
   textLabel: {
     fontSize: wp(4),
-    color: "#FF5722", // Updated label color
+    color: "#FF5722",
     fontWeight: "600",
     marginBottom: hp(0.3),
   },
@@ -195,5 +192,29 @@ const styles = StyleSheet.create({
     fontSize: wp(4),
     color: "#333",
     marginBottom: hp(0.8),
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: hp(1.5),
+  },
+  actionButton: {
+    flex: 1,
+    paddingVertical: hp(1.2),
+    marginHorizontal: wp(1),
+    borderRadius: wp(2),
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cancelButton: {
+    backgroundColor: "#FF5722",
+  },
+  completeButton: {
+    backgroundColor: "#4CAF50",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: wp(4),
+    fontWeight: "600",
   },
 });
