@@ -83,7 +83,7 @@ export default function AddUserDetails() {
 
         <TextInput
           style={styles.input}
-          placeholder="Enter your email"
+          placeholder="Enter your login email please"
           keyboardType="email-address"
           placeholderTextColor="#fff"
           value={form.email}

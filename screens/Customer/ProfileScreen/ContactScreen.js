@@ -26,16 +26,12 @@ export default function ContactScreen() {
   // Function to fetch the user contact details from API
   const fetchUserDetails = async (email) => {
     try {
-      // Assuming getUserContactDetails is a function in your GlobalApi utility
       const result = await GlobalApi.getUserContactDetails(email);
-      console.log(result); // Inspect the full response to ensure it's correct
-
       if (result?.userContactDetails) {
         setUserDetails(result.userContactDetails); // Store user data
       } else {
         setError("No user details found");
       }
-
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -51,7 +47,7 @@ export default function ContactScreen() {
         fetchUserDetails(email); // Fetch the user details if the email is available
       }
     }
-  }, [user]); // Re-run the effect whenever the user changes
+  }, [user]);
 
   if (isLoading) {
     return <Text>Loading...</Text>; // Show loading message while user details are being fetched
@@ -59,10 +55,30 @@ export default function ContactScreen() {
 
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
-      <Text style={styles.itemText}>Name: {item.name}</Text>
-      <Text style={styles.itemText}>Phone: {item.phone}</Text>
-      <Text style={styles.itemText}>Email: {item.email}</Text>
-      <Text style={styles.itemText}>Address: {item.address}</Text>
+      <Text style={[styles.itemText, { color: Color.PRIMARY }]}>
+        Name:{" "}
+        <Text style={{ color: "black", fontFamily: "outfit" }}>
+          {item.name}
+        </Text>
+      </Text>
+      <Text style={[styles.itemText, { color: Color.SECONDARY }]}>
+        Phone:{" "}
+        <Text style={{ color: "black", fontFamily: "outfit" }}>
+          {item.phone}
+        </Text>
+      </Text>
+      <Text style={[styles.itemText, { color: Color.TERTIARY }]}>
+        Email:{" "}
+        <Text style={{ color: "black", fontFamily: "outfit" }}>
+          {item.email}
+        </Text>
+      </Text>
+      <Text style={[styles.itemText, { color: Color.FOURTH }]}>
+        Address:{" "}
+        <Text style={{ color: "black", fontFamily: "outfit" }}>
+          {item.address}
+        </Text>
+      </Text>
     </View>
   );
 
@@ -71,11 +87,10 @@ export default function ContactScreen() {
       <Text style={styles.heading}>User Contact Details</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("adduserdetails")} // Navigate to the add user details page
+        onPress={() => navigation.navigate("adduserdetails")}
       >
         <Text style={styles.buttonText}>Add User Detail</Text>
       </TouchableOpacity>
-      {/* Display a loading spinner while data is being fetched */}
       {loading ? (
         <ActivityIndicator
           size="large"
@@ -86,14 +101,13 @@ export default function ContactScreen() {
         <FlatList
           data={userDetails}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()} // Make sure each item has a unique `id`
+          keyExtractor={(item) => item.id.toString()}
           ListEmptyComponent={
             <Text style={styles.noDataText}>No user details found.</Text>
           }
         />
       )}
       {error && <Text style={styles.errorText}>{error}</Text>}
-      {/* Display error message */}
     </View>
   );
 }
@@ -121,8 +135,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5, // For Android shadow
-    marginBottom: hp("3%"), // Add some space below the button
+    elevation: 5,
+    marginBottom: hp("3%"),
   },
   buttonText: {
     fontFamily: "outfit-bold",
@@ -130,28 +144,27 @@ const styles = StyleSheet.create({
     fontSize: wp("4.5%"),
     textAlign: "center",
   },
-  detailsContainer: {
-    width: "100%",
-    marginTop: hp("3%"),
-  },
   itemContainer: {
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffff",
     padding: wp("4%"),
     marginVertical: hp("1%"),
     borderRadius: wp("2%"),
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 3, // Add a little shadow for better UI
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    borderWidth: 2,
+    borderColor: Color.PRIMARY,
+    backgroundColor: "#f8f8f8",
   },
   itemText: {
     fontSize: wp("4.5%"),
-    color: "#333",
     marginBottom: hp("1%"),
+    fontFamily: "outfit-bold",
   },
   loading: {
-    marginTop: hp("10%"), // Adjust the position of the loading indicator
+    marginTop: hp("10%"),
   },
   noDataText: {
     fontSize: wp("4.5%"),
