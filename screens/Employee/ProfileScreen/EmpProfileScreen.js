@@ -116,7 +116,7 @@ export default function EmpProfileScreen() {
             <FontAwesome name="arrow-left" size={wp(8)} color="#000" />
           </TouchableOpacity>
 
-          <Text style={styles.title}>Employee Profile</Text>
+          <Text style={styles.title}>Employee Job Profile</Text>
 
           <TextInput
             style={styles.input}

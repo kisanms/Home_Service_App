@@ -13,6 +13,7 @@ import {
 } from "react-native-responsive-screen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useUser, useClerk } from "@clerk/clerk-expo"; // Use useClerk hook
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import Color from "../../../utils/Color";
 
@@ -71,8 +72,8 @@ export default function ProfileScreen() {
             style={styles.menuItem}
             onPress={() => navigation.navigate("contact")}
           >
-            <Ionicons name="mail" size={wp(6)} color={Color.PRIMARY} />
-            <Text style={styles.menuText}>Contact Us</Text>
+            <MaterialIcons name="contacts" size={24} color={Color.PRIMARY} />
+            <Text style={styles.menuText}>User Details</Text>
           </TouchableOpacity>
 
           <TouchableOpacity

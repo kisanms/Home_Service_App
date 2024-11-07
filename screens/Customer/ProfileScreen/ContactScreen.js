@@ -4,7 +4,7 @@ import React from "react";
 export default function ContactScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.contactText}>Contact Us</Text>
+      <Text style={styles.contactText}>User Contact Details</Text>
       {/* Add more content here, like a form or contact details */}
     </View>
   );
