@@ -5,29 +5,55 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Modal,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
-import { LinearGradient } from "expo-linear-gradient"; // For gradient background
+import { LinearGradient } from "expo-linear-gradient";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Color from "../../../utils/Color";
+import GlobalApi from "../../../utils/GlobalApi";
+import { useNavigation } from "@react-navigation/native";
+// Make sure this path is correct for your project
 
 export default function AddUserDetails() {
+  const navigation = useNavigation();
   const [form, setForm] = useState({
     name: "",
     phone: "",
     email: "",
     address: "",
   });
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (field, value) => {
     setForm((prevForm) => ({ ...prevForm, [field]: value }));
   };
 
-  const handleSubmit = () => {
-    console.log("Form Submitted:", form);
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const response = await GlobalApi.createUserContactDetail(form);
+      setLoading(false);
+      showSuccessModal(); // Show success modal after data is submitted and published
+    } catch (error) {
+      setLoading(false);
+      Alert.alert("Error", "Failed to submit details, please try again.");
+    }
+  };
+
+  const showSuccessModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const hideSuccessModal = () => {
+    setIsModalVisible(false);
+
+    navigation.navigate("contact"); // Optionally, navigate to another screen or reset form fields here
   };
 
   return (
@@ -49,7 +75,7 @@ export default function AddUserDetails() {
         <TextInput
           style={styles.input}
           placeholder="Enter your phone number"
-          keyboardType="phone-pad"
+          keyboardType="name-phone-pad"
           placeholderTextColor="#fff"
           value={form.phone}
           onChangeText={(value) => handleInputChange("phone", value)}
@@ -75,9 +101,33 @@ export default function AddUserDetails() {
         />
 
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit</Text>
+          <Text style={styles.buttonText}>
+            {loading ? "Submitting..." : "Submit"}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
+
+      {/* Success Modal */}
+      <Modal
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={hideSuccessModal}
+      >
+        <View style={styles.modalBackdrop}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalHeading}>Success</Text>
+            <Text style={styles.modalText}>
+              Your details have been successfully submitted and published.
+            </Text>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={hideSuccessModal}
+            >
+              <Text style={styles.modalButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </LinearGradient>
   );
 }
@@ -130,6 +180,43 @@ const styles = StyleSheet.create({
   buttonText: {
     color: Color.PRIMARY,
     fontSize: wp("5%"),
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalBackdrop: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: wp("80%"),
+    padding: hp("4%"),
+    backgroundColor: "white",
+    borderRadius: wp("3%"),
+    alignItems: "center",
+  },
+  modalHeading: {
+    fontSize: wp("6%"),
+    fontWeight: "bold",
+    color: Color.PRIMARY,
+    marginBottom: hp("2%"),
+  },
+  modalText: {
+    fontSize: wp("4%"),
+    color: "#333",
+    marginBottom: hp("3%"),
+    textAlign: "center",
+  },
+  modalButton: {
+    backgroundColor: Color.PRIMARY,
+    paddingVertical: hp("1.5%"),
+    paddingHorizontal: wp("10%"),
+    borderRadius: wp("3%"),
+  },
+  modalButtonText: {
+    color: "white",
+    fontSize: wp("4.5%"),
     fontWeight: "bold",
     textAlign: "center",
   },

@@ -331,7 +331,7 @@ const getEmployeeBookings = async ({ id }) => {
 };
 
 const createUserContactDetail = async (data) => {
-  const mutationQuery = gql`
+  const mutationCreate = gql`
     mutation createUserContactDetail(
       $name: String!
       $email: String!
@@ -342,10 +342,14 @@ const createUserContactDetail = async (data) => {
         data: { name: $name, email: $email, phone: $phone, address: $address }
       ) {
         id
-        name
-        email
-        phone
-        address
+      }
+    }
+  `;
+
+  const mutationPublish = gql`
+    mutation publishUserContactDetail($id: ID!) {
+      publishUserContactDetail(where: { id: $id }, to: PUBLISHED) {
+        id
       }
     }
   `;
@@ -358,17 +362,27 @@ const createUserContactDetail = async (data) => {
   };
 
   try {
-    const result = await request(MASTER_URL, mutationQuery, variables);
+    // Step 1: Create the user contact detail
+    const result = await request(MASTER_URL, mutationCreate, variables);
+    const newUserId = result.createUserContactDetail.id;
+
+    // Step 2: Publish the newly created user contact detail
+    await request(MASTER_URL, mutationPublish, { id: newUserId });
+
+    // Return the created user contact detail
     return result.createUserContactDetail;
   } catch (error) {
-    console.error("Error creating user contact detail:", error);
-    throw new Error("Failed to create user contact detail");
+    console.error("Error creating or publishing user contact detail:", error);
+    throw new Error("Failed to create or publish user contact detail");
   }
 };
 const getUserContactDetails = async (email) => {
-  const query = gql`
-    query GetUserContactDetails($email: String!) {
-      userContactDetails(where: { email: $email }) {
+  const query =
+    gql`
+    query GetUserContactDetails {
+      userContactDetails(where: { email: "` +
+    email +
+    `" }) {
         id
         name
         email
@@ -378,13 +392,8 @@ const getUserContactDetails = async (email) => {
     }
   `;
 
-  try {
-    const result = await request(MASTER_URL, query, { email });
-    return result.userContactDetails || [];
-  } catch (error) {
-    console.error("Error fetching user contact details:", error);
-    throw new Error("Failed to fetch user contact details");
-  }
+  const result = await request(MASTER_URL, query);
+  return result;
 };
 
 const deleteUserContactDetail = async (id) => {
