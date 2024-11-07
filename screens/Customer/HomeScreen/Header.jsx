@@ -4,11 +4,12 @@ import { useUser } from '@clerk/clerk-expo';
 import Color from '../../../utils/Color';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Header() {
     const { user, isLoading } = useUser();
     const { width } = Dimensions.get('window'); // Get screen width
-
+    const navigation = useNavigation();
     return user && (
         <View style={styles.container}>
             {/* Profile Section */}
@@ -20,7 +21,8 @@ export default function Header() {
                         <Text style={styles.userNameText}>{user?.fullName}</Text>
                     </View>
                 </View>
-                <FontAwesome name="bookmark-o" size={wp('6%')} color="white" />
+                <FontAwesome name="user-circle" size={35} color="white"
+                    onPress={() => navigation.navigate("contact")} />
             </View>
             {/* Search bar section */}
             <View style={styles.searchBarContainer}>
