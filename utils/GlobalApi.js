@@ -330,6 +330,126 @@ const getEmployeeBookings = async ({ id }) => {
   return response;
 };
 
+const createUserContactDetail = async (data) => {
+  const mutationQuery = gql`
+    mutation createUserContactDetail(
+      $name: String!
+      $email: String!
+      $phone: String!
+      $address: String!
+    ) {
+      createUserContactDetail(
+        data: { name: $name, email: $email, phone: $phone, address: $address }
+      ) {
+        id
+        name
+        email
+        phone
+        address
+      }
+    }
+  `;
+
+  const variables = {
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    address: data.address,
+  };
+
+  try {
+    const result = await request(MASTER_URL, mutationQuery, variables);
+    return result.createUserContactDetail;
+  } catch (error) {
+    console.error("Error creating user contact detail:", error);
+    throw new Error("Failed to create user contact detail");
+  }
+};
+const getUserContactDetails = async (email) => {
+  const query = gql`
+    query GetUserContactDetails($email: String!) {
+      userContactDetails(where: { email: $email }) {
+        id
+        name
+        email
+        phone
+        address
+      }
+    }
+  `;
+
+  try {
+    const result = await request(MASTER_URL, query, { email });
+    return result.userContactDetails || [];
+  } catch (error) {
+    console.error("Error fetching user contact details:", error);
+    throw new Error("Failed to fetch user contact details");
+  }
+};
+
+const deleteUserContactDetail = async (id) => {
+  const mutationQuery = gql`
+    mutation DeleteUserContactDetail($id: ID!) {
+      deleteUserContactDetail(where: { id: $id }) {
+        id
+      }
+      publishManyUserContactDetails(to: PUBLISHED) {
+        count
+      }
+    }
+  `;
+
+  try {
+    const result = await request(MASTER_URL, mutationQuery, { id });
+    return result.deleteUserContactDetail;
+  } catch (error) {
+    console.error("Error deleting user contact detail:", error);
+    throw new Error("Failed to delete user contact detail");
+  }
+};
+
+const updateUserContactDetail = async (id, data) => {
+  const mutationQuery = gql`
+    mutation UpdateUserContactDetail(
+      $id: ID!
+      $name: String
+      $email: String
+      $phone: String
+      $address: String
+    ) {
+      updateUserContactDetail(
+        where: { id: $id }
+        data: { name: $name, email: $email, phone: $phone, address: $address }
+      ) {
+        id
+        name
+        email
+        phone
+        address
+      }
+      publishUserContactDetail(where: { id: $id }, to: PUBLISHED) {
+        id
+      }
+    }
+  `;
+
+  const variables = {
+    id,
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    address: data.address,
+  };
+
+  try {
+    const result = await request(MASTER_URL, mutationQuery, variables);
+    return result.updateUserContactDetail;
+  } catch (error) {
+    console.error("Error updating user contact detail:", error);
+    throw new Error("Failed to update user contact detail");
+  }
+};
+
 export default {
   getSlider,
   getCategories,
@@ -342,4 +462,8 @@ export default {
   getEmployeeBookings,
   cancelBooking,
   completeBooking,
+  createUserContactDetail,
+  getUserContactDetails,
+  deleteUserContactDetail,
+  updateUserContactDetail,
 };

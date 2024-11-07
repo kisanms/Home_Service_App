@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { Keyboard, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/Customer/HomeScreen/HomeScreen";
 import BookingScreen from "../screens/Customer/BookingScreen/BookingScreen";
@@ -9,12 +9,33 @@ import Color from "../utils/Color";
 import HomeNavigation from "./HomeNavigation";
 
 const Tab = createBottomTabNavigator();
+
 export default function Tabnavigation() {
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: Color.PRIMARY,
+        tabBarStyle: isKeyboardVisible ? { display: "none" } : {},
       }}
     >
       <Tab.Screen

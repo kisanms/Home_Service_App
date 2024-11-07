@@ -7,6 +7,7 @@ import BusinessListByCategoryScreen from '../screens/BusinessListByCategoryScree
 import BusinessDetailsScreen from '../screens/BusinessDetailsScreen/BusinessDetailsScreen';
 import AllBusinessListing from '../screens/BusinessDetailsScreen/AllBusinessListing';
 import ContactScreen from '../screens/Customer/ProfileScreen/ContactScreen';
+import AddUserDetails from '../screens/Customer/ProfileScreen/AddUserDetails';
 
 LogBox.ignoreLogs(["Found screens with the same name nested inside one another. Check:"]);
 const Stack = createStackNavigator();
@@ -18,6 +19,7 @@ export default function HomeNavigation() {
       <Stack.Screen name='business-detail' component={BusinessDetailsScreen} />
       <Stack.Screen name='all-business-detail' component={AllBusinessListing} />
       <Stack.Screen name='contact' component={ContactScreen} />
+      <Stack.Screen name='adduserdetails' component={AddUserDetails} />
     </Stack.Navigator>
   )
 }
