@@ -1,5 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View, Dimensions, FlatList, TextInput, ScrollView, KeyboardAvoidingView, ToastAndroid, Alert,
-  Platform, } from 'react-native';
+import {
+  StyleSheet, Text, TouchableOpacity, View, Dimensions, FlatList, TextInput, ScrollView, KeyboardAvoidingView, ToastAndroid, Alert,
+  Platform,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CalendarPicker from "react-native-calendar-picker";
@@ -57,7 +59,7 @@ export default function BookingModal({ buinessId, hideModal }) {
     });
 
     // Loop for afternoon/evening times (1 PM - 7 PM)
-    for (let i = 1; i <= 7; i++) {
+    for (let i = 1; i <= 9; i++) {
       timeList.push({
         time: i + ':00 PM'
       });
