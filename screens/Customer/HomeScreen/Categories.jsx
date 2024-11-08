@@ -36,7 +36,7 @@ export default function Categories() {
       <View style={styles.headingContainer}>
         <Heading text={'Categories'} />
         <TouchableOpacity onPress={toggleViewAll}>
-          <Text style={styles.viewAllText}>{showAll ? "Show Less" : "View All"}</Text>
+          <Text style={styles.viewAllText}>{showAll ? "View Less" : "View All"}</Text>
         </TouchableOpacity>
       </View>
 
