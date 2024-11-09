@@ -49,6 +49,7 @@ export default function ContactScreen() {
     }
   }, [user]);
 
+  // Update the handleDelete function in your ContactScreen.js
   const handleDelete = async (id) => {
     Alert.alert(
       "Delete Contact",
@@ -63,14 +64,24 @@ export default function ContactScreen() {
           style: "destructive",
           onPress: async () => {
             try {
+              setLoading(true);
               await GlobalApi.deleteUserContactDetail(id);
-              // Refresh the list after deletion
+
+              // Refresh the list after successful deletion
               const email = user.primaryEmailAddress?.emailAddress;
               if (email) {
-                fetchUserDetails(email);
+                await fetchUserDetails(email);
               }
+
+              Alert.alert("Success", "Contact deleted successfully");
             } catch (error) {
-              Alert.alert("Error", "Failed to delete contact");
+              Alert.alert(
+                "Error",
+                "Unable to delete contact. Please try again later."
+              );
+              console.error("Delete error:", error);
+            } finally {
+              setLoading(false);
             }
           },
         },
