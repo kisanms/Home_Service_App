@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   FlatList,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -13,22 +14,21 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Color from "../../../utils/Color";
-import { useUser } from "@clerk/clerk-expo"; // Use Clerk's useUser hook
-import GlobalApi from "../../../utils/GlobalApi"; // Assuming you have this utility to handle API calls
+import { useUser } from "@clerk/clerk-expo";
+import GlobalApi from "../../../utils/GlobalApi";
 
 export default function ContactScreen() {
   const navigation = useNavigation();
-  const { user, isLoading } = useUser(); // Access logged-in user details
-  const [userDetails, setUserDetails] = useState([]); // To hold the user details
-  const [loading, setLoading] = useState(true); // Loading state for the data fetch
-  const [error, setError] = useState(""); // To handle error messages
+  const { user, isLoading } = useUser();
+  const [userDetails, setUserDetails] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // Function to fetch the user contact details from API
   const fetchUserDetails = async (email) => {
     try {
       const result = await GlobalApi.getUserContactDetails(email);
       if (result?.userContactDetails) {
-        setUserDetails(result.userContactDetails); // Store user data
+        setUserDetails(result.userContactDetails);
       } else {
         setError("No user details found");
       }
@@ -42,16 +42,45 @@ export default function ContactScreen() {
 
   useEffect(() => {
     if (user) {
-      const email = user.primaryEmailAddress?.emailAddress; // Get the email from the logged-in user
+      const email = user.primaryEmailAddress?.emailAddress;
       if (email) {
-        fetchUserDetails(email); // Fetch the user details if the email is available
+        fetchUserDetails(email);
       }
     }
   }, [user]);
 
-  if (isLoading) {
-    return <Text>Loading...</Text>; // Show loading message while user details are being fetched
-  }
+  const handleDelete = async (id) => {
+    Alert.alert(
+      "Delete Contact",
+      "Are you sure you want to delete this contact?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await GlobalApi.deleteUserContactDetail(id);
+              // Refresh the list after deletion
+              const email = user.primaryEmailAddress?.emailAddress;
+              if (email) {
+                fetchUserDetails(email);
+              }
+            } catch (error) {
+              Alert.alert("Error", "Failed to delete contact");
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const handleUpdate = (item) => {
+    navigation.navigate("updateuserdetails", { userDetail: item });
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
@@ -79,8 +108,28 @@ export default function ContactScreen() {
           {item.address}
         </Text>
       </Text>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.actionButton, styles.updateButton]}
+          onPress={() => handleUpdate(item)}
+        >
+          <Text style={styles.actionButtonText}>Update</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.actionButton, styles.deleteButton]}
+          onPress={() => handleDelete(item.id)}
+        >
+          <Text style={styles.actionButtonText}>Delete</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <View style={styles.container}>
@@ -113,6 +162,7 @@ export default function ContactScreen() {
 }
 
 const styles = StyleSheet.create({
+  // ... keep all existing styles ...
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
@@ -177,5 +227,29 @@ const styles = StyleSheet.create({
     color: "red",
     textAlign: "center",
     marginTop: hp("3%"),
+  },
+  // New styles for action buttons
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: hp("2%"),
+  },
+  actionButton: {
+    paddingVertical: hp("1%"),
+    paddingHorizontal: wp("4%"),
+    borderRadius: wp("1%"),
+    width: wp("35%"),
+  },
+  updateButton: {
+    backgroundColor: Color.SECONDARY,
+  },
+  deleteButton: {
+    backgroundColor: "#FF4444",
+  },
+  actionButtonText: {
+    color: "white",
+    fontSize: wp("4%"),
+    fontFamily: "outfit-bold",
+    textAlign: "center",
   },
 });
