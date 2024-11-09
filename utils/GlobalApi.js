@@ -396,35 +396,23 @@ const getUserContactDetails = async (email) => {
   return result;
 };
 
-// Update the deleteUserContactDetail function in your GlobalApi.js
 const deleteUserContactDetail = async (id) => {
-  // First, unpublish the record
-  const unpublishMutation = gql`
-    mutation UnpublishUserContactDetail($id: ID!) {
-      unpublishUserContactDetail(where: { id: $id }, from: PUBLISHED) {
-        id
-      }
-    }
-  `;
-
-  // Then, delete the record
-  const deleteMutation = gql`
+  const mutationQuery = gql`
     mutation DeleteUserContactDetail($id: ID!) {
       deleteUserContactDetail(where: { id: $id }) {
         id
+      }
+      publishManyUserContactDetails(to: PUBLISHED) {
+        count
       }
     }
   `;
 
   try {
-    // Step 1: Unpublish the record
-    await request(MASTER_URL, unpublishMutation, { id });
-
-    // Step 2: Delete the unpublished record
-    const result = await request(MASTER_URL, deleteMutation, { id });
+    const result = await request(MASTER_URL, mutationQuery, { id });
     return result.deleteUserContactDetail;
   } catch (error) {
-    console.error("Error in delete operation:", error);
+    console.error("Error deleting user contact detail:", error);
     throw new Error("Failed to delete user contact detail");
   }
 };
