@@ -395,22 +395,43 @@ const getUserContactDetails = async (email) => {
   const result = await request(MASTER_URL, query);
   return result;
 };
-
-const deleteUserContactDetail = async (id) => {
-  const mutationQuery = gql`
-    mutation DeleteUserContactDetail($id: ID!) {
-      deleteUserContactDetail(where: { id: $id }) {
+const publishUserContactDetail = async (id) => {
+  const publishMutation = gql`
+    mutation PublishUserContactDetail($id: ID!) {
+      publishUserContactDetail(where: { id: $id }, to: PUBLISHED) {
         id
-      }
-      publishManyUserContactDetails(to: PUBLISHED) {
-        count
       }
     }
   `;
 
   try {
-    const result = await request(MASTER_URL, mutationQuery, { id });
-    return result.deleteUserContactDetail;
+    await request(MASTER_URL, publishMutation, { id });
+  } catch (error) {
+    console.error("Error publishing user contact detail:", error);
+    throw new Error("Failed to publish user contact detail");
+  }
+};
+const deleteUserContactDetail = async (id) => {
+  try {
+    // First publish the item to PUBLISHED stage
+    await publishUserContactDetail(id);
+
+    // Then perform the deletion mutation
+    const deleteMutation = gql`
+      mutation DeleteUserContactDetail($id: ID!) {
+        # Delete from PUBLISHED stage
+        deleteUserContactDetail(where: { id: $id }, from: PUBLISHED) {
+          id
+        }
+        # Delete from DRAFT stage
+        deleteUserContactDetailFromStage(where: { id: $id }, stage: DRAFT) {
+          id
+        }
+      }
+    `;
+
+    const result = await request(MASTER_URL, deleteMutation, { id });
+    return result;
   } catch (error) {
     console.error("Error deleting user contact detail:", error);
     throw new Error("Failed to delete user contact detail");
@@ -475,4 +496,5 @@ export default {
   getUserContactDetails,
   deleteUserContactDetail,
   updateUserContactDetail,
+  publishUserContactDetail,
 };

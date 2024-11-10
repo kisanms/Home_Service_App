@@ -17,7 +17,6 @@ import {
 import Color from "../../../utils/Color";
 import GlobalApi from "../../../utils/GlobalApi";
 import { useNavigation } from "@react-navigation/native";
-// Make sure this path is correct for your project
 
 export default function AddUserDetails() {
   const navigation = useNavigation();
@@ -27,19 +26,61 @@ export default function AddUserDetails() {
     email: "",
     address: "",
   });
+  const [errors, setErrors] = useState({});
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (field, value) => {
     setForm((prevForm) => ({ ...prevForm, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors((prevErrors) => ({ ...prevErrors, [field]: "" }));
+    }
+  };
+
+  const validateForm = () => {
+    let tempErrors = {};
+    let isValid = true;
+
+    // Check each field
+    if (!form.name.trim()) {
+      tempErrors.name = "Name is required";
+      isValid = false;
+    }
+
+    if (!form.phone.trim()) {
+      tempErrors.phone = "Phone number is required";
+      isValid = false;
+    }
+
+    if (!form.email.trim()) {
+      tempErrors.email = "Email is required";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
+      tempErrors.email = "Please enter a valid email";
+      isValid = false;
+    }
+
+    if (!form.address.trim()) {
+      tempErrors.address = "Address is required";
+      isValid = false;
+    }
+
+    setErrors(tempErrors);
+    return isValid;
   };
 
   const handleSubmit = async () => {
+    if (!validateForm()) {
+      Alert.alert("Error", "Please fill in all required fields correctly.");
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await GlobalApi.createUserContactDetail(form);
       setLoading(false);
-      showSuccessModal(); // Show success modal after data is submitted and published
+      showSuccessModal();
     } catch (error) {
       setLoading(false);
       Alert.alert("Error", "Failed to submit details, please try again.");
@@ -52,8 +93,7 @@ export default function AddUserDetails() {
 
   const hideSuccessModal = () => {
     setIsModalVisible(false);
-
-    navigation.navigate("contact"); // Optionally, navigate to another screen or reset form fields here
+    navigation.navigate("contact");
   };
 
   return (
@@ -64,41 +104,59 @@ export default function AddUserDetails() {
       >
         <Text style={styles.heading}>Add User Details</Text>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your name"
-          placeholderTextColor="#fff"
-          value={form.name}
-          onChangeText={(value) => handleInputChange("name", value)}
-        />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={[styles.input, errors.name && styles.inputError]}
+            placeholder="Enter your name"
+            placeholderTextColor="#fff"
+            value={form.name}
+            onChangeText={(value) => handleInputChange("name", value)}
+          />
+          {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
+        </View>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your phone number"
-          keyboardType="name-phone-pad"
-          placeholderTextColor="#fff"
-          value={form.phone}
-          onChangeText={(value) => handleInputChange("phone", value)}
-        />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={[styles.input, errors.phone && styles.inputError]}
+            placeholder="Enter your phone number"
+            keyboardType="phone-pad"
+            placeholderTextColor="#fff"
+            value={form.phone}
+            onChangeText={(value) => handleInputChange("phone", value)}
+          />
+          {errors.phone && <Text style={styles.errorText}>{errors.phone}</Text>}
+        </View>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your login email please"
-          keyboardType="email-address"
-          placeholderTextColor="#fff"
-          value={form.email}
-          onChangeText={(value) => handleInputChange("email", value)}
-        />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={[styles.input, errors.email && styles.inputError]}
+            placeholder="Enter your login email please"
+            keyboardType="email-address"
+            placeholderTextColor="#fff"
+            value={form.email}
+            onChangeText={(value) => handleInputChange("email", value)}
+          />
+          {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+        </View>
 
-        <TextInput
-          style={[styles.input, styles.addressInput]}
-          placeholder="Enter your address"
-          placeholderTextColor="#fff"
-          value={form.address}
-          onChangeText={(value) => handleInputChange("address", value)}
-          multiline={true}
-          numberOfLines={4}
-        />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={[
+              styles.input,
+              styles.addressInput,
+              errors.address && styles.inputError,
+            ]}
+            placeholder="Enter your address"
+            placeholderTextColor="#fff"
+            value={form.address}
+            onChangeText={(value) => handleInputChange("address", value)}
+            multiline={true}
+            numberOfLines={4}
+          />
+          {errors.address && (
+            <Text style={styles.errorText}>{errors.address}</Text>
+          )}
+        </View>
 
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>
@@ -107,7 +165,6 @@ export default function AddUserDetails() {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Success Modal */}
       <Modal
         transparent={true}
         visible={isModalVisible}
@@ -150,6 +207,10 @@ const styles = StyleSheet.create({
     marginBottom: hp("4%"),
     textAlign: "center",
   },
+  inputContainer: {
+    width: "100%",
+    marginBottom: hp("2%"),
+  },
   input: {
     width: "100%",
     backgroundColor: "rgba(255, 255, 255, 0.2)",
@@ -160,7 +221,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     fontSize: wp("4.5%"),
     color: "#fff",
-    marginBottom: hp("2%"),
+  },
+  inputError: {
+    borderColor: "#FF0000",
+    borderWidth: 1,
+  },
+  errorText: {
+    color: "#FFD700",
+    fontSize: wp("3.5%"),
+    marginTop: hp("0.5%"),
+    marginLeft: wp("1%"),
   },
   addressInput: {
     textAlignVertical: "top",
