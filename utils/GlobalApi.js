@@ -344,6 +344,7 @@ const getEmployeeBookings = async ({ id }) => {
     return {
       ...booking,
       userAddress: userDetails?.address || null,
+      userPhone: userDetails?.phone || null,
     };
   });
 

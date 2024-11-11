@@ -26,12 +26,15 @@ export default function EmployeeBookingDetails({ route }) {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [actionType, setActionType] = useState("");
 
-  // Function to get user address based on email
-  const getUserAddress = (userEmail) => {
+  // Function to get user details based on email
+  const getUserDetails = (userEmail) => {
     const userDetails = bookingDetails?.userContactDetails?.find(
       (user) => user.email === userEmail
     );
-    return userDetails?.address || "No address provided";
+    return {
+      address: userDetails?.address || "No address provided",
+      phone: userDetails?.phone || "No phone provided",
+    };
   };
 
   // Show confirmation modal
@@ -108,61 +111,65 @@ export default function EmployeeBookingDetails({ route }) {
             data={bookings}
             keyExtractor={(item) => item.id.toString()}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item: booking }) => (
-              <View style={styles.bookingContainer}>
-                <Text style={styles.textLabel}>User:</Text>
-                <Text style={styles.textValue}>{booking.userName}</Text>
+            renderItem={({ item: booking }) => {
+              const userDetails = getUserDetails(booking.userEmail);
+              return (
+                <View style={styles.bookingContainer}>
+                  <Text style={styles.textLabel}>User:</Text>
+                  <Text style={styles.textValue}>{booking.userName}</Text>
 
-                <Text style={styles.textLabel}>Email:</Text>
-                <Text style={styles.textValue}>{booking.userEmail}</Text>
+                  <Text style={styles.textLabel}>User Email:</Text>
+                  <Text style={styles.textValue}>{booking.userEmail}</Text>
 
-                <Text style={styles.textLabel}>Status:</Text>
-                <Text style={styles.textValue}>{booking.bookingStatus}</Text>
+                  <Text style={styles.textLabel}>User Mobile No.:</Text>
+                  <Text style={styles.textValue}>{userDetails.phone}</Text>
 
-                <Text style={styles.textLabel}>Date:</Text>
-                <Text style={styles.textValue}>{booking.date}</Text>
+                  <Text style={styles.textLabel}>Status:</Text>
+                  <Text style={styles.textValue}>{booking.bookingStatus}</Text>
 
-                <Text style={styles.textLabel}>Time:</Text>
-                <Text style={styles.textValue}>{booking.time}</Text>
+                  <Text style={styles.textLabel}>Date:</Text>
+                  <Text style={styles.textValue}>{booking.date}</Text>
 
-                <Text style={styles.textLabel}>Business Name:</Text>
-                <Text style={styles.textValue}>
-                  {booking.businessList.name}
-                </Text>
+                  <Text style={styles.textLabel}>Time:</Text>
+                  <Text style={styles.textValue}>{booking.time}</Text>
 
-                <Text style={styles.textLabel}>Contact:</Text>
-                <Text style={styles.textValue}>
-                  {booking.businessList.contactPerson}
-                </Text>
+                  <Text style={styles.textLabel}>Business Name:</Text>
+                  <Text style={styles.textValue}>
+                    {booking.businessList.name}
+                  </Text>
 
-                <Text style={styles.textLabel}>Business Address:</Text>
-                <Text style={styles.textValue}>
-                  {booking.businessList.address}
-                </Text>
+                  <Text style={styles.textLabel}>Employee:</Text>
+                  <Text style={styles.textValue}>
+                    {booking.businessList.contactPerson}
+                  </Text>
 
-                <Text style={styles.textLabel}>User Address:</Text>
-                <Text style={styles.textValue}>
-                  {getUserAddress(booking.userEmail)}
-                </Text>
+                  {/* <Text style={styles.textLabel}>Business Address:</Text>
+                  <Text style={styles.textValue}>
+                    {booking.businessList.address}
+                  </Text> */}
 
-                {/* Cancel and Complete Booking Buttons */}
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity
-                    style={[styles.actionButton, styles.CancelButton]}
-                    onPress={() => showModal("cancel", booking.id)}
-                  >
-                    <Text style={styles.buttonText}>Cancel Booking</Text>
-                  </TouchableOpacity>
+                  <Text style={styles.textLabel}>User Address:</Text>
+                  <Text style={styles.textValue}>{userDetails.address}</Text>
 
-                  <TouchableOpacity
-                    style={[styles.actionButton, styles.completeButton]}
-                    onPress={() => showModal("complete", booking.id)}
-                  >
-                    <Text style={styles.buttonText}>Complete Booking</Text>
-                  </TouchableOpacity>
+                  {/* Cancel and Complete Booking Buttons */}
+                  <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                      style={[styles.actionButton, styles.CancelButton]}
+                      onPress={() => showModal("cancel", booking.id)}
+                    >
+                      <Text style={styles.buttonText}>Cancel Booking</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      style={[styles.actionButton, styles.completeButton]}
+                      onPress={() => showModal("complete", booking.id)}
+                    >
+                      <Text style={styles.buttonText}>Complete Booking</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </View>
-            )}
+              );
+            }}
             contentContainerStyle={styles.listContentContainer}
           />
         </View>
@@ -201,6 +208,7 @@ export default function EmployeeBookingDetails({ route }) {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
