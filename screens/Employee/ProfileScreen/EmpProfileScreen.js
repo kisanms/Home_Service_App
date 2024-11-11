@@ -74,7 +74,7 @@ export default function EmpProfileScreen() {
     try {
       // Save submitted data to MongoDB
       const resp = await axios.post(
-        "http://192.168.148.175:5001/api/profiles",
+        "http://192.168.236.175:5001/api/profiles",
         formData
       );
 

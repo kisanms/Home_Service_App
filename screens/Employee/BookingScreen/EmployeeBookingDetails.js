@@ -26,6 +26,14 @@ export default function EmployeeBookingDetails({ route }) {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [actionType, setActionType] = useState("");
 
+  // Function to get user address based on email
+  const getUserAddress = (userEmail) => {
+    const userDetails = bookingDetails?.userContactDetails?.find(
+      (user) => user.email === userEmail
+    );
+    return userDetails?.address || "No address provided";
+  };
+
   // Show confirmation modal
   const showModal = (action, bookingId) => {
     setSelectedBooking(bookingId);
@@ -105,6 +113,9 @@ export default function EmployeeBookingDetails({ route }) {
                 <Text style={styles.textLabel}>User:</Text>
                 <Text style={styles.textValue}>{booking.userName}</Text>
 
+                <Text style={styles.textLabel}>Email:</Text>
+                <Text style={styles.textValue}>{booking.userEmail}</Text>
+
                 <Text style={styles.textLabel}>Status:</Text>
                 <Text style={styles.textValue}>{booking.bookingStatus}</Text>
 
@@ -122,6 +133,16 @@ export default function EmployeeBookingDetails({ route }) {
                 <Text style={styles.textLabel}>Contact:</Text>
                 <Text style={styles.textValue}>
                   {booking.businessList.contactPerson}
+                </Text>
+
+                <Text style={styles.textLabel}>Business Address:</Text>
+                <Text style={styles.textValue}>
+                  {booking.businessList.address}
+                </Text>
+
+                <Text style={styles.textLabel}>User Address:</Text>
+                <Text style={styles.textValue}>
+                  {getUserAddress(booking.userEmail)}
                 </Text>
 
                 {/* Cancel and Complete Booking Buttons */}
@@ -180,7 +201,6 @@ export default function EmployeeBookingDetails({ route }) {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -305,9 +325,8 @@ const styles = StyleSheet.create({
   actionButton: {
     paddingVertical: hp(1.2),
     paddingHorizontal: wp(4),
-    borderRadius: wp(6), // Adjust for desired roundness
+    borderRadius: wp(6),
     alignItems: "center",
-    // Adjust width if needed
   },
   CancelButton: {
     backgroundColor: "#FF5722",

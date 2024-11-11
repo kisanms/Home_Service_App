@@ -308,7 +308,10 @@ const getEmployeeBookings = async ({ id }) => {
     MASTER_URL,
     gql`
       query GetEmployeeBookings {
-        bookings(orderBy: updatedAt_DESC, where: { businessList: { id: "${id}" } }) {
+        bookings(
+          orderBy: updatedAt_DESC
+          where: { businessList: { id: "${id}" } }
+        ) {
           time
           userEmail
           userName
@@ -325,12 +328,29 @@ const getEmployeeBookings = async ({ id }) => {
           }
         }
         userContactDetails {
-           address
+          email
+          address
+          phone
         }
       }
     `
   );
-  return response;
+
+  // Combine the data by matching emails
+  const enhancedBookings = response.bookings.map((booking) => {
+    const userDetails = response.userContactDetails.find(
+      (user) => user.email === booking.userEmail
+    );
+    return {
+      ...booking,
+      userAddress: userDetails?.address || null,
+    };
+  });
+
+  return {
+    ...response,
+    bookings: enhancedBookings,
+  };
 };
 
 const createUserContactDetail = async (data) => {
