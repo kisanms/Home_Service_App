@@ -65,7 +65,7 @@ export default function Register() {
 
     // Make the registration request
     axios
-      .post("http://192.168.46.179:5001/register", userData)
+      .post("http://192.168.148.179:5001/register", userData)
       .then((res) => {
         console.log(res.data);
 

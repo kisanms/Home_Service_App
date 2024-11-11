@@ -324,6 +324,9 @@ const getEmployeeBookings = async ({ id }) => {
             about
           }
         }
+        userContactDetails {
+           address
+        }
       }
     `
   );
