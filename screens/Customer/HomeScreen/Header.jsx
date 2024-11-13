@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TextInput, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, Dimensions, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useUser } from '@clerk/clerk-expo';
 import Color from '../../../utils/Color';
@@ -15,14 +15,16 @@ export default function Header() {
             {/* Profile Section */}
             <View style={styles.profileMainContainer}>
                 <View style={styles.profileContainer}>
-                    <Image source={{ uri: user?.imageUrl }} style={styles.userImage} />
+                    <TouchableOpacity onPress={() => navigation.navigate("contact")}>
+                        <Image source={{ uri: user?.imageUrl }} style={styles.userImage} />
+                    </TouchableOpacity>
                     <View>
                         <Text style={styles.welcomeText}>Welcome,</Text>
                         <Text style={styles.userNameText}>{user?.fullName}</Text>
                     </View>
                 </View>
-                <FontAwesome name="user-circle" size={35} color="white"
-                    onPress={() => navigation.navigate("contact")} />
+                <FontAwesome name="bookmark-o" size={30} color="white"
+                />
             </View>
             {/* Search bar section */}
             <View style={styles.searchBarContainer}>

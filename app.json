@@ -17,14 +17,19 @@
       },
       "permissions": [
         "INTERNET"
-      ]
-      
+      ],
+      "package": "com.deepkm.Home_Service_App"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "53664a58-6d71-48fa-9a88-08cbdaf9cddb"
+      }
+    }
   }
 }
