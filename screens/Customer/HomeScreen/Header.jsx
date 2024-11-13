@@ -24,7 +24,7 @@ export default function Header() {
                     </View>
                 </View>
                 <FontAwesome name="bookmark-o" size={30} color="white"
-                />
+                    onPress={() => navigation.navigate("Booking")} />
             </View>
             {/* Search bar section */}
             <View style={styles.searchBarContainer}>
