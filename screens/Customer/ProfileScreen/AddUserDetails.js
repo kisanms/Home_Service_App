@@ -17,6 +17,7 @@ import {
 import Color from "../../../utils/Color";
 import GlobalApi from "../../../utils/GlobalApi";
 import { useNavigation } from "@react-navigation/native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function AddUserDetails() {
   const navigation = useNavigation();
@@ -102,6 +103,7 @@ export default function AddUserDetails() {
         contentContainerStyle={styles.container}
         keyboardShouldPersistTaps="handled"
       >
+        <Ionicons name="arrow-back-outline" size={wp("7%")} color="white" />
         <Text style={styles.heading}>Add User Details</Text>
 
         <View style={styles.inputContainer}>
