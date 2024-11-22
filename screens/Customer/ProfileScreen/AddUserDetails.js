@@ -103,8 +103,11 @@ export default function AddUserDetails() {
         contentContainerStyle={styles.container}
         keyboardShouldPersistTaps="handled"
       >
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back-outline" size={wp("7%")} color="white" />
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back-outline" size={wp("9%")} color="white" />
         </TouchableOpacity>
 
         <Text style={styles.heading}>Add User Details</Text>
@@ -205,6 +208,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  backButton: {
+    position: "absolute",
+    top: hp("3%"),
+    left: wp("3%"),
+    zIndex: 1, // Ensures it appears above other elements
+  },
+
   heading: {
     fontSize: wp("7%"),
     fontWeight: "bold",
