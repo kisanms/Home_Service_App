@@ -27,14 +27,18 @@ Welcome to the **Home Service Application**, a comprehensive solution designed t
 | ![Screenshot_20241026_203751](https://github.com/user-attachments/assets/1332ff01-22c0-40d8-ab88-42268b3fcfff) | Select date and time Details |
 | ![Screenshot_20241026_203818](https://github.com/user-attachments/assets/efad58c4-131f-4a52-b7ac-ab4d64ea4ba5) | After confirm booking a **Toast message will PopUp** |
 | ![Screenshot_20241026_203832](https://github.com/user-attachments/assets/dc66dc83-0359-444e-a249-94ed42fe1761) | Booking Detail |
-| ![Screenshot_20241026_203856](https://github.com/user-attachments/assets/e058cac4-34cb-4eed-be73-876aa7f0d761) | Feedback Detail |
-| ![Screenshot_20241026_203917](https://github.com/user-attachments/assets/333dfbc3-c577-4984-8849-882f23eb78aa) | Profile Detail |
+|![image](https://github.com/user-attachments/assets/ae066c1b-f821-448d-9ccc-5d8ecb5c1578) | Feedback Detail |
+|![image](https://github.com/user-attachments/assets/5ddf8be2-ea94-47b6-8f5e-4a6fdcbb6cec)| Cancel Detail |
+|![image](https://github.com/user-attachments/assets/1709092a-3449-4d67-ba9b-cd4bacb410f4)| Cancel Detail Confirmation Modal |
+|![image](https://github.com/user-attachments/assets/fe419b0f-d974-4046-9fb4-1fcaeb8d4ba0)| Profile Detail |
+|![image](https://github.com/user-attachments/assets/b8727926-7957-4966-a907-bc3df690828a)| User Details |
+|![image](https://github.com/user-attachments/assets/67e8b6a6-b8f7-42d0-a9af-671ec0d0cbde)| Add User Details |
 | ![Screenshot_20241026_203942](https://github.com/user-attachments/assets/59174307-13f2-44fc-a24c-381638fd5e53) | Employee Login |
 | ![Screenshot_20241026_203957](https://github.com/user-attachments/assets/49ea41a4-3583-439c-aa33-83ea2833ec12) | Employee Register |
 | ![Screenshot_20241106_203436](https://github.com/user-attachments/assets/2bb0b058-3147-4670-917a-9f07eb2863b4) | LoggedIn employee Homescreen |
 | ![Screenshot_20241106_204123](https://github.com/user-attachments/assets/3ca55fa0-a652-459f-9f12-251de6d50d5f) | Job apply Screen |
 | ![Screenshot_20241106_204412](https://github.com/user-attachments/assets/9d21e825-e662-443b-a7b7-25153c27a7a6) | Booking Details of user<br>When the employee types its ID, all bookings by the user will be shown |
-| ![Screenshot_20241106_204518](https://github.com/user-attachments/assets/a590d12f-1301-4cf2-8b88-3273ba5aa807) | All booking details of the user<br>Employee can cancel and complete bookings |
+|![image](https://github.com/user-attachments/assets/c7f6a4fd-a17e-4bf3-a39f-4724f96d68ed)| All booking details of the user<br>Employee can cancel and complete bookings |
 
 ## Database
 
