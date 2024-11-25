@@ -19,22 +19,28 @@ Welcome to the **Home Service Application**, a comprehensive solution designed t
 
 ## Demonstration of Project
 
-| **Screenshot**                                                                                                  | **Description**                                                                                  |
-|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| <img src="https://github.com/user-attachments/assets/15496770-84aa-446b-9c00-8363681225ff" height="600px">      | **Select User Type**: Allows users to choose between being a customer or a service provider.     |
-| <img src="https://github.com/user-attachments/assets/e95ad838-bb84-45cd-9e23-a73b8987a976" height="600px">      | **Customer Login Screen**: Secure login for customers with an intuitive design.                 |
-| <img src="https://github.com/user-attachments/assets/dbfbf901-feb8-472d-aba0-40bef1bfc5ea" height="600px">      | **Google Authentication**: Fast and secure authentication via Google OAuth.                     |
-| <img src="https://github.com/user-attachments/assets/326337f3-1c41-4925-a295-b5716f7346f6" height="600px">      | **Home Screen**: Displays offers, service categories, and an employee list for quick access.    |
-| <img src="https://github.com/user-attachments/assets/73bf3b80-c5c3-45cf-972b-181dab79a3b4" height="600px">      | **Categories List**: Organized list of available service categories for easier selection.        |
-| <img src="https://github.com/user-attachments/assets/bff131da-506f-4b3d-b3b8-798427ba73e2" height="600px">      | **Service List**: Shows available services under selected categories with clear details.         |
-| <img src="https://github.com/user-attachments/assets/2fc6b32f-9daa-4530-aad5-1ae95f2fb5e7" height="600px">      | **Specific Service Details**: Comprehensive details about a specific service.                   |
-| <img src="https://github.com/user-attachments/assets/02c50f0f-304b-4005-86d5-c8c13082a4bd" height="600px">      | **Employee Details**: Displays profiles of service providers and their expertise.               |
-| <img src="https://github.com/user-attachments/assets/1332ff01-22c0-40d8-ab88-42268b3fcfff" height="600px">      | **Select Date and Time**: A user-friendly interface for scheduling appointments.                |
-| <img src="https://github.com/user-attachments/assets/efad58c4-131f-4a52-b7ac-ab4d64ea4ba5" height="600px">      | **Booking Confirmation**: Confirms the booking with a toast notification.                       |
-| <img src="https://github.com/user-attachments/assets/dc66dc83-0359-444e-a249-94ed42fe1761" height="600px">      | **Booking Details**: Displays details about the current booking, including time and location.   |
-| <img src="https://github.com/user-attachments/assets/ae066c1b-f821-448d-9ccc-5d8ecb5c1578" height="600px">      | **Feedback Details**: Allows customers to provide feedback about the service.                   |
-| <img src="https://github.com/user-attachments/assets/5ddf8be2-ea94-47b6-8f5e-4a6fdcbb6cec" height="600px">      | **Cancel Booking Details**: Customers can cancel their bookings with clear confirmation steps.  |
-| <img src="https://github.com/user-attachments/assets/fe419b0f-d974-4046-9fb4-1fcaeb8d4ba0" height="600px">      | **Profile Details**: Shows a user’s profile and service history.                                |
+| **Screenshot**                                                                            | **Description**                                                                                       |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| <img src="https://github.com/user-attachments/assets/15496770-84aa-446b-9c00-8363681225ff" height="600px"> | **Select User Type**: Allows users to choose between being a customer or an employee |
+| <img src="https://github.com/user-attachments/assets/e95ad838-bb84-45cd-9e23-a73b8987a976" height="600px"> | **Customer Login**: Secure login screen for customers                                |
+| <img src="https://github.com/user-attachments/assets/dbfbf901-feb8-472d-aba0-40bef1bfc5ea" height="600px"> | **Google OAuth Authentication**: Customers can log in using their Google accounts    |
+| <img src="https://github.com/user-attachments/assets/326337f3-1c41-4925-a295-b5716f7346f6" height="600px"> | **Home Screen**: Features an offer slider, categories, and employee lists            |
+| <img src="https://github.com/user-attachments/assets/73bf3b80-c5c3-45cf-972b-181dab79a3b4" height="600px"> | **Categories List**: View different service categories                               |
+| <img src="https://github.com/user-attachments/assets/bff131da-506f-4b3d-b3b8-798427ba73e2" height="600px"> | **Service List**: Detailed service offerings in selected categories                  |
+| <img src="https://github.com/user-attachments/assets/2fc6b32f-9daa-4530-aad5-1ae95f2fb5e7" height="600px"> | **Specific Service Details**: Comprehensive details about a chosen service           |
+| <img src="https://github.com/user-attachments/assets/02c50f0f-304b-4005-86d5-c8c13082a4bd" height="600px"> | **Employee Details**: Information about the employee providing the service           |
+| <img src="https://github.com/user-attachments/assets/1332ff01-22c0-40d8-ab88-42268b3fcfff" height="600px"> | **Date & Time Selection**: Users can select their preferred appointment time         |
+| <img src="https://github.com/user-attachments/assets/efad58c4-131f-4a52-b7ac-ab4d64ea4ba5v" height="600px"> | **Booking Confirmation**: A toast message confirms successful bookings               |
+| <img src="https://github.com/user-attachments/assets/dc66dc83-0359-444e-a249-94ed42fe1761" height="600px"> | **Booking Details**: Displays confirmed booking details for the user.                |
+| <img src="https://github.com/user-attachments/assets/ae066c1b-f821-448d-9ccc-5d8ecb5c1578" height="600px"> | **Feedback Detail**: Users can leave feedback for completed services                 |
+| <img src="https://github.com/user-attachments/assets/5ddf8be2-ea94-47b6-8f5e-4a6fdcbb6cec" height="600px"> | **Cancel Detail**: Users can review cancellation details before proceeding           |
+| <img src="https://github.com/user-attachments/assets/67e8b6a6-b8f7-42d0-a9af-671ec0d0cbde" height="600px"> | **Add User Details**: Allows users to add or edit their profile information          |
+| <img src="https://github.com/user-attachments/assets/59174307-13f2-44fc-a24c-381638fd5e53" height="600px"> | **Employee Login**: Secure login screen for employees                                |
+| <img src="https://github.com/user-attachments/assets/49ea41a4-3583-439c-aa33-83ea2833ec12" height="600px"> | **Employee Register**: Registration form for new employees                           |
+| <img src="https://github.com/user-attachments/assets/2bb0b058-3147-4670-917a-9f07eb2863b4" height="600px"> | **Logged-in Employee Home**: Employee dashboard showing relevant tasks               |
+| <img src="https://github.com/user-attachments/assets/3ca55fa0-a652-459f-9f12-251de6d50d5f" height="600px"> | **Job Apply Screen**: Employees can apply for available jobs                         |
+| <img src="https://github.com/user-attachments/assets/9d21e825-e662-443b-a7b7-25153c27a7a6" height="600px"> | **User Booking Details**: View all bookings associated with a user                   |
+| <img src="https://github.com/user-attachments/assets/c7f6a4fd-a17e-4bf3-a39f-4724f96d68ed" height="600px"> | **Manage Bookings**: Employees can cancel or mark bookings as completed              |
 
 ---
 
