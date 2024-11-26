@@ -21,7 +21,7 @@ Welcome to the **Home Service Application**, a comprehensive solution designed t
 
 | **Screenshot**                                                                            | **Description**                                                                                       |
 | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| <img src="https://github.com/user-attachments/assets/15496770-84aa-446b-9c00-8363681225ff" height="600px"> | **Select User Type**: Allows users to choose between being a customer or an employee |
+| <img src="https://github.com/user-attachments/assets/15496770-84aa-446b-9c00-8363681225ff" height="600px" width="600px"> | **Select User Type**: Allows users to choose between being a customer or an employee |
 | <img src="https://github.com/user-attachments/assets/e95ad838-bb84-45cd-9e23-a73b8987a976" height="600px"> | **Customer Login**: Secure login screen for customers                                |
 | <img src="https://github.com/user-attachments/assets/dbfbf901-feb8-472d-aba0-40bef1bfc5ea" height="600px"> | **Google OAuth Authentication**: Customers can log in using their Google accounts    |
 | <img src="https://github.com/user-attachments/assets/326337f3-1c41-4925-a295-b5716f7346f6" height="600px"> | **Home Screen**: Features an offer slider, categories, and employee lists            |
