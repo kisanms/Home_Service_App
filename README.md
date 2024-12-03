@@ -1,6 +1,8 @@
 # Home Service Application
 
-Welcome to the **Home Service Application**, a comprehensive solution designed to connect customers with various home service providers. Built using React Native with Expo, Hygraph, and MongoDB for backend management, and Clerk authentication for secure sign-in. The app aims to provide a seamless experience for users to book and manage home services with ease.
+Welcome to the **Home Service Application**, a comprehensive solution designed to connect customers with various home service providers. Built using **React Native with Expo**, **Hygraph**, **MongoDB**, and **Clerk Authentication**, the app provides a seamless experience for users to book and manage home services effortlessly.
+
+---
 
 ## Features
 
@@ -9,10 +11,13 @@ Welcome to the **Home Service Application**, a comprehensive solution designed t
 - **Secure Authentication**: Integrated with Clerk authentication for secure sign-in, sign-up, and Google OAuth.
 - **Real-time Booking and Management**: Customers can select services, set preferences, and schedule appointments.
 - **Responsive Design**: Adaptable to various screen sizes for a consistent experience across devices.
-- **Hygraph Integration**: Data storage and real-time updates powered by Graphql.
-- **Service Categories**: Multiple service categories with detailed information and images.
+- **Hygraph Integration**: Data storage and real-time updates powered by GraphQL.
+- **MongoDB**: A robust backend database to securely store user data, service details, and bookings.
+- **Axios**: Used for efficient and reliable API communication between the app and the backend.
 
-# Demonstration of Project
+---
+
+## Demonstration of Project
 
 | Image                                                                                                          | Description                                                                                       |
 | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
