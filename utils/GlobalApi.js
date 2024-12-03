@@ -437,18 +437,13 @@ const publishUserContactDetail = async (id) => {
 };
 const deleteUserContactDetail = async (id) => {
   try {
-    // First publish the item to PUBLISHED stage
+    // First, publish the item
     await publishUserContactDetail(id);
 
-    // Then perform the deletion mutation
+    // Updated GraphQL mutation
     const deleteMutation = gql`
       mutation DeleteUserContactDetail($id: ID!) {
-        # Delete from PUBLISHED stage
-        deleteUserContactDetail(where: { id: $id }, from: PUBLISHED) {
-          id
-        }
-        # Delete from DRAFT stage
-        deleteUserContactDetailFromStage(where: { id: $id }, stage: DRAFT) {
+        deleteUserContactDetail(where: { id: $id }) {
           id
         }
       }
